@@ -3,93 +3,15 @@
     <!--<< Header Area >>-->
     <head>
         <!-- ========== Meta Tags ========== -->
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="gramentheme">
-        <meta name="description" content="Kidsa - Kindergarten School HTML Template">
+                <?php include "include/meta.php" ?>
         <!-- ======== Page title ============ -->
         <title>Campus Coach | India's Largest In-School Career Mentoring Program for 11th & 12th Grade Students</title>
-        <!--<< Favcion >>-->
-        <link rel="shortcut icon" href="assets/img/favicon.svg">
-        <!--<< Bootstrap min.css >>-->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <!--<< All Min Css >>-->
-        <link rel="stylesheet" href="assets/css/all.min.css">
-        <!--<< Animate.css >>-->
-        <link rel="stylesheet" href="assets/css/animate.css">
-        <!--<< Magnific Popup.css >>-->
-        <link rel="stylesheet" href="assets/css/magnific-popup.css">
-        <!--<< MeanMenu.css >>-->
-        <link rel="stylesheet" href="assets/css/meanmenu.css">
-        <!--<< Swiper Bundle.css >>-->
-        <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-        <!--<< Nice Select.css >>-->
-        <link rel="stylesheet" href="assets/css/nice-select.css">
-        <!--<< Main.css >>-->
-        <link rel="stylesheet" href="assets/css/main.css">
+        
     </head>
     <body>
 
         <!-- Preloader Start -->
-        <div id="preloader" class="preloader">
-             <div class="animation-preloader">
-                <div class="spinner">                
-                </div>
-                <div class="txt-loading">
-                    <span data-text-preloader="K" class="letters-loading">
-                        C
-                    </span>
-                    <span data-text-preloader="I" class="letters-loading">
-                        A
-                    </span>
-                    <span data-text-preloader="D" class="letters-loading">
-                        M
-                    </span>
-                    <span data-text-preloader="S" class="letters-loading">
-                        P
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        U
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        S
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        C
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        O
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        A
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        C
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        H
-                    </span>
-                </div>
-                <p class="text-center">Campus Coach</p>
-            </div>
-            <div class="loader">
-                <div class="row">
-                    <div class="col-3 loader-section section-left">
-                        <div class="bg"></div>
-                    </div>
-                    <div class="col-3 loader-section section-left">
-                        <div class="bg"></div>
-                    </div>
-                    <div class="col-3 loader-section section-right">
-                        <div class="bg"></div>
-                    </div>
-                    <div class="col-3 loader-section section-right">
-                        <div class="bg"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+           <?php include "include/loader.php" ?>
 
         <!-- Offcanvas Area Start -->
         <div class="fix-area">
@@ -98,7 +20,7 @@
                 <div class="offcanvas__content">
                     <div class="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
                         <div class="offcanvas__logo">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img src="assets/img/logo/logo.svg" alt="logo-img">
                             </a>
                         </div>
@@ -149,7 +71,7 @@
                             </li>
                         </ul>
                         <div class="header-button mt-4">
-                            <a href="contact.html" class="theme-btn text-center">
+                            <a href="contact.php" class="theme-btn text-center">
                                 <span>Get A Quote<i class="fa-solid fa-arrow-right-long"></i></span>
                             </a>
                         </div>
@@ -173,7 +95,7 @@
                     <ul class="contact-list">
                         <li>
                             <i class="fal fa-map-marker-alt"></i>
-                            6391 Elgin St. Celina, USA
+                           Raj Palace, Navi Mumbai- 400709
                         </li>
                         <li>
                             <i class="far fa-envelope"></i>
@@ -198,7 +120,7 @@
                     <div class="header-main style-2">
                         <div class="header-left">
                             <div class="logo">
-                                <a href="index.html" class="header-logo">
+                                <a href="index.php" class="header-logo">
                                     <img src="assets/img/logo/logo.svg" alt="logo-img">
                                 </a>
                             </div>
@@ -207,7 +129,7 @@
                                     <nav id="mobile-menu">
                                         <ul>
                                             <li class="has-dropdown active menu-thumb">
-                                                <a href="index.html">
+                                                <a href="index.php">
                                                 Home 
                                                 <i class="fas fa-angle-down"></i>
                                                 </a>
@@ -218,10 +140,10 @@
                                                                 <div class="homemenu-thumb">
                                                                     <img src="assets/img/header/home-1.jpg" alt="img">
                                                                     <div class="demo-button">
-                                                                        <a href="index.html" class="theme-btn">
+                                                                        <a href="index.php" class="theme-btn">
                                                                             <span>Multi Page</span>
                                                                         </a>
-                                                                        <a href="index-one-page.html" class="theme-btn">
+                                                                        <a href="index-one-page.php" class="theme-btn">
                                                                             <span>One Page</span>
                                                                         </a>
                                                                     </div>
@@ -236,10 +158,10 @@
                                                                 <div class="homemenu-thumb mb-15">
                                                                     <img src="assets/img/header/home-2.jpg" alt="img">
                                                                     <div class="demo-button">
-                                                                        <a href="index-2.html" class="theme-btn">
+                                                                        <a href="index-2.php" class="theme-btn">
                                                                             <span>Multi Page</span>
                                                                         </a>
-                                                                        <a href="index-two-page.html" class="theme-btn">
+                                                                        <a href="index-two-page.php" class="theme-btn">
                                                                             <span>One Page</span>
                                                                         </a>
                                                                     </div>
@@ -254,10 +176,10 @@
                                                                 <div class="homemenu-thumb mb-15">
                                                                     <img src="assets/img/header/home-3.jpg" alt="img">
                                                                     <div class="demo-button">
-                                                                        <a href="index-3.html" class="theme-btn">
+                                                                        <a href="index-3.php" class="theme-btn">
                                                                             <span>Multi Page</span>
                                                                         </a>
-                                                                        <a href="index-three-page.html" class="theme-btn">
+                                                                        <a href="index-three-page.php" class="theme-btn">
                                                                             <span>One Page</span>
                                                                         </a>
                                                                     </div>
@@ -272,10 +194,10 @@
                                                                 <div class="homemenu-thumb mb-15">
                                                                     <img src="assets/img/header/home-4.jpg" alt="img">
                                                                     <div class="demo-button">
-                                                                        <a href="index-4.html" class="theme-btn">
+                                                                        <a href="index-4.php" class="theme-btn">
                                                                             <span>Multi Page</span>
                                                                         </a>
-                                                                        <a href="index-four-page.html" class="theme-btn">
+                                                                        <a href="index-four-page.php" class="theme-btn">
                                                                             <span>One Page</span>
                                                                         </a>
                                                                     </div>
@@ -291,16 +213,66 @@
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="#about">About Us</a>
+                                                <a href="about.php">About Us</a>
                                             </li>
                                             <li>
-                                                <a href="#clases">Classes</a>
+                                                <a href="program-details.php">
+                                                    Programs
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="program.php">Programs Grid</a></li>
+                                                    <li><a href="program-carousel.php">Programs Carousel</a></li>
+                                                    <li><a href="program-details.php">Programs Details</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="has-dropdown">
+                                                <a href="news.php">
+                                                    Pages
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li class="has-dropdown">
+                                                        <a href="event-details.php">
+                                                            Event
+                                                        <i class="fas fa-angle-down"></i>
+                                                        </a>
+                                                        <ul class="submenu">
+                                                                <li><a href="event.php">Event Grid</a></li>
+                                                            <li><a href="event-carousel.php">Event Carousel</a></li>
+                                                            <li><a href="event-details.php">Event Details</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="has-dropdown">
+                                                        <a href="team-details.php">
+                                                        Teacher
+                                                        <i class="fas fa-angle-down"></i>
+                                                        </a>
+                                                        <ul class="submenu">
+                                                            <li><a href="team.php">Our Teacher</a></li>
+                                                            <li><a href="team-carousel.php">Teacher Carousel</a></li>
+                                                            <li><a href="team-details.php">Teacher Details</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="pricing.php">Pricing</a></li>
+                                                    <li><a href="faq.php">Faq's</a></li>
+                                                    <li><a href="404.php">404 Page</a></li>
+                                                </ul>
                                             </li>
                                             <li>
-                                                <a href="#event">Events</a>
+                                                <a href="news.php">
+                                                    Blog
+                                                    <i class="fas fa-angle-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="news-grid.php">Blog Grid</a></li>
+                                                    <li><a href="news.php">Blog List</a></li>
+                                                    <li><a href="news-carousel.php">Blog Carousel</a></li>
+                                                    <li><a href="news-details.php">Blog Details</a></li>
+                                                </ul>
                                             </li>
                                             <li>
-                                                <a href="#blog">Blog</a>
+                                                <a href="contact.php">Contact Us</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -320,7 +292,7 @@
                                  </div>
                              </div>
                             <div class="header-button">
-                                <a href="contact.html" class="theme-btn">
+                                <a href="contact.php" class="theme-btn">
                                     <span>
                                         Book A visit
                                         <i class="fa-solid fa-arrow-right-long"></i>
@@ -371,11 +343,11 @@
                                                 Suspendisse eget lectus vitae elit malesuada lacinia Vestibulum <br> scelerisque, ligula sit amet consequat
                                             </p>
                                             <div class="hero-button">
-                                                <a href="about.html" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn hover-white">
+                                                <a href="about.php" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn hover-white">
                                                     Explore More
                                                     <i class="fa-solid fa-arrow-right-long"></i>
                                                 </a>
-                                                <a href="contact.html" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn transparent-2">
+                                                <a href="contact.php" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn transparent-2">
                                                     Get In Touch
                                                     <i class="fa-solid fa-arrow-right-long"></i>
                                                 </a>
@@ -415,11 +387,11 @@
                                                 Suspendisse eget lectus vitae elit malesuada lacinia Vestibulum <br> scelerisque, ligula sit amet consequat
                                             </p>
                                             <div class="hero-button">
-                                                <a href="about.html" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn hover-white">
+                                                <a href="about.php" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn hover-white">
                                                     Explore More
                                                     <i class="fa-solid fa-arrow-right-long"></i>
                                                 </a>
-                                                <a href="contact.html" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn transparent-2">
+                                                <a href="contact.php" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn transparent-2">
                                                     Get In Touch
                                                     <i class="fa-solid fa-arrow-right-long"></i>
                                                 </a>
@@ -459,11 +431,11 @@
                                                 Suspendisse eget lectus vitae elit malesuada lacinia Vestibulum <br> scelerisque, ligula sit amet consequat
                                             </p>
                                             <div class="hero-button">
-                                                <a href="about.html" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn hover-white">
+                                                <a href="about.php" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn hover-white">
                                                     Explore More
                                                     <i class="fa-solid fa-arrow-right-long"></i>
                                                 </a>
-                                                <a href="contact.html" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn transparent-2">
+                                                <a href="contact.php" data-animation="fadeInUp" data-delay="1.7s" class="theme-btn transparent-2">
                                                     Get In Touch
                                                     <i class="fa-solid fa-arrow-right-long"></i>
                                                 </a>
@@ -482,7 +454,7 @@
         </section>
 
         <!-- About Section Start -->
-        <section class="about-section-2 fix section-padding" id="about">
+        <section class="about-section-2 fix section-padding">
             <div class="left-shape">
                 <img src="assets/img/about/line-shape.png" alt="shape-img">
             </div>
@@ -565,7 +537,7 @@
         </section>
         
         <!-- Clases Section Start -->
-        <section class="clases-section section-padding bg-cover" style="background-image: url('assets/img/clases-bg.jpg');" id="clases">
+        <section class="clases-section section-padding bg-cover" style="background-image: url('assets/img/clases-bg.jpg');">
             <div class="clases-shape">
                 <div class="wave"></div>
                 <div class="wave"></div>
@@ -589,7 +561,7 @@
                                 </div>
                                 <div class="clases-content">
                                     <h4>
-                                        <a href="program-details.html">English Classes</a>
+                                        <a href="program-details.php">English Classes</a>
                                     </h4>
                                     <p>Nulla a auctor leo. Vestibulum viverra mattis arcu <br> nec viverra. Vivamus </p>
                                     <ul class="clases-schedule">
@@ -617,7 +589,7 @@
                                 </div>
                                 <div class="clases-content">
                                     <h4>
-                                        <a href="program-details.html">Tutoring Individual</a>
+                                        <a href="program-details.php">Tutoring Individual</a>
                                     </h4>
                                     <p>Nulla a auctor leo. Vestibulum viverra mattis arcu <br> nec viverra. Vivamus </p>
                                     <ul class="clases-schedule">
@@ -645,7 +617,7 @@
                                 </div>
                                 <div class="clases-content">
                                     <h4>
-                                        <a href="program-details.html">Tutoring Online</a>
+                                        <a href="program-details.php">Tutoring Online</a>
                                     </h4>
                                     <p>Nulla a auctor leo. Vestibulum viverra mattis arcu <br> nec viverra. Vivamus </p>
                                     <ul class="clases-schedule">
@@ -695,7 +667,7 @@
                                 </p>
                                 <div class="about-author wow fadeInUp" data-wow-delay=".3s">
                                     <div class="about-button">
-                                        <a href="contact.html" class="theme-btn">
+                                        <a href="contact.php" class="theme-btn">
                                             Book A visit <i class="fa-solid fa-arrow-right-long"></i>
                                         </a>
                                     </div>
@@ -863,7 +835,7 @@
                                             Pellentesque non massa sed elit 
                                         </li>
                                     </ul>
-                                    <a href="contact.html" class="theme-btn">
+                                    <a href="contact.php" class="theme-btn">
                                         Choose Plan <i class="fa-solid fa-arrow-right-long"></i>
                                     </a>
                                 </div>
@@ -902,7 +874,7 @@
                                             Pellentesque non massa sed elit 
                                         </li>
                                     </ul>
-                                    <a href="contact.html" class="theme-btn">
+                                    <a href="contact.php" class="theme-btn">
                                         Choose Plan <i class="fa-solid fa-arrow-right-long"></i>
                                     </a>
                                 </div>
@@ -941,7 +913,7 @@
                                             Pellentesque non massa sed elit 
                                         </li>
                                     </ul>
-                                    <a href="contact.html" class="theme-btn">
+                                    <a href="contact.php" class="theme-btn">
                                         Choose Plan <i class="fa-solid fa-arrow-right-long"></i>
                                     </a>
                                 </div>
@@ -984,7 +956,7 @@
                                             Pellentesque non massa sed elit 
                                         </li>
                                     </ul>
-                                    <a href="contact.html" class="theme-btn">
+                                    <a href="contact.php" class="theme-btn">
                                         Choose Plan <i class="fa-solid fa-arrow-right-long"></i>
                                     </a>
                                 </div>
@@ -1023,7 +995,7 @@
                                             Pellentesque non massa sed elit 
                                         </li>
                                     </ul>
-                                    <a href="contact.html" class="theme-btn">
+                                    <a href="contact.php" class="theme-btn">
                                         Choose Plan <i class="fa-solid fa-arrow-right-long"></i>
                                     </a>
                                 </div>
@@ -1062,7 +1034,7 @@
                                             Pellentesque non massa sed elit 
                                         </li>
                                     </ul>
-                                    <a href="contact.html" class="theme-btn">
+                                    <a href="contact.php" class="theme-btn">
                                         Choose Plan <i class="fa-solid fa-arrow-right-long"></i>
                                     </a>
                                 </div>
@@ -1145,7 +1117,7 @@
         </section>
 
         <!-- Event Section Start -->
-        <section class="event-section section-padding bg-cover" style="background-image: url('assets/img/event-bg.jpg');" id="event">
+        <section class="event-section section-padding bg-cover" style="background-image: url('assets/img/event-bg.jpg');">
             <div class="event-top-shape">
                 <div class="wave"></div>
                 <div class="wave"></div>
@@ -1181,10 +1153,10 @@
                                     </li>
                                 </ul>
                                 <h3>
-                                    <a href="event-details.html">Last Day of School end of Year Picnic</a>
+                                    <a href="event-details.php">Last Day of School end of Year Picnic</a>
                                 </h3>
                                 <div class="event-author">
-                                    <a href="event-details.html" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
+                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
                                     <div class="author-ratting">
                                         <span>(10 Review)</span>
                                         <div class="star">
@@ -1224,10 +1196,10 @@
                                     </li>
                                 </ul>
                                 <h3>
-                                    <a href="event-details.html">The complete web developer guideline 2024</a>
+                                    <a href="event-details.php">The complete web developer guideline 2024</a>
                                 </h3>
                                 <div class="event-author">
-                                    <a href="event-details.html" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
+                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
                                     <div class="author-ratting">
                                         <span>(10 Review)</span>
                                         <div class="star">
@@ -1267,10 +1239,10 @@
                                     </li>
                                 </ul>
                                 <h3>
-                                    <a href="event-details.html">Gathering & welcome speech marketing strategy</a>
+                                    <a href="event-details.php">Gathering & welcome speech marketing strategy</a>
                                 </h3>
                                 <div class="event-author">
-                                    <a href="event-details.html" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
+                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
                                     <div class="author-ratting">
                                         <span>(10 Review)</span>
                                         <div class="star">
@@ -1290,7 +1262,7 @@
         </section>
 
         <!-- News Section Start -->
-        <section class="news-section section-padding fix" id="blog">
+        <section class="news-section section-padding fix">
             <div class="plane-shape float-bob-y">
                 <img src="assets/img/plane.png" alt="shape-img">
             </div>
@@ -1323,7 +1295,7 @@
                                         </li>
                                     </ul>
                                     <h3>
-                                        <a href="news-details.html">
+                                        <a href="news-details.php">
                                             That jerk Form Finance <br>
                                             really threw me
                                         </a>
@@ -1362,7 +1334,7 @@
                                         </li>
                                     </ul>
                                     <h3>
-                                        <a href="news-details.html">
+                                        <a href="news-details.php">
                                             From without content <br>
                                             style without 
                                         </a>
@@ -1409,7 +1381,7 @@
                                 <span class="text-white wow fadeInUp">Get your quality</span>
                                 <h2 class="text-white wow fadeInUp" data-wow-delay=".3s">Skills certificate from  the Kidsa</h2>
                             </div>
-                            <a href="contact.html" class="theme-btn bg-white mt-4 mt-md-0 wow fadeInUp" data-wow-delay=".5s">Apply Now <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <a href="contact.php" class="theme-btn bg-white mt-4 mt-md-0 wow fadeInUp" data-wow-delay=".5s">Apply Now <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                         <div class="col-lg-6 wow fadeInUp" data-wow-delay=".4s">
                             <div class="cta-image-area">
@@ -1440,7 +1412,7 @@
                     <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".3s">
                         <div class="single-footer-widget">
                             <div class="widget-head">
-                                <a href="index.html">
+                                <a href="index.php">
                                     <img src="assets/img/logo/logo.svg" alt="logo-img">
                                 </a>
                             </div>
@@ -1454,7 +1426,7 @@
                                     <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
                                     <a href="#"><i class="fa-brands fa-youtube"></i></a>
                                 </div>
-                                <a href="contact.html" class="theme-btn">contact Us<i class="fa-solid fa-arrow-right-long"></i></a>
+                                <a href="contact.php" class="theme-btn">contact Us<i class="fa-solid fa-arrow-right-long"></i></a>
                             </div>
                         </div>
                     </div>
@@ -1465,25 +1437,25 @@
                             </div>
                             <ul class="list-area">
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Our Services
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="news-details.html">
+                                    <a href="news-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Our Blogs
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="faq.html">
+                                    <a href="faq.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         FAQ’S
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">
+                                    <a href="contact.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Contact Us
                                     </a>
@@ -1498,25 +1470,25 @@
                             </div>
                             <ul class="list-area">
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Music Learning
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Sports, Games
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Science Class
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Drawing
                                     </a>
@@ -1550,16 +1522,16 @@
             <div class="container">
                 <div class="footer-wrapper d-flex align-items-center justify-content-between">
                     <p class="wow fadeInLeft color-2" data-wow-delay=".3s">
-                        © All Copyright 2024 by <a href="index.html">Kidsa</a>
+                        © All Copyright 2024 by <a href="index.php">Kidsa</a>
                     </p>
                     <ul class="footer-menu wow fadeInRight" data-wow-delay=".5s">
                         <li>
-                            <a href="contact.html">
+                            <a href="contact.php">
                                 Terms & Condition
                             </a>
                         </li>
                         <li>
-                            <a href="contact.html">
+                            <a href="contact.php">
                                 Privacy Policy
                             </a>
                         </li>
@@ -1572,27 +1544,6 @@
         </div>
         </footer>
 
-        <!--<< All JS Plugins >>-->
-        <script src="assets/js/jquery-3.7.1.min.js"></script>
-        <!--<< Viewport Js >>-->
-        <script src="assets/js/viewport.jquery.js"></script>
-        <!--<< Bootstrap Js >>-->
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        <!--<< Nice Select Js >>-->
-        <script src="assets/js/jquery.nice-select.min.js"></script>
-        <!--<< Waypoints Js >>-->
-        <script src="assets/js/jquery.waypoints.js"></script>
-        <!--<< Counterup Js >>-->
-        <script src="assets/js/jquery.counterup.min.js"></script>
-        <!--<< Swiper Slider Js >>-->
-        <script src="assets/js/swiper-bundle.min.js"></script>
-        <!--<< MeanMenu Js >>-->
-        <script src="assets/js/jquery.meanmenu.min.js"></script>
-        <!--<< Magnific Popup Js >>-->
-        <script src="assets/js/jquery.magnific-popup.min.js"></script>
-        <!--<< Wow Animation Js >>-->
-        <script src="assets/js/wow.min.js"></script>
-        <!--<< Main.js >>-->
-        <script src="assets/js/main.js"></script>
+        <?php include "include/script.php" ?>
     </body>
 </html>

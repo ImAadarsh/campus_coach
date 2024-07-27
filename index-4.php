@@ -3,397 +3,21 @@
     <!--<< Header Area >>-->
     <head>
         <!-- ========== Meta Tags ========== -->
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="gramentheme">
-        <meta name="description" content="Kidsa - Kindergarten School HTML Template">
+                <?php include "include/meta.php" ?>
         <!-- ======== Page title ============ -->
         <title>Campus Coach | India's Largest In-School Career Mentoring Program for 11th & 12th Grade Students</title>
-        <!--<< Favcion >>-->
-        <link rel="shortcut icon" href="assets/img/favicon.svg">
-        <!--<< Bootstrap min.css >>-->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <!--<< All Min Css >>-->
-        <link rel="stylesheet" href="assets/css/all.min.css">
-        <!--<< Animate.css >>-->
-        <link rel="stylesheet" href="assets/css/animate.css">
-        <!--<< Magnific Popup.css >>-->
-        <link rel="stylesheet" href="assets/css/magnific-popup.css">
-        <!--<< MeanMenu.css >>-->
-        <link rel="stylesheet" href="assets/css/meanmenu.css">
-        <!--<< Swiper Bundle.css >>-->
-        <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-        <!--<< Nice Select.css >>-->
-        <link rel="stylesheet" href="assets/css/nice-select.css">
-        <!--<< Main.css >>-->
-        <link rel="stylesheet" href="assets/css/main.css">
+        
     </head>
     <body>
 
         <!-- Preloader Start -->
-        <div id="preloader" class="preloader">
-             <div class="animation-preloader">
-                <div class="spinner">                
-                </div>
-                <div class="txt-loading">
-                    <span data-text-preloader="K" class="letters-loading">
-                        C
-                    </span>
-                    <span data-text-preloader="I" class="letters-loading">
-                        A
-                    </span>
-                    <span data-text-preloader="D" class="letters-loading">
-                        M
-                    </span>
-                    <span data-text-preloader="S" class="letters-loading">
-                        P
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        U
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        S
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        C
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        O
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        A
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        C
-                    </span>
-                    <span data-text-preloader="A" class="letters-loading">
-                        H
-                    </span>
-                </div>
-                <p class="text-center">Campus Coach</p>
-            </div>
-            <div class="loader">
-                <div class="row">
-                    <div class="col-3 loader-section section-left">
-                        <div class="bg"></div>
-                    </div>
-                    <div class="col-3 loader-section section-left">
-                        <div class="bg"></div>
-                    </div>
-                    <div class="col-3 loader-section section-right">
-                        <div class="bg"></div>
-                    </div>
-                    <div class="col-3 loader-section section-right">
-                        <div class="bg"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+           <?php include "include/loader.php" ?>
 
         <!-- Offcanvas Area Start -->
-        <div class="fix-area">
-            <div class="offcanvas__info">
-                <div class="offcanvas__wrapper">
-                    <div class="offcanvas__content">
-                        <div class="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
-                            <div class="offcanvas__logo">
-                                <a href="index.html">
-                                    <img src="assets/img/logo/logo.svg" alt="logo-img">
-                                </a>
-                            </div>
-                            <div class="offcanvas__close">
-                                <button>
-                                <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <p class="text d-none d-xl-block">
-                            Nullam dignissim, ante scelerisque the  is euismod fermentum odio sem semper the is erat, a feugiat leo urna eget eros. Duis Aenean a imperdiet risus.
-                        </p>
-                        <div class="mobile-menu fix mb-3"></div>
-                        <div class="offcanvas__contact">
-                            <h4>Contact Info</h4>
-                            <ul>
-                                <li class="d-flex align-items-center">
-                                    <div class="offcanvas__contact-icon">
-                                        <i class="fal fa-map-marker-alt"></i>
-                                    </div>
-                                    <div class="offcanvas__contact-text">
-                                        <a target="_blank" href="#">Main Street, Melbourne, Australia</a>
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <div class="offcanvas__contact-icon mr-15">
-                                        <i class="fal fa-envelope"></i>
-                                    </div>
-                                    <div class="offcanvas__contact-text">
-                                        <a href="mailto:info@campuscoach.in"><span class="mailto:info@campuscoach.in">info@campuscoach.in</span></a>
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <div class="offcanvas__contact-icon mr-15">
-                                        <i class="fal fa-clock"></i>
-                                    </div>
-                                    <div class="offcanvas__contact-text">
-                                        <a target="_blank" href="#">Mod-friday, 09am -05pm</a>
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <div class="offcanvas__contact-icon mr-15">
-                                        <i class="far fa-phone"></i>
-                                    </div>
-                                    <div class="offcanvas__contact-text">
-                                        <a href="tel:+11002345909">+11002345909</a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="header-button mt-4">
-                                <a href="contact.html" class="theme-btn text-center">
-                                    <span>Get A Quote<i class="fa-solid fa-arrow-right-long"></i></span>
-                                </a>
-                            </div>
-                            <div class="social-icon d-flex align-items-center">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-youtube"></i></a>
-                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="offcanvas__overlay"></div>
+  <?php include "include/canvas.php" ?>
 
         <!-- Header Top Section Start -->
-        <div class="header-top-section-4">
-            <div class="header-top-shape">
-                <img src="assets/img/header-top-shape-2.png" alt="shape-img">
-            </div>
-            <div class="container">
-                <div class="header-top-wrapper style-2">
-                    <ul class="contact-list">
-                        <li>
-                            <i class="fal fa-map-marker-alt"></i>
-                            6391 Elgin St. Celina, USA
-                        </li>
-                        <li>
-                            <i class="far fa-envelope"></i>
-                            <a href="mailto:info@campuscoach.in" class="link">info@campuscoach.in</a>
-                        </li>
-                    </ul>
-                    <div class="social-icon d-flex align-items-center">
-                        <span>Follow Us On:</span>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Header Section Start -->
-        <header id="header-sticky" class="header-4">
-            <div class="container">
-                <div class="mega-menu-wrapper">
-                    <div class="header-main style-2">
-                        <div class="header-left">
-                            <div class="logo">
-                                <a href="index.html" class="header-logo">
-                                    <img src="assets/img/logo/logo.svg" alt="logo-img">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="header-right d-flex justify-content-end align-items-center">
-                            <div class="mean__menu-wrapper">
-                                <div class="main-menu">
-                                    <nav id="mobile-menu">
-                                        <ul>
-                                            <li class="has-dropdown active menu-thumb">
-                                                <a href="index.html">
-                                                Home 
-                                                <i class="fas fa-angle-down"></i>
-                                                </a>
-                                                <ul class="submenu has-homemenu">
-                                                    <li>
-                                                        <div class="homemenu-items">
-                                                            <div class="homemenu">
-                                                                <div class="homemenu-thumb">
-                                                                    <img src="assets/img/header/home-1.jpg" alt="img">
-                                                                    <div class="demo-button">
-                                                                        <a href="index.html" class="theme-btn">
-                                                                            <span>Multi Page</span>
-                                                                        </a>
-                                                                        <a href="index-one-page.html" class="theme-btn">
-                                                                            <span>One Page</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="homemenu-content text-center">
-                                                                    <h4 class="homemenu-title">
-                                                                        Home 01
-                                                                    </h4>
-                                                                </div>
-                                                            </div>
-                                                            <div class="homemenu">
-                                                                <div class="homemenu-thumb mb-15">
-                                                                    <img src="assets/img/header/home-2.jpg" alt="img">
-                                                                    <div class="demo-button">
-                                                                        <a href="index-2.html" class="theme-btn">
-                                                                            <span>Multi Page</span>
-                                                                        </a>
-                                                                        <a href="index-two-page.html" class="theme-btn">
-                                                                            <span>One Page</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="homemenu-content text-center">
-                                                                    <h4 class="homemenu-title">
-                                                                        Home 02
-                                                                    </h4>
-                                                                </div>
-                                                            </div>
-                                                            <div class="homemenu">
-                                                                <div class="homemenu-thumb mb-15">
-                                                                    <img src="assets/img/header/home-3.jpg" alt="img">
-                                                                    <div class="demo-button">
-                                                                        <a href="index-3.html" class="theme-btn">
-                                                                            <span>Multi Page</span>
-                                                                        </a>
-                                                                        <a href="index-three-page.html" class="theme-btn">
-                                                                            <span>One Page</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="homemenu-content text-center">
-                                                                    <h4 class="homemenu-title">
-                                                                        Home 03
-                                                                    </h4>
-                                                                </div>
-                                                            </div>
-                                                            <div class="homemenu">
-                                                                <div class="homemenu-thumb mb-15">
-                                                                    <img src="assets/img/header/home-4.jpg" alt="img">
-                                                                    <div class="demo-button">
-                                                                        <a href="index-4.html" class="theme-btn">
-                                                                            <span>Multi Page</span>
-                                                                        </a>
-                                                                        <a href="index-four-page.html" class="theme-btn">
-                                                                            <span>One Page</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="homemenu-content text-center">
-                                                                    <h4 class="homemenu-title">
-                                                                        Home 04
-                                                                    </h4>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="about.html">About Us</a>
-                                            </li>
-                                            <li>
-                                                <a href="program-details.html">
-                                                    Programs
-                                                    <i class="fas fa-angle-down"></i>
-                                                </a>
-                                                <ul class="submenu">
-                                                    <li><a href="program.html">Programs Grid</a></li>
-                                                    <li><a href="program-carousel.html">Programs Carousel</a></li>
-                                                    <li><a href="program-details.html">Programs Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-dropdown">
-                                                <a href="news.html">
-                                                    Pages
-                                                    <i class="fas fa-angle-down"></i>
-                                                </a>
-                                                <ul class="submenu">
-                                                    <li class="has-dropdown">
-                                                        <a href="event-details.html">
-                                                            Event
-                                                        <i class="fas fa-angle-down"></i>
-                                                        </a>
-                                                        <ul class="submenu">
-                                                                <li><a href="event.html">Event Grid</a></li>
-                                                            <li><a href="event-carousel.html">Event Carousel</a></li>
-                                                            <li><a href="event-details.html">Event Details</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li class="has-dropdown">
-                                                        <a href="team-details.html">
-                                                        Teacher
-                                                        <i class="fas fa-angle-down"></i>
-                                                        </a>
-                                                        <ul class="submenu">
-                                                            <li><a href="team.html">Our Teacher</a></li>
-                                                            <li><a href="team-carousel.html">Teacher Carousel</a></li>
-                                                            <li><a href="team-details.html">Teacher Details</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="pricing.html">Pricing</a></li>
-                                                    <li><a href="faq.html">Faq's</a></li>
-                                                    <li><a href="404.html">404 Page</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="news.html">
-                                                    Blog
-                                                    <i class="fas fa-angle-down"></i>
-                                                </a>
-                                                <ul class="submenu">
-                                                    <li><a href="news-grid.html">Blog Grid</a></li>
-                                                    <li><a href="news.html">Blog List</a></li>
-                                                    <li><a href="news-carousel.html">Blog Carousel</a></li>
-                                                    <li><a href="news-details.html">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="contact.html">Contact Us</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <a href="#0" class="search-trigger search-icon"><i class="fal fa-search"></i></a>
-                            <div class="header-button">
-                                <a href="contact.html" class="theme-btn">
-                                    <span>
-                                        Book A visit
-                                        <i class="fa-solid fa-arrow-right-long"></i>
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="header__hamburger d-xl-none my-auto">
-                                <div class="sidebar__toggle">
-                                    <i class="fas fa-bars"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Search Area Start -->
-        <div class="search-wrap">
-            <div class="search-inner">
-                <i class="fas fa-times search-close" id="search-close"></i>
-                <div class="search-cell">
-                    <form method="get">
-                        <div class="search-field-holder">
-                            <input type="search" class="main-search-input" placeholder="Search...">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                <?php include "include/header_sub.php" ?>
 
         <!-- Hero Section Start -->
         <section class="hero-section hero-4 bg-cover fix" style="background-image: url('assets/img/hero/hero-4-bg.jpg');">
@@ -429,10 +53,10 @@
                             </h1>
                             <p class="wow fadeInUp" data-wow-delay=".5s">Suspendisse eget lectus vitae elit malesuada lacinia Vestibulum <br> scelerisque, ligula sit amet consequat</p>
                             <div class="hero-button">
-                                <a href="index-4.html" class="theme-btn wow fadeInUp" data-wow-delay=".7s">
+                                <a href="index-4.php" class="theme-btn wow fadeInUp" data-wow-delay=".7s">
                                     Explore More <i class="fa-solid fa-arrow-right-long"></i>
                                 </a>
-                                <a href="contact.html" class="theme-btn transparent wow fadeInUp" data-wow-delay=".8s">
+                                <a href="contact.php" class="theme-btn transparent wow fadeInUp" data-wow-delay=".8s">
                                     Get In Touch <i class="fa-solid fa-arrow-right-long"></i>
                                 </a>
                             </div>
@@ -550,7 +174,7 @@
                                 </ul>
                                 <div class="about-author">
                                     <div class="about-button wow fadeInUp" data-wow-delay=".3s">
-                                        <a href="about.html" class="theme-btn">
+                                        <a href="about.php" class="theme-btn">
                                             Explore More <i class="fa-solid fa-arrow-right-long"></i>
                                         </a>
                                     </div>
@@ -645,13 +269,13 @@
                             </div>
                             <div class="program-content text-center">
                                 <h4>
-                                    <a href="program-details.html">Kindergarten</a>
+                                    <a href="program-details.php">Kindergarten</a>
                                 </h4>
                                 <span>(4-5 years)</span>
                                 <p>
                                     Lorem ipsum dolor consectur the <br> adipiscing elit eiusmod.
                                 </p>
-                                <a href="program-details.html" class="arrow-icon">
+                                <a href="program-details.php" class="arrow-icon">
                                     <i class="fa-solid fa-arrow-right-long"></i>
                                 </a>
                             </div>
@@ -665,13 +289,13 @@
                             </div>
                             <div class="program-content text-center">
                                 <h4>
-                                    <a href="program-details.html">Chemistry Class</a>
+                                    <a href="program-details.php">Chemistry Class</a>
                                 </h4>
                                 <span>(1-2 years)</span>
                                 <p>
                                     Lorem ipsum dolor consectur the <br> adipiscing elit eiusmod.
                                 </p>
-                                <a href="program-details.html" class="arrow-icon color-2">
+                                <a href="program-details.php" class="arrow-icon color-2">
                                     <i class="fa-solid fa-arrow-right-long"></i>
                                 </a>
                             </div>
@@ -685,13 +309,13 @@
                             </div>
                             <div class="program-content text-center style-2">
                                 <h4>
-                                    <a href="program-details.html">Drawing Class</a>
+                                    <a href="program-details.php">Drawing Class</a>
                                 </h4>
                                 <span>(1-2 years)</span>
                                 <p>
                                     Lorem ipsum dolor consectur the <br> adipiscing elit eiusmod.
                                 </p>
-                                <a href="program-details.html" class="arrow-icon">
+                                <a href="program-details.php" class="arrow-icon">
                                     <i class="fa-solid fa-arrow-right-long"></i>
                                 </a>
                             </div>
@@ -782,7 +406,7 @@
                                 </div>
                                 <div class="team-content">
                                     <h3>
-                                        <a href="team-details.html">Brooklyn Simmons</a>
+                                        <a href="team-details.php">Brooklyn Simmons</a>
                                     </h3>
                                     <p>Instructors</p>
                                 </div>
@@ -806,7 +430,7 @@
                                 </div>
                                 <div class="team-content">
                                     <h3>
-                                        <a href="team-details.html">Leslie Alexander</a>
+                                        <a href="team-details.php">Leslie Alexander</a>
                                     </h3>
                                     <p>Instructors</p>
                                 </div>
@@ -830,7 +454,7 @@
                                 </div>
                                 <div class="team-content">
                                     <h3>
-                                        <a href="team-details.html">Ronald Richards</a>
+                                        <a href="team-details.php">Ronald Richards</a>
                                     </h3>
                                     <p>Instructors</p>
                                 </div>
@@ -854,7 +478,7 @@
                                 </div>
                                 <div class="team-content">
                                     <h3>
-                                        <a href="team-details.html">Kristin Watson</a>
+                                        <a href="team-details.php">Kristin Watson</a>
                                     </h3>
                                     <p>Instructors</p>
                                 </div>
@@ -884,7 +508,7 @@
                                 <span class="text-white wow fadeInUp" data-wow-delay=".3s">Special Offer</span>
                                 <h2 class="text-white wow fadeInUp" data-wow-delay=".5s">Learn to Play, Converse <br> with Confidence.</h2>
                             </div>
-                            <a href="contact.html" class="theme-btn bg-white mt-5 wow fadeInUp" data-wow-delay=".7s">
+                            <a href="contact.php" class="theme-btn bg-white mt-5 wow fadeInUp" data-wow-delay=".7s">
                                 Apply Now <i class="fa-solid fa-arrow-right-long"></i>
                             </a>
                         </div>
@@ -967,7 +591,7 @@
                         <span class="wow fadeInUp">Our Blogs</span>
                         <h2 class="wow fadeInUp" data-wow-delay=".3s">Explore blogs and news</h2>
                     </div>
-                    <a href="news.html" class="theme-btn wow fadeInUp" data-wow-delay=".5s">
+                    <a href="news.php" class="theme-btn wow fadeInUp" data-wow-delay=".5s">
                         See All Article <i class="fa-solid fa-arrow-right-long"></i>
                     </a>
                 </div>
@@ -995,7 +619,7 @@
                                         </li>
                                     </ul>
                                     <h3>
-                                        <a href="news-details.html">Questions to Ask Vendors Before Choosing an <br> LMS Platform</a>
+                                        <a href="news-details.php">Questions to Ask Vendors Before Choosing an <br> LMS Platform</a>
                                     </h3>
                                     <p>
                                         Phasellus turpis sapien, venenatis tempus vestibulum in, cursus quis enim. Nunc mollis vitae ipsum sit amet ultrices. Duis in dapibus erat
@@ -1010,7 +634,7 @@
                                                 <h6>Ronald Richards</h6>
                                             </div>
                                         </div>
-                                        <a href="news-details.html" class="theme-btn">
+                                        <a href="news-details.php" class="theme-btn">
                                             Read More <i class="fa-solid fa-arrow-right-long"></i>
                                         </a>
                                     </div>
@@ -1039,7 +663,7 @@
                                         </li>
                                     </ul>
                                     <h3>
-                                        <a href="news-details.html">
+                                        <a href="news-details.php">
                                             That jerk Form Finance <br>
                                             really threw me
                                         </a>
@@ -1076,7 +700,7 @@
                                         </li>
                                     </ul>
                                     <h3>
-                                        <a href="news-details.html">
+                                        <a href="news-details.php">
                                             From without content <br>
                                             style without 
                                         </a>
@@ -1150,7 +774,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-6 pe-md-5 wow fadeInUp" data-wow-delay=".3s">
                         <div class="single-footer-widget">
                             <div class="widget-head">
-                                <a href="index.html">
+                                <a href="index.php">
                                     <img src="assets/img/logo/logo.svg" alt="logo-img">
                                 </a>
                             </div>
@@ -1178,25 +802,25 @@
                             </div>
                             <ul class="list-area">
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Our Services
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="news-details.html">
+                                    <a href="news-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Our Blogs
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="faq.html">
+                                    <a href="faq.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         FAQ’S
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="contact.html">
+                                    <a href="contact.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Contact Us
                                     </a>
@@ -1211,25 +835,25 @@
                             </div>
                             <ul class="list-area">
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Music Learning
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Sports, Games
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Science Class
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="program-details.html">
+                                    <a href="program-details.php">
                                         <i class="fa-solid fa-chevron-right"></i>
                                         Drawing
                                     </a>
@@ -1246,7 +870,7 @@
                                 <ul class="contact-info">
                                     <li>
                                         <i class="fas fa-map-marker-alt"></i>
-                                        6391 Elgin St. Celina, USA
+                                       Raj Palace, Navi Mumbai- 400709
                                     </li>
                                     <li>
                                         <i class="fa-solid fa-phone-volume"></i>
@@ -1257,7 +881,7 @@
                                         <a href="mailto:info@campuscoach.in">info@campuscoach.in</a>
                                     </li>
                                 </ul>
-                                <a href="contact.html" class="theme-btn mt-4">
+                                <a href="contact.php" class="theme-btn mt-4">
                                     contact Us <i class="fa-solid fa-arrow-right-long"></i>
                                 </a>
                             </div>
@@ -1273,16 +897,16 @@
             <div class="container">
                 <div class="footer-wrapper d-flex align-items-center justify-content-between">
                     <p class="wow fadeInLeft color-2" data-wow-delay=".3s">
-                        © All Copyright 2024 by <a href="index.html">Kidsa</a>
+                        © All Copyright 2024 by <a href="index.php">Kidsa</a>
                     </p>
                     <ul class="footer-menu wow fadeInRight" data-wow-delay=".5s">
                         <li>
-                            <a href="contact.html">
+                            <a href="contact.php">
                                 Terms & Condition
                             </a>
                         </li>
                         <li>
-                            <a href="contact.html">
+                            <a href="contact.php">
                                 Privacy Policy
                             </a>
                         </li>
@@ -1295,27 +919,6 @@
         </div>
         </footer>
 
-        <!--<< All JS Plugins >>-->
-        <script src="assets/js/jquery-3.7.1.min.js"></script>
-        <!--<< Viewport Js >>-->
-        <script src="assets/js/viewport.jquery.js"></script>
-        <!--<< Bootstrap Js >>-->
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        <!--<< Nice Select Js >>-->
-        <script src="assets/js/jquery.nice-select.min.js"></script>
-        <!--<< Waypoints Js >>-->
-        <script src="assets/js/jquery.waypoints.js"></script>
-        <!--<< Counterup Js >>-->
-        <script src="assets/js/jquery.counterup.min.js"></script>
-        <!--<< Swiper Slider Js >>-->
-        <script src="assets/js/swiper-bundle.min.js"></script>
-        <!--<< MeanMenu Js >>-->
-        <script src="assets/js/jquery.meanmenu.min.js"></script>
-        <!--<< Magnific Popup Js >>-->
-        <script src="assets/js/jquery.magnific-popup.min.js"></script>
-        <!--<< Wow Animation Js >>-->
-        <script src="assets/js/wow.min.js"></script>
-        <!--<< Main.js >>-->
-        <script src="assets/js/main.js"></script>
+        <?php include "include/script.php" ?>
     </body>
 </html>
