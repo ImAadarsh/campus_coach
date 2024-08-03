@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="hero-image wow fadeInUp" data-wow-delay=".4s">
-                        <img src="assets/img/hero/01.png" alt="hero-img">
+                        <img src="assets/img/hero/main.png" alt="hero-img">
                         <div class="hero-shape">
                             <img src="assets/img/hero/hero-shape.png" alt="shape-img">
                         </div>
@@ -96,10 +96,10 @@
                 <div class="row g-4">
                     <div class="col-lg-6">
                         <div class="about-image wow fadeInUp" data-wow-delay=".3s">
-                            <img src="assets/img/about/01.png" alt="about-img">
-                            <div class="about-image-2">
+                            <img src="assets/img/custom/cc_about_1.svg" alt="about-img">
+                            <!-- <div class="about-image-2">
                                 <img src="assets/img/about/02.png" alt="about-img">
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -330,7 +330,7 @@
                 <div class="row g-4">
                     <div class="col-lg-6 wow fadeInUp" data-wow-delay=".4s">
                         <div class="activities-image">
-                            <img src="assets/img/about/03.png" alt="img">
+                            <img src="assets/img/custom/about_main.png" alt="img">
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -623,7 +623,7 @@
                     </div>
                     <div class="col-lg-5 wow fadeInUp" data-wow-delay=".4s">
                         <div class="cta-image">
-                            <img src="assets/img/cta/cta-1.png" alt="cta-img">
+                            <img src="assets/img/custom/about_child.png" alt="cta-img">
                             <div class="cta-shape">
                                 <img src="assets/img/cta/cta-shape.png" alt="img">
                             </div>

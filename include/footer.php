@@ -68,9 +68,7 @@
                                 </div>
                                 <div class="footer-content">
                                     <p>
-                                        Phasellus ultricies aliquam volutpat 
-                                        ullamcorper laoreet neque, a lacinia
-                                        curabitur lacinia mollis
+                                    Campus Coach | India's Largest In-School Career Mentoring Program for 11th & 12th Grade Students
                                     </p>
                                     <div class="social-icon d-flex align-items-center">
                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
