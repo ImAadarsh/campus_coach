@@ -188,7 +188,7 @@
                     <div class="program-box-items">
                         <div class="program-bg"></div>
                         <div class="program-image">
-                            <img src="assets/img/program/01.png" alt="img">
+                            <img src="assets/img/custom/1.svg" alt="img">
                         </div>
                         <div class="program-content text-center">
                             <h4>
@@ -208,7 +208,7 @@
                     <div class="program-box-items">
                         <div class="program-bg bg-2"></div>
                         <div class="program-image">
-                            <img src="assets/img/program/02.png" alt="img">
+                            <img src="assets/img/custom/2.svg" alt="img">
                         </div>
                         <div class="program-content text-center">
                             <h4>
@@ -228,7 +228,7 @@
                     <div class="program-box-items">
                         <div class="program-bg bg-3"></div>
                         <div class="program-image">
-                            <img src="assets/img/program/01.png" alt="img">
+                            <img src="assets/img/custom/3.svg" alt="img">
                         </div>
                         <div class="program-content text-center style-2">
                             <h4>
