@@ -1,3 +1,21 @@
+<?php
+include ("../include/private_page.php");
+include ("../include/connect.php");
+
+// Get all reviews for the current user
+$reviews_sql = "SELECT tr.*, t.first_name, t.last_name, t.hero_img, b.id as booking_id
+                FROM trainer_reviews tr
+                JOIN bookings b ON tr.booking_id = b.id
+                JOIN time_slots ts ON b.time_slot_id = ts.id
+                JOIN trainer_availabilities ta ON ts.trainer_availability_id = ta.id
+                JOIN trainers t ON ta.trainer_id = t.id
+                WHERE tr.user_id = " . $_SESSION['userid'] . "
+                ORDER BY tr.created_at DESC";
+
+$reviews_result = mysqli_query($connect, $reviews_sql);
+$reviews = mysqli_fetch_all($reviews_result, MYSQLI_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,21 +51,10 @@
 				<?php include "include/header.php" ?>
 				<!-- End Header -->
 
-				<h2 class="main-title d-block d-lg-none">Reviews</h2>
+				<h2 class="main-title d-block d-lg-none">My Reviews</h2>
 
                 <div class="d-sm-flex align-items-center justify-content-between mb-25">
-                    <div class="fs-16">Showing <span class="color-dark fw-500">1–5</span> of <span class="color-dark fw-500">40</span> results</div>
-                    <div class="d-flex ms-auto xs-mt-30">
-                        <div class="short-filter d-flex align-items-center ms-sm-auto">
-                            <div class="fs-16 me-2">Short by:</div>
-                            <select class="nice-select">
-                                <option value="0">Newest</option>
-                                <option value="1">Best Rating</option>
-                                <option value="3">Rating Low</option>
-                                <option value="4">Rating High</option>
-                            </select>
-                        </div>
-                    </div>
+                    <div class="fs-16">Showing <span class="color-dark fw-500">1–<?php echo count($reviews); ?></span> of <span class="color-dark fw-500"><?php echo count($reviews); ?></span> reviews</div>
                 </div>
 
 				<div class="bg-white card-box pt-0 border-20">
@@ -55,184 +62,84 @@
                         <div class="review-panel-one">
 							<div class="position-relative z-1">
 								<div class="review-wrapper">
-									<div class="review">
-										<img src="../images/media/img_01.jpg" alt="" class="rounded-circle avatar">
-										<div class="text">
-											<div class="d-sm-flex justify-content-between">
-												<div>
-													<h6 class="name">Zubayer Al Hasan</h6>
-													<div class="time fs-16">17 Aug, 23</div>
-												</div>
-												<ul class="rating style-none d-flex xs-mt-10">
-													<li><span class="fst-italic me-2">(4.7 Rating)</span> </li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-												</ul>
-											</div>
-											<p class="fs-20 mt-20 mb-30">Lorem ipsum dolor sit amet consectetur. Pellentesque sed nulla facili diam posuere aliquam suscipit quam.</p>
-											<div class="d-flex review-help-btn">
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-thumbs-up"></i> <span>Helpful</span></a>
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-flag-swallowtail"></i> <span>Flag</span></a>
-                                                <a href="#"><i class="fa-sharp fa-regular fa-reply"></i> <span>Reply</span></a>
-											</div>
-										</div>
-										<!-- /.text -->
-									</div>
-									<!-- /.review -->
-
-									<div class="review">
-										<img src="../images/media/img_03.jpg" alt="" class="rounded-circle avatar">
-										<div class="text">
-											<div class="d-sm-flex justify-content-between">
-												<div>
-													<h6 class="name">Rashed Kabir</h6>
-													<div class="time fs-16">13 Jun, 23</div>
-												</div>
-												<ul class="rating style-none d-flex xs-mt-10">
-													<li><span class="fst-italic me-2">(4.9 Rating)</span> </li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-												</ul>
-											</div>
-											<p class="fs-20 mt-20 mb-30">Lorem ipsum dolor sit amet consectetur. Pellentesque sed nulla facili diam posuere aliquam suscipit quam.</p>
-											<ul class="style-none d-flex flex-wrap review-gallery pb-30">
-												<li><a href="../images/listing/img_large_01.jpg" class="d-block" data-fancybox="revImg" data-caption="Duplex orkit villa"><img src="../images/listing/img_48.jpg" alt=""></a></li>
-												<li><a href="../images/listing/img_large_02.jpg" class="d-block" data-fancybox="revImg" data-caption="Duplex orkit villa"><img src="../images/listing/img_49.jpg" alt=""></a></li>
-												<li><a href="../images/listing/img_large_03.jpg" class="d-block" data-fancybox="revImg" data-caption="Duplex orkit villa"><img src="../images/listing/img_50.jpg" alt=""></a></li>
-												<li>
-													<div class="position-relative more-img">
-														<img src="../images/listing/img_50.jpg" alt="">
-														<span>13+</span>
-														<a href="../images/listing/img_large_04.jpg" class="d-block" data-fancybox="revImg" data-caption="Duplex orkit villa."></a>
-														<a href="../images/listing/img_large_05.jpg" class="d-block" data-fancybox="revImg" data-caption="Duplex orkit villa."></a>
-														<a href="../images/listing/img_large_06.jpg" class="d-block" data-fancybox="revImg" data-caption="Duplex orkit villa."></a>
-													</div>
-												</li>
-											</ul>
-											<div class="d-flex review-help-btn">
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-thumbs-up"></i> <span>Helpful</span></a>
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-flag-swallowtail"></i> <span>Flag</span></a>
-                                                <a href="#"><i class="fa-sharp fa-regular fa-reply"></i> <span>Reply</span></a>
-											</div>
-											
-										</div>
-										<!-- /.text -->
-									</div>
-									<!-- /.review -->
-
-									<div class="review">
-										<img src="../images/media/img_02.jpg" alt="" class="rounded-circle avatar">
-										<div class="text">
-											<div class="d-sm-flex justify-content-between">
-												<div>
-													<h6 class="name">Perty Jinta</h6>
-													<div class="time fs-16">17 Aug, 23</div>
-												</div>
-												<ul class="rating style-none d-flex xs-mt-10">
-													<li><span class="fst-italic me-2">(4.7 Rating)</span> </li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-												</ul>
-											</div>
-											<p class="fs-20 mt-20 mb-30">Lorem ipsum dolor sit amet consectetur. Amet amet id cursus dignissim. Eget vitae amet tempus sit mattis. Semper integer condimentum nunc augue aliquet quam a tincidunt.</p>
-											<div class="d-flex review-help-btn">
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-thumbs-up"></i> <span>Helpful</span></a>
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-flag-swallowtail"></i> <span>Flag</span></a>
-                                                <a href="#"><i class="fa-sharp fa-regular fa-reply"></i> <span>Reply</span></a>
-											</div>
-										</div>
-										<!-- /.text -->
-									</div>
-									<!-- /.review -->
-
-                                    <div class="review border-0 pb-0">
-										<img src="../images/media/img_01.jpg" alt="" class="rounded-circle avatar">
-										<div class="text">
-											<div class="d-sm-flex justify-content-between">
-												<div>
-													<h6 class="name">Milon Ahmed</h6>
-													<div class="time fs-16">7 Jan, 23</div>
-												</div>
-												<ul class="rating style-none d-flex xs-mt-10">
-													<li><span class="fst-italic me-2">(4.7 Rating)</span> </li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-													<li><i class="fa-sharp fa-solid fa-star"></i></li>
-												</ul>
-											</div>
-											<p class="fs-20 mt-20 mb-30">Lorem ipsum dolor sit amet consectetur. Pellentesque sed nulla facili diam posuere aliquam suscipit quam.</p>
-											<div class="d-flex review-help-btn">
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-thumbs-up"></i> <span>Helpful</span></a>
-												<a href="#" class="me-5"><i class="fa-sharp fa-regular fa-flag-swallowtail"></i> <span>Flag</span></a>
-                                                <a href="#"><i class="fa-sharp fa-regular fa-reply"></i> <span>Reply</span></a>
-											</div>
-										</div>
-										<!-- /.text -->
-									</div>
-									<!-- /.review -->
+                                    <?php if(empty($reviews)): ?>
+                                        <div class="alert alert-info">
+                                            <i class="bi bi-info-circle me-2"></i> You haven't written any reviews yet.
+                                        </div>
+                                    <?php else: ?>
+                                        <?php foreach($reviews as $review): ?>
+                                            <div class="review" id="review-<?php echo $review['id']; ?>">
+                                                <img src="<?php echo $uri . $review['hero_img']; ?>" alt="" class="rounded-circle avatar">
+                                                <div class="text">
+                                                    <div class="d-sm-flex justify-content-between">
+                                                        <div>
+                                                            <h6 class="name"><?php echo htmlspecialchars($review['first_name'] . ' ' . $review['last_name']); ?></h6>
+                                                            <div class="time fs-16"><?php echo date('d M, Y', strtotime($review['created_at'])); ?></div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <ul class="rating style-none d-flex xs-mt-10">
+                                                                <?php for($i = 1; $i <= 5; $i++): ?>
+                                                                    <li><i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill text-warning' : ''; ?>"></i></li>
+                                                                <?php endfor; ?>
+                                                            </ul>
+                                                            <button class="btn btn-link edit-review-btn" data-review-id="<?php echo $review['id']; ?>">
+                                                                <i class="bi bi-pencil"></i> Edit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <p class="fs-20 mt-20 mb-30 review-content"><?php echo htmlspecialchars($review['review']); ?></p>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
 								</div>
-								<!-- /.review-wrapper -->
 							</div>						
 						</div>
-						<!-- /.review-panel-one -->
-                    </div>                    
+					</div>                    
                 </div>
-				<!-- /.card-box -->
-
-				<ul class="pagination-one d-flex align-items-center style-none pt-40">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li>....</li>
-                    <li class="ms-2"><a href="#" class="d-flex align-items-center">Last <img src="../images/icon/icon_46.svg" alt="" class="ms-2"></a></li>
-                </ul>	
 			</div>
 		</div>
 		<!-- /.dashboard-body -->
 
-
-		<!-- Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen modal-dialog-centered">
-                <div class="container">
-                    <div class="remove-account-popup text-center modal-content">
+        <!-- Edit Review Modal -->
+        <div class="modal fade" id="editReviewModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Review</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						<img src="../images/lazy.svg" data-src="images/icon/icon_22.svg" alt="" class="lazy-img m-auto">
-						<h2>Are you sure?</h2>
-						<p>Are you sure to delete your account? All data will be lost.</p>
-						<div class="button-group d-inline-flex justify-content-center align-items-center pt-15">
-							<a href="#" class="confirm-btn fw-500 tran3s me-3">Yes</a>
-							<button type="button" class="btn-close fw-500 ms-3" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-						</div>
                     </div>
-                    <!-- /.remove-account-popup -->
+                    <div class="modal-body">
+                        <form id="editReviewForm">
+                            <input type="hidden" name="review_id" id="edit_review_id">
+                            <div class="mb-3">
+                                <label class="form-label">Rating</label>
+                                <div class="stars">
+                                    <?php for($i = 5; $i >= 1; $i--): ?>
+                                        <i class="bi bi-star-fill star" data-rating="<?php echo $i; ?>"></i>
+                                    <?php endfor; ?>
+                                </div>
+                                <input type="hidden" name="rating" id="edit_rating" value="5">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Review</label>
+                                <textarea class="form-control" name="review" id="edit_review" rows="4"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveReviewBtn">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
-		
-
 
 		<button class="scroll-top">
 			<i class="bi bi-arrow-up-short"></i>
 		</button>
 
-
-
-
 		<!-- Optional JavaScript _____________________________  -->
-
 		<!-- jQuery first, then Bootstrap JS -->
 		<!-- jQuery -->
 		<script src="../vendor/jquery.min.js"></script>
@@ -256,6 +163,111 @@
 
 		<!-- Theme js -->
 		<script src="../js/theme.js"></script>
+
+        <script>
+            // Star rating functionality
+            document.querySelectorAll('.stars .star').forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.dataset.rating;
+                    const form = this.closest('.modal-body');
+                    const hiddenInput = form.querySelector('input[name="rating"]');
+                    const stars = form.querySelectorAll('.star');
+                    
+                    hiddenInput.value = rating;
+                    
+                    stars.forEach(s => {
+                        if(s.dataset.rating <= rating) {
+                            s.classList.add('text-warning');
+                        } else {
+                            s.classList.remove('text-warning');
+                        }
+                    });
+                });
+            });
+
+            // Edit review functionality
+            document.querySelectorAll('.edit-review-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const reviewId = this.dataset.reviewId;
+                    const reviewElement = document.getElementById(`review-${reviewId}`);
+                    const rating = reviewElement.querySelectorAll('.bi-star-fill').length;
+                    const reviewContent = reviewElement.querySelector('.review-content').textContent;
+
+                    document.getElementById('edit_review_id').value = reviewId;
+                    document.getElementById('edit_rating').value = rating;
+                    document.getElementById('edit_review').value = reviewContent;
+
+                    // Set initial star rating
+                    const stars = document.querySelectorAll('#editReviewModal .star');
+                    stars.forEach(star => {
+                        if(star.dataset.rating <= rating) {
+                            star.classList.add('text-warning');
+                        } else {
+                            star.classList.remove('text-warning');
+                        }
+                    });
+
+                    new bootstrap.Modal(document.getElementById('editReviewModal')).show();
+                });
+            });
+
+            // Save edited review
+            document.getElementById('saveReviewBtn').addEventListener('click', function() {
+                const reviewId = document.getElementById('edit_review_id').value;
+                const rating = document.getElementById('edit_rating').value;
+                const review = document.getElementById('edit_review').value;
+
+                $.ajax({
+                    url: 'update_review.php',
+                    method: 'POST',
+                    data: {
+                        review_id: reviewId,
+                        rating: rating,
+                        review: review
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            alert('Review updated successfully');
+                            location.reload();
+                        } else {
+                            alert('Failed to update review: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Error connecting to server. Please try again.');
+                    }
+                });
+            });
+        </script>
+		<?php include "include/footer.php" ?>
+
+        <style>
+            .stars {
+                display: flex;
+                gap: 0.25rem;
+            }
+
+            .stars .star {
+                cursor: pointer;
+                font-size: 1.25rem;
+                color: #ddd;
+                transition: color 0.2s;
+            }
+
+            .stars .star.text-warning {
+                color: #ffc107;
+            }
+
+            .edit-review-btn {
+                color: #6c757d;
+                text-decoration: none;
+                padding: 0.25rem 0.5rem;
+            }
+
+            .edit-review-btn:hover {
+                color: #0d6efd;
+            }
+        </style>
 	</div> <!-- /.main-page-wrapper -->
 </body>
 

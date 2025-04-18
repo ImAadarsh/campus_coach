@@ -1,26 +1,110 @@
+
+
+<?php
+include "include/connect.php";
+
+// Fetch all workshops
+$sql = "SELECT w.*, c.name as category_name FROM workshops w 
+        LEFT JOIN categories c ON w.category_id = c.id 
+        ORDER BY w.start_date DESC";
+$result = mysqli_query($connect, $sql);
+$workshops = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+// Fetch all categories for filter
+$cat_sql = "SELECT * FROM categories";
+$cat_result = mysqli_query($connect, $cat_sql);
+$categories = mysqli_fetch_all($cat_result, MYSQLI_ASSOC);
+$months = array_unique(array_map(function($workshop) {
+    return date('F Y', strtotime($workshop['start_date']));
+}, $workshops));
+sort($months);
+
+// Get unique modes, states, and languages
+$modes = array_unique(array_column($workshops, 'mode'));
+$states = array_unique(array_column($workshops, 'state'));
+$languages = array_unique(array_column($workshops, 'language'));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-    <!--<< Header Area >>-->
-    <head>
-        <!-- ========== Meta Tags ========== -->
-                <?php include "include/meta.php" ?>
-        <!-- ======== Page title ============ -->
-        <title>Campus Coach | India's Largest In-School Career Mentoring Program for 11th & 12th Grade Students</title>
-        
-    </head>
-    <body>
+<head>
+    <?php include "include/meta.php" ?>
+    <title>Workshops | Campus Coach</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .filter-section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .filter-section h3 {
+            color: #8B4513;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .filter-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .filter-select-wrapper {
+            position: relative;
+        }
+        .filter-select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 16px;
+            color: #8B4513;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+       
+        .filter-select::-ms-expand {
+            display: none;
+        }
+        .filter-select-wrapper::before {
+            content: '\25BC';
+            position: absolute;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            color: #8B4513;
+            pointer-events: none;
+            font-size: 12px;
+        }
+        .filter-select-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid #8B4513;
+            border-bottom: 2px solid #8B4513;
+            transform: translateY(-75%) rotate(45deg);
+            pointer-events: none;
+        }
+        .filter-select:focus {
+            outline: none;
+            border-color: #8B4513;
+        }
+        .filter-select option{
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <?php include "include/loader.php" ?>
+    <?php include "include/canvas.php" ?>
+    <?php include "include/header_sub.php" ?>
 
-        <!-- Preloader Start -->
-           <?php include "include/loader.php" ?>
-
-        <!-- Offcanvas Area Start -->
-  <?php include "include/canvas.php" ?>
-
-        <!-- Header Top Section Start -->
-                <?php include "include/header_sub.php" ?>
-
-        <!--<< Breadcrumb Section Start >>-->
-        <div class="breadcrumb-wrapper bg-cover" style="background-image: url('assets/img/breadcrumb.png');">
+    <!--<< Breadcrumb Section Start >>-->
+    <div class="breadcrumb-wrapper bg-cover" style="background-image: url('assets/img/breadcrumb.png');">
             <div class="line-shape">
                 <img src="assets/img/breadcrumb-shape/line.png" alt="shape-img">
             </div>
@@ -41,7 +125,7 @@
             </div>
             <div class="container">
                 <div class="page-heading">
-                    <h1 class="wow fadeInUp" data-wow-delay=".3s">Event Grid</h1>
+                    <h1 class="wow fadeInUp" data-wow-delay=".3s">Workshop & Sessions</h1>
                     <ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s">
                         <li>
                             <a href="index.php">
@@ -52,508 +136,147 @@
                             <i class="fas fa-chevron-right"></i>
                         </li>
                         <li>
-                            Event Grid
+                            Workshops
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Event Section Start -->
-        <section class="event-section fix section-padding">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".3s">
-                        <div class="event-box-items mt-0 box-shadow">
-                            <div class="event-image">
-                                <img src="assets/img/event/01.jpg" alt="event-img">
-                                <div class="event-shape">
-                                    <img src="assets/img/event/shape.png" alt="shape-img">
-                                </div>
-                                <ul class="post-date">
-                                    <li>
-                                        <img src="assets/img/event/calender.svg" alt="img" class="me-2">
-                                        Jan 16, 2024
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-content">
-                                <ul>
-                                    <li>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M12.7847 1.98206C11.5066 0.703906 9.80717 0 7.99961 0C6.19205 0 4.49261 0.703906 3.21448 1.98206C1.93633 3.26025 1.23242 4.95962 1.23242 6.76716C1.23242 10.4238 4.68986 13.4652 6.54733 15.0991C6.80545 15.3262 7.02836 15.5223 7.20595 15.6882C7.42845 15.896 7.71405 15.9999 7.99958 15.9999C8.28517 15.9999 8.5707 15.896 8.79324 15.6882C8.97083 15.5223 9.19374 15.3262 9.45186 15.0991C11.3093 13.4652 14.7668 10.4238 14.7668 6.76716C14.7667 4.95962 14.0629 3.26025 12.7847 1.98206ZM8.8328 14.3954C8.56902 14.6275 8.34124 14.8279 8.15342 15.0033C8.06714 15.0838 7.93202 15.0838 7.8457 15.0033C7.65792 14.8278 7.43011 14.6274 7.16633 14.3954C5.42008 12.8593 2.16961 9.99997 2.16961 6.76719C2.16961 3.55256 4.78489 0.937281 7.99955 0.937281C11.2142 0.937281 13.8295 3.55256 13.8295 6.76719C13.8295 9.99997 10.579 12.8593 8.8328 14.3954Z" fill="#F39F5F"/>
-                                            <path d="M7.9998 3.5293C6.35539 3.5293 5.01758 4.86708 5.01758 6.51148C5.01758 8.15589 6.35539 9.49367 7.9998 9.49367C9.6442 9.49367 10.982 8.15589 10.982 6.51148C10.982 4.86708 9.6442 3.5293 7.9998 3.5293ZM7.9998 8.55639C6.8722 8.55639 5.95483 7.63902 5.95483 6.51145C5.95483 5.38389 6.8722 4.46652 7.9998 4.46652C9.12739 4.46652 10.0447 5.38389 10.0447 6.51145C10.0447 7.63902 9.12739 8.55639 7.9998 8.55639Z" fill="#F39F5F"/>
-                                        </svg>
-                                        <span>6391 Elgin St. Celina, USA</span>
-                                    </li>
-                                </ul>
-                                <h3>
-                                    <a href="event-details.php">Last Day of School end of Year Picnic</a>
-                                </h3>
-                                <div class="event-author">
-                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    <div class="author-ratting">
-                                        <span>(10 Review)</span>
-                                        <div class="star">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star color-1"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".5s">
-                        <div class="event-box-items mt-0 box-shadow">
-                            <div class="event-image">
-                                <img src="assets/img/event/02.jpg" alt="event-img">
-                                <div class="event-shape">
-                                    <img src="assets/img/event/shape.png" alt="shape-img">
-                                </div>
-                                <ul class="post-date">
-                                    <li>
-                                        <img src="assets/img/event/calender.svg" alt="img" class="me-2">
-                                        Feb 20, 2024
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-content">
-                                <ul>
-                                    <li>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M12.7847 1.98206C11.5066 0.703906 9.80717 0 7.99961 0C6.19205 0 4.49261 0.703906 3.21448 1.98206C1.93633 3.26025 1.23242 4.95962 1.23242 6.76716C1.23242 10.4238 4.68986 13.4652 6.54733 15.0991C6.80545 15.3262 7.02836 15.5223 7.20595 15.6882C7.42845 15.896 7.71405 15.9999 7.99958 15.9999C8.28517 15.9999 8.5707 15.896 8.79324 15.6882C8.97083 15.5223 9.19374 15.3262 9.45186 15.0991C11.3093 13.4652 14.7668 10.4238 14.7668 6.76716C14.7667 4.95962 14.0629 3.26025 12.7847 1.98206ZM8.8328 14.3954C8.56902 14.6275 8.34124 14.8279 8.15342 15.0033C8.06714 15.0838 7.93202 15.0838 7.8457 15.0033C7.65792 14.8278 7.43011 14.6274 7.16633 14.3954C5.42008 12.8593 2.16961 9.99997 2.16961 6.76719C2.16961 3.55256 4.78489 0.937281 7.99955 0.937281C11.2142 0.937281 13.8295 3.55256 13.8295 6.76719C13.8295 9.99997 10.579 12.8593 8.8328 14.3954Z" fill="#F39F5F"/>
-                                            <path d="M7.9998 3.5293C6.35539 3.5293 5.01758 4.86708 5.01758 6.51148C5.01758 8.15589 6.35539 9.49367 7.9998 9.49367C9.6442 9.49367 10.982 8.15589 10.982 6.51148C10.982 4.86708 9.6442 3.5293 7.9998 3.5293ZM7.9998 8.55639C6.8722 8.55639 5.95483 7.63902 5.95483 6.51145C5.95483 5.38389 6.8722 4.46652 7.9998 4.46652C9.12739 4.46652 10.0447 5.38389 10.0447 6.51145C10.0447 7.63902 9.12739 8.55639 7.9998 8.55639Z" fill="#F39F5F"/>
-                                        </svg>
-                                        <span>6391 Elgin St. Celina, USA</span>
-                                    </li>
-                                </ul>
-                                <h3>
-                                    <a href="event-details.php">The complete web developer guideline 2024</a>
-                                </h3>
-                                <div class="event-author">
-                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    <div class="author-ratting">
-                                        <span>(10 Review)</span>
-                                        <div class="star">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star color-1"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".7s">
-                        <div class="event-box-items mt-0 box-shadow">
-                            <div class="event-image">
-                                <img src="assets/img/event/03.jpg" alt="event-img">
-                                <div class="event-shape">
-                                    <img src="assets/img/event/shape.png" alt="shape-img">
-                                </div>
-                                <ul class="post-date">
-                                    <li>
-                                        <img src="assets/img/event/calender.svg" alt="img" class="me-2">
-                                        Mar 26, 2024
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-content">
-                                <ul>
-                                    <li>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M12.7847 1.98206C11.5066 0.703906 9.80717 0 7.99961 0C6.19205 0 4.49261 0.703906 3.21448 1.98206C1.93633 3.26025 1.23242 4.95962 1.23242 6.76716C1.23242 10.4238 4.68986 13.4652 6.54733 15.0991C6.80545 15.3262 7.02836 15.5223 7.20595 15.6882C7.42845 15.896 7.71405 15.9999 7.99958 15.9999C8.28517 15.9999 8.5707 15.896 8.79324 15.6882C8.97083 15.5223 9.19374 15.3262 9.45186 15.0991C11.3093 13.4652 14.7668 10.4238 14.7668 6.76716C14.7667 4.95962 14.0629 3.26025 12.7847 1.98206ZM8.8328 14.3954C8.56902 14.6275 8.34124 14.8279 8.15342 15.0033C8.06714 15.0838 7.93202 15.0838 7.8457 15.0033C7.65792 14.8278 7.43011 14.6274 7.16633 14.3954C5.42008 12.8593 2.16961 9.99997 2.16961 6.76719C2.16961 3.55256 4.78489 0.937281 7.99955 0.937281C11.2142 0.937281 13.8295 3.55256 13.8295 6.76719C13.8295 9.99997 10.579 12.8593 8.8328 14.3954Z" fill="#F39F5F"/>
-                                            <path d="M7.9998 3.5293C6.35539 3.5293 5.01758 4.86708 5.01758 6.51148C5.01758 8.15589 6.35539 9.49367 7.9998 9.49367C9.6442 9.49367 10.982 8.15589 10.982 6.51148C10.982 4.86708 9.6442 3.5293 7.9998 3.5293ZM7.9998 8.55639C6.8722 8.55639 5.95483 7.63902 5.95483 6.51145C5.95483 5.38389 6.8722 4.46652 7.9998 4.46652C9.12739 4.46652 10.0447 5.38389 10.0447 6.51145C10.0447 7.63902 9.12739 8.55639 7.9998 8.55639Z" fill="#F39F5F"/>
-                                        </svg>
-                                        <span>6391 Elgin St. Celina, USA</span>
-                                    </li>
-                                </ul>
-                                <h3>
-                                    <a href="event-details.php">Gathering & welcome speech marketing strategy</a>
-                                </h3>
-                                <div class="event-author">
-                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    <div class="author-ratting">
-                                        <span>(10 Review)</span>
-                                        <div class="star">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star color-1"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".3s">
-                        <div class="event-box-items mt-0 box-shadow">
-                            <div class="event-image">
-                                <img src="assets/img/event/04.jpg" alt="event-img">
-                                <div class="event-shape">
-                                    <img src="assets/img/event/shape.png" alt="shape-img">
-                                </div>
-                                <ul class="post-date">
-                                    <li>
-                                        <img src="assets/img/event/calender.svg" alt="img" class="me-2">
-                                        Mar 10, 2024
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-content">
-                                <ul>
-                                    <li>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M12.7847 1.98206C11.5066 0.703906 9.80717 0 7.99961 0C6.19205 0 4.49261 0.703906 3.21448 1.98206C1.93633 3.26025 1.23242 4.95962 1.23242 6.76716C1.23242 10.4238 4.68986 13.4652 6.54733 15.0991C6.80545 15.3262 7.02836 15.5223 7.20595 15.6882C7.42845 15.896 7.71405 15.9999 7.99958 15.9999C8.28517 15.9999 8.5707 15.896 8.79324 15.6882C8.97083 15.5223 9.19374 15.3262 9.45186 15.0991C11.3093 13.4652 14.7668 10.4238 14.7668 6.76716C14.7667 4.95962 14.0629 3.26025 12.7847 1.98206ZM8.8328 14.3954C8.56902 14.6275 8.34124 14.8279 8.15342 15.0033C8.06714 15.0838 7.93202 15.0838 7.8457 15.0033C7.65792 14.8278 7.43011 14.6274 7.16633 14.3954C5.42008 12.8593 2.16961 9.99997 2.16961 6.76719C2.16961 3.55256 4.78489 0.937281 7.99955 0.937281C11.2142 0.937281 13.8295 3.55256 13.8295 6.76719C13.8295 9.99997 10.579 12.8593 8.8328 14.3954Z" fill="#F39F5F"/>
-                                            <path d="M7.9998 3.5293C6.35539 3.5293 5.01758 4.86708 5.01758 6.51148C5.01758 8.15589 6.35539 9.49367 7.9998 9.49367C9.6442 9.49367 10.982 8.15589 10.982 6.51148C10.982 4.86708 9.6442 3.5293 7.9998 3.5293ZM7.9998 8.55639C6.8722 8.55639 5.95483 7.63902 5.95483 6.51145C5.95483 5.38389 6.8722 4.46652 7.9998 4.46652C9.12739 4.46652 10.0447 5.38389 10.0447 6.51145C10.0447 7.63902 9.12739 8.55639 7.9998 8.55639Z" fill="#F39F5F"/>
-                                        </svg>
-                                        <span>6391 Elgin St. Celina, USA</span>
-                                    </li>
-                                </ul>
-                                <h3>
-                                    <a href="event-details.php">How to prepare your child for preschool</a>
-                                </h3>
-                                <div class="event-author">
-                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    <div class="author-ratting">
-                                        <span>(10 Review)</span>
-                                        <div class="star">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star color-1"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".5s">
-                        <div class="event-box-items mt-0 box-shadow">
-                            <div class="event-image">
-                                <img src="assets/img/event/05.jpg" alt="event-img">
-                                <div class="event-shape">
-                                    <img src="assets/img/event/shape.png" alt="shape-img">
-                                </div>
-                                <ul class="post-date">
-                                    <li>
-                                        <img src="assets/img/event/calender.svg" alt="img" class="me-2">
-                                        Oct 28, 2024
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-content">
-                                <ul>
-                                    <li>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M12.7847 1.98206C11.5066 0.703906 9.80717 0 7.99961 0C6.19205 0 4.49261 0.703906 3.21448 1.98206C1.93633 3.26025 1.23242 4.95962 1.23242 6.76716C1.23242 10.4238 4.68986 13.4652 6.54733 15.0991C6.80545 15.3262 7.02836 15.5223 7.20595 15.6882C7.42845 15.896 7.71405 15.9999 7.99958 15.9999C8.28517 15.9999 8.5707 15.896 8.79324 15.6882C8.97083 15.5223 9.19374 15.3262 9.45186 15.0991C11.3093 13.4652 14.7668 10.4238 14.7668 6.76716C14.7667 4.95962 14.0629 3.26025 12.7847 1.98206ZM8.8328 14.3954C8.56902 14.6275 8.34124 14.8279 8.15342 15.0033C8.06714 15.0838 7.93202 15.0838 7.8457 15.0033C7.65792 14.8278 7.43011 14.6274 7.16633 14.3954C5.42008 12.8593 2.16961 9.99997 2.16961 6.76719C2.16961 3.55256 4.78489 0.937281 7.99955 0.937281C11.2142 0.937281 13.8295 3.55256 13.8295 6.76719C13.8295 9.99997 10.579 12.8593 8.8328 14.3954Z" fill="#F39F5F"/>
-                                            <path d="M7.9998 3.5293C6.35539 3.5293 5.01758 4.86708 5.01758 6.51148C5.01758 8.15589 6.35539 9.49367 7.9998 9.49367C9.6442 9.49367 10.982 8.15589 10.982 6.51148C10.982 4.86708 9.6442 3.5293 7.9998 3.5293ZM7.9998 8.55639C6.8722 8.55639 5.95483 7.63902 5.95483 6.51145C5.95483 5.38389 6.8722 4.46652 7.9998 4.46652C9.12739 4.46652 10.0447 5.38389 10.0447 6.51145C10.0447 7.63902 9.12739 8.55639 7.9998 8.55639Z" fill="#F39F5F"/>
-                                        </svg>
-                                        <span>6391 Elgin St. Celina, USA</span>
-                                    </li>
-                                </ul>
-                                <h3>
-                                    <a href="event-details.php">Last Day of School end of Year Picnic</a>
-                                </h3>
-                                <div class="event-author">
-                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    <div class="author-ratting">
-                                        <span>(10 Review)</span>
-                                        <div class="star">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star color-1"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".7s">
-                        <div class="event-box-items mt-0 box-shadow">
-                            <div class="event-image">
-                                <img src="assets/img/event/06.jpg" alt="event-img">
-                                <div class="event-shape">
-                                    <img src="assets/img/event/shape.png" alt="shape-img">
-                                </div>
-                                <ul class="post-date">
-                                    <li>
-                                        <img src="assets/img/event/calender.svg" alt="img" class="me-2">
-                                        Jun 26, 2024
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="event-content">
-                                <ul>
-                                    <li>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M12.7847 1.98206C11.5066 0.703906 9.80717 0 7.99961 0C6.19205 0 4.49261 0.703906 3.21448 1.98206C1.93633 3.26025 1.23242 4.95962 1.23242 6.76716C1.23242 10.4238 4.68986 13.4652 6.54733 15.0991C6.80545 15.3262 7.02836 15.5223 7.20595 15.6882C7.42845 15.896 7.71405 15.9999 7.99958 15.9999C8.28517 15.9999 8.5707 15.896 8.79324 15.6882C8.97083 15.5223 9.19374 15.3262 9.45186 15.0991C11.3093 13.4652 14.7668 10.4238 14.7668 6.76716C14.7667 4.95962 14.0629 3.26025 12.7847 1.98206ZM8.8328 14.3954C8.56902 14.6275 8.34124 14.8279 8.15342 15.0033C8.06714 15.0838 7.93202 15.0838 7.8457 15.0033C7.65792 14.8278 7.43011 14.6274 7.16633 14.3954C5.42008 12.8593 2.16961 9.99997 2.16961 6.76719C2.16961 3.55256 4.78489 0.937281 7.99955 0.937281C11.2142 0.937281 13.8295 3.55256 13.8295 6.76719C13.8295 9.99997 10.579 12.8593 8.8328 14.3954Z" fill="#F39F5F"/>
-                                            <path d="M7.9998 3.5293C6.35539 3.5293 5.01758 4.86708 5.01758 6.51148C5.01758 8.15589 6.35539 9.49367 7.9998 9.49367C9.6442 9.49367 10.982 8.15589 10.982 6.51148C10.982 4.86708 9.6442 3.5293 7.9998 3.5293ZM7.9998 8.55639C6.8722 8.55639 5.95483 7.63902 5.95483 6.51145C5.95483 5.38389 6.8722 4.46652 7.9998 4.46652C9.12739 4.46652 10.0447 5.38389 10.0447 6.51145C10.0447 7.63902 9.12739 8.55639 7.9998 8.55639Z" fill="#F39F5F"/>
-                                        </svg>
-                                        <span>6391 Elgin St. Celina, USA</span>
-                                    </li>
-                                </ul>
-                                <h3>
-                                    <a href="event-details.php">Which toys are best for preschool kids in</a>
-                                </h3>
-                                <div class="event-author">
-                                    <a href="event-details.php" class="theme-btn">Get Ticket <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    <div class="author-ratting">
-                                        <span>(10 Review)</span>
-                                        <div class="star">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star color-1"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- Workshop Section Start -->
+    <section class="event-section fix section-padding">
+        <div class="container">
+            <!-- Filter Section -->
+            <div class="filter-section wow fadeInUp" data-wow-delay=".3s">
+    <h3>Filter Workshops</h3>
+    <div class="filter-container">
+        <div class="filter-select-wrapper">
+            <select id="monthFilter" class="filter-select">
+                <option value="">All Months</option>
+                <?php foreach ($months as $month): ?>
+                    <option value="<?php echo $month; ?>"><?php echo $month; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="filter-select-wrapper">
+            <select id="categoryFilter" class="filter-select">
+                <option value="">All Categories</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="filter-select-wrapper">
+            <select id="modeFilter" class="filter-select">
+                <option value="">All Modes</option>
+                <?php foreach ($modes as $mode): ?>
+                    <option value="<?php echo $mode; ?>"><?php echo $mode; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="filter-select-wrapper">
+            <select id="stateFilter" class="filter-select">
+                <option value="">All States</option>
+                <?php foreach ($states as $state): ?>
+                    <option value="<?php echo $state; ?>"><?php echo $state; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
 
-        <!--<< Footer Section Start >>-->
-        <footer class="footer-section section-bg fix">
-            <div class="footer-top-shape">
-                <img src="assets/img/footer-top.png" alt="shape-img">
-            </div>
-            <div class="frame-shape">
-                <img src="assets/img/frame.png" alt="shape-img">
-            </div>
-            <div class="zebra-shape">
-                <img src="assets/img/about/zebra.png" alt="shape-img">
-            </div>
-            <div class="container">
-                <div class="contact-info-area">
-                    <div class="contact-info-items wow fadeInUp" data-wow-delay=".3s">
-                        <div class="icon">
-                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M23.7891 1.81641H16.7578C13.3658 1.81641 10.6055 4.5767 10.6055 7.96875C10.6055 11.063 12.9015 13.631 15.8789 14.0585V16.7578C15.8788 16.9317 15.9303 17.1016 16.0268 17.2462C16.1234 17.3907 16.2607 17.5033 16.4214 17.5697C16.7456 17.705 17.1258 17.6325 17.3793 17.3792L20.6374 14.1211H23.7891C27.1811 14.1211 30 11.3608 30 7.96875C30 4.5767 27.1811 1.81641 23.7891 1.81641ZM16.7578 8.84754C16.2723 8.84754 15.8789 8.45402 15.8789 7.96863C15.8789 7.48324 16.2723 7.08973 16.7578 7.08973C17.2432 7.08973 17.6367 7.48324 17.6367 7.96863C17.6367 8.45402 17.2432 8.84754 16.7578 8.84754ZM20.2734 8.84754C19.7879 8.84754 19.3945 8.45402 19.3945 7.96863C19.3945 7.48324 19.7879 7.08973 20.2734 7.08973C20.7588 7.08973 21.1523 7.48324 21.1523 7.96863C21.1523 8.45402 20.7588 8.84754 20.2734 8.84754ZM23.7891 8.84754C23.3036 8.84754 22.9102 8.45402 22.9102 7.96863C22.9102 7.48324 23.3036 7.08973 23.7891 7.08973C24.2745 7.08973 24.668 7.48324 24.668 7.96863C24.668 8.45402 24.2745 8.84754 23.7891 8.84754Z" fill="#F39F5F"/>
-                                <path d="M19.7461 28.1836C21.2 28.1836 22.3828 27.0008 22.3828 25.5469V22.0312C22.3828 21.6527 22.1408 21.3171 21.782 21.1978L16.5209 19.44C16.2634 19.3533 15.9819 19.3928 15.7553 19.5421L13.5186 21.033C11.1496 19.9035 8.33871 17.0925 7.20914 14.7236L8.7 12.4868C8.77415 12.3754 8.82189 12.2485 8.83958 12.1158C8.85728 11.9831 8.84447 11.8482 8.80213 11.7212L7.04432 6.46014C6.98611 6.28516 6.87428 6.13295 6.72469 6.02512C6.5751 5.91728 6.39534 5.85929 6.21094 5.85938H2.63672C1.18277 5.85938 0 7.02979 0 8.48373C0 18.61 9.6198 28.1836 19.7461 28.1836Z" fill="#F39F5F"/>
-                            </svg>                                        
-                        </div>
-                        <div class="content">
-                            <p>Call Us 7/24</p>
-                            <h3>
-                                <a href="tel:+2085550112">+91 92463 08588</a>
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="contact-info-items wow fadeInUp" data-wow-delay=".5s">
-                        <div class="icon">
-                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6493 10.8272C12.8019 10.914 12.9755 10.9569 13.1509 10.9509C13.3307 10.9344 13.5048 10.8798 13.6618 10.7906L24.9212 4.22062C24.6765 3.79416 24.324 3.43955 23.8989 3.19239C23.4739 2.94523 22.9913 2.81422 22.4996 2.8125H3.74965C3.25782 2.81406 2.77505 2.94499 2.34983 3.19216C1.92461 3.43932 1.57191 3.79402 1.32715 4.22062L12.6493 10.8272Z" fill="#F39F5F"/>
-                                <path d="M25.3125 6.15918V12.6748C24.4104 12.3501 23.4587 12.1852 22.5 12.1873C20.2633 12.1908 18.1192 13.0808 16.5376 14.6624C14.956 16.244 14.066 18.3881 14.0625 20.6248C14.0623 20.9382 14.0811 21.2512 14.1188 21.5623H3.75C3.00476 21.5601 2.29069 21.263 1.76372 20.7361C1.23676 20.2091 0.939726 19.495 0.9375 18.7498V6.15918L11.7094 12.4498C12.1434 12.6872 12.6303 12.8116 13.125 12.8116C13.6197 12.8116 14.1066 12.6872 14.5406 12.4498L25.3125 6.15918Z" fill="#F39F5F"/>
-                                <path d="M22.5 14.0625C20.7595 14.0625 19.0903 14.7539 17.8596 15.9846C16.6289 17.2153 15.9375 18.8845 15.9375 20.625C15.9375 22.3655 16.6289 24.0347 17.8596 25.2654C19.0903 26.4961 20.7595 27.1875 22.5 27.1875C22.7486 27.1875 22.9871 27.0887 23.1629 26.9129C23.3387 26.7371 23.4375 26.4986 23.4375 26.25C23.4375 26.0014 23.3387 25.7629 23.1629 25.5871C22.9871 25.4113 22.7486 25.3125 22.5 25.3125C21.5729 25.3125 20.6666 25.0376 19.8958 24.5225C19.1249 24.0074 18.5241 23.2754 18.1693 22.4188C17.8145 21.5623 17.7217 20.6198 17.9026 19.7105C18.0834 18.8012 18.5299 17.966 19.1854 17.3104C19.841 16.6549 20.6762 16.2084 21.5855 16.0276C22.4948 15.8467 23.4373 15.9395 24.2938 16.2943C25.1504 16.6491 25.8824 17.2499 26.3975 18.0208C26.9126 18.7916 27.1875 19.6979 27.1875 20.625V21.5625C27.1875 21.8111 27.0887 22.0496 26.9129 22.2254C26.7371 22.4012 26.4986 22.5 26.25 22.5C26.0014 22.5 25.7629 22.4012 25.5871 22.2254C25.4113 22.0496 25.3125 21.8111 25.3125 21.5625V20.625C25.3125 20.0687 25.1476 19.525 24.8385 19.0625C24.5295 18.5999 24.0902 18.2395 23.5763 18.0266C23.0624 17.8137 22.4969 17.758 21.9513 17.8665C21.4057 17.9751 20.9046 18.2429 20.5113 18.6363C20.1179 19.0296 19.8501 19.5307 19.7415 20.0763C19.633 20.6219 19.6887 21.1874 19.9016 21.7013C20.1145 22.2152 20.4749 22.6545 20.9375 22.9635C21.4 23.2726 21.9437 23.4375 22.5 23.4375C22.9843 23.4344 23.4594 23.3048 23.8781 23.0616C24.2022 23.578 24.6856 23.9748 25.2552 24.1921C25.8248 24.4094 26.4496 24.4353 27.0353 24.266C27.621 24.0967 28.1356 23.7412 28.5013 23.2535C28.867 22.7657 29.064 22.1721 29.0625 21.5625V20.625C29.0605 18.8851 28.3685 17.2171 27.1382 15.9868C25.9079 14.7565 24.2399 14.0645 22.5 14.0625ZM22.5 21.5625C22.3146 21.5625 22.1333 21.5075 21.9792 21.4045C21.825 21.3015 21.7048 21.1551 21.6339 20.9838C21.5629 20.8125 21.5443 20.624 21.5805 20.4421C21.6167 20.2602 21.706 20.0932 21.8371 19.9621C21.9682 19.831 22.1352 19.7417 22.3171 19.7055C22.499 19.6693 22.6875 19.6879 22.8588 19.7589C23.0301 19.8298 23.1765 19.95 23.2795 20.1042C23.3825 20.2583 23.4375 20.4396 23.4375 20.625C23.4375 20.8736 23.3387 21.1121 23.1629 21.2879C22.9871 21.4637 22.7486 21.5625 22.5 21.5625Z" fill="#F39F5F"/>
-                            </svg>
-                                                                        
-                        </div>
-                        <div class="content">
-                            <p>Make a Quote</p>
-                            <h3>
-                                <a href="mailto:info@campuscoach.in">info@campuscoach.in</a>
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="contact-info-items wow fadeInUp" data-wow-delay=".7s">
-                        <div class="icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16 1.66699C11.036 1.66699 7 5.73899 7 10.7617C7 12.463 7.74933 14.5737 8.84 16.679C11.2413 21.315 15.2413 25.9843 15.2413 25.9843C15.3352 26.0937 15.4516 26.1814 15.5826 26.2416C15.7135 26.3017 15.8559 26.3328 16 26.3328C16.1441 26.3328 16.2865 26.3017 16.4174 26.2416C16.5484 26.1814 16.6648 26.0937 16.7587 25.9843C16.7587 25.9843 20.7587 21.315 23.16 16.679C24.2507 14.5737 25 12.463 25 10.7617C25 5.73899 20.964 1.66699 16 1.66699ZM16 7.00033C15.0447 7.02609 14.1371 7.4237 13.4705 8.10853C12.8039 8.79335 12.4309 9.7113 12.4309 10.667C12.4309 11.6227 12.8039 12.5406 13.4705 13.2255C14.1371 13.9103 15.0447 14.3079 16 14.3337C16.9553 14.3079 17.8629 13.9103 18.5295 13.2255C19.1961 12.5406 19.5691 11.6227 19.5691 10.667C19.5691 9.7113 19.1961 8.79335 18.5295 8.10853C17.8629 7.4237 16.9553 7.02609 16 7.00033Z" fill="#F39F5F"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22.3783 23.1693C23.4623 23.4946 24.3557 23.8973 24.973 24.3693C25.373 24.6733 25.6663 24.9706 25.6663 25.3333C25.6663 25.5466 25.545 25.74 25.3743 25.9333C25.0917 26.252 24.6717 26.5386 24.1517 26.8053C22.3143 27.7453 19.3437 28.3333 15.9997 28.3333C12.6557 28.3333 9.68501 27.7453 7.84767 26.8053C7.32767 26.5386 6.90767 26.252 6.62501 25.9333C6.45434 25.74 6.33301 25.5466 6.33301 25.3333C6.33301 24.9706 6.62634 24.6733 7.02634 24.3693C7.64367 23.8973 8.53701 23.4946 9.62101 23.1693C9.87509 23.0929 10.0884 22.9187 10.2141 22.6851C10.3397 22.4514 10.3674 22.1774 10.291 21.9233C10.2146 21.6692 10.0404 21.4559 9.80677 21.3302C9.5731 21.2046 9.29909 21.1769 9.04501 21.2533C7.39434 21.7506 6.11167 22.432 5.34101 23.1853C4.66367 23.8453 4.33301 24.584 4.33301 25.3333C4.33301 26.2693 4.86234 27.2026 5.93834 27.9813C7.82634 29.3466 11.6183 30.3333 15.9997 30.3333C20.381 30.3333 24.173 29.3466 26.061 27.9813C27.137 27.2026 27.6663 26.2693 27.6663 25.3333C27.6663 24.584 27.3357 23.8453 26.6583 23.1853C25.8877 22.432 24.605 21.7506 22.9543 21.2533C22.8285 21.2155 22.6965 21.2028 22.5658 21.216C22.4351 21.2292 22.3083 21.268 22.1926 21.3302C22.0769 21.3925 21.9746 21.4769 21.8915 21.5786C21.8084 21.6804 21.7462 21.7975 21.7083 21.9233C21.6705 22.0491 21.6578 22.1811 21.6711 22.3118C21.6843 22.4425 21.7231 22.5694 21.7853 22.6851C21.8475 22.8008 21.9319 22.9031 22.0337 22.9862C22.1354 23.0692 22.2525 23.1315 22.3783 23.1693Z" fill="#F39F5F"/>
-                            </svg>                     
-                        </div>
-                        <div class="content">
-                            <p>Location</p>
-                            <h3>
-                                Raj Palace, Navi Mumbai- 400709
-                            </h3>
-                        </div>
-                    </div>
-                </div>    
-            </div>
-            <div class="footer-widgets-wrapper">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".3s">
-                            <div class="single-footer-widget">
-                                <div class="widget-head">
-                                    <a href="index.php">
-                                        <img src="assets/img/logo/logo.svg" alt="logo-img">
-                                    </a>
+            <!-- Workshop Grid -->
+            <div class="row g-4" id="workshopGrid">
+                <?php foreach ($workshops as $workshop): ?>
+                    <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp workshop-item" 
+                         data-category="<?php echo $workshop['category_id']; ?>"
+                         data-mode="<?php echo $workshop['mode']; ?>"
+                         data-state="<?php echo $workshop['state']; ?>"
+                         data-date="<?php echo $workshop['start_date']; ?>"
+                         data-wow-delay=".3s">
+                        <div class="event-box-items mt-0 box-shadow">
+                            <div class="event-image">
+                                <img src="<?php echo $uri . $workshop['banner_image']; ?>" alt="workshop-img">
+                                <div class="event-shape">
+                                    <img src="assets/img/event/shape.png" alt="shape-img">
                                 </div>
-                                <div class="footer-content">
-                                    <p>
-                                        Phasellus ultricies aliquam volutpat 
-                                        ullamcorper laoreet neque, a lacinia
-                                        curabitur lacinia mollis
-                                    </p>
-                                    <div class="social-icon d-flex align-items-center">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-4 col-md-6 ps-lg-5 wow fadeInUp" data-wow-delay=".5s">
-                            <div class="single-footer-widget">
-                                <div class="widget-head">
-                                    <h3>Quick Links</h3>
-                                </div>
-                                <ul class="list-area">
+                                <ul class="post-date">
                                     <li>
-                                        <a href="program-details.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            Our Services
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="news-details.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            Our Blogs
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="faq.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            FAQ’S
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="contact.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            Contact Us
-                                        </a>
+                                        <img src="assets/img/event/calender.svg" alt="img" class="me-2">
+                                        <?php echo date('M d, Y', strtotime($workshop['start_date'])); ?>
                                     </li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 ps-lg-5 wow fadeInUp" data-wow-delay=".5s">
-                            <div class="single-footer-widget style-margin">
-                                <div class="widget-head">
-                                    <h3>Categories</h3>
-                                </div>
-                                <ul class="list-area">
+                            <div class="event-content">
+                                <ul>
                                     <li>
-                                        <a href="program-details.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            Music Learning
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="program-details.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            Sports, Games
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="program-details.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            Science Class
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="program-details.php">
-                                            <i class="fa-solid fa-chevron-right"></i>
-                                            Drawing
-                                        </a>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M12.7847 1.98206C11.5066 0.703906 9.80717 0 7.99961 0C6.19205 0 4.49261 0.703906 3.21448 1.98206C1.93633 3.26025 1.23242 4.95962 1.23242 6.76716C1.23242 10.4238 4.68986 13.4652 6.54733 15.0991C6.80545 15.3262 7.02836 15.5223 7.20595 15.6882C7.42845 15.896 7.71405 15.9999 7.99958 15.9999C8.28517 15.9999 8.5707 15.896 8.79324 15.6882C8.97083 15.5223 9.19374 15.3262 9.45186 15.0991C11.3093 13.4652 14.7668 10.4238 14.7668 6.76716C14.7667 4.95962 14.0629 3.26025 12.7847 1.98206ZM8.8328 14.3954C8.56902 14.6275 8.34124 14.8279 8.15342 15.0033C8.06714 15.0838 7.93202 15.0838 7.8457 15.0033C7.65792 14.8278 7.43011 14.6274 7.16633 14.3954C5.42008 12.8593 2.16961 9.99997 2.16961 6.76719C2.16961 3.55256 4.78489 0.937281 7.99955 0.937281C11.2142 0.937281 13.8295 3.55256 13.8295 6.76719C13.8295 9.99997 10.579 12.8593 8.8328 14.3954Z" fill="#F39F5F"/>
+                                            <path d="M7.9998 3.5293C6.35539 3.5293 5.01758 4.86708 5.01758 6.51148C5.01758 8.15589 6.35539 9.49367 7.9998 9.49367C9.6442 9.49367 10.982 8.15589 10.982 6.51148C10.982 4.86708 9.6442 3.5293 7.9998 3.5293ZM7.9998 8.55639C6.8722 8.55639 5.95483 7.63902 5.95483 6.51145C5.95483 5.38389 6.8722 4.46652 7.9998 4.46652C9.12739 4.46652 10.0447 5.38389 10.0447 6.51145C10.0447 7.63902 9.12739 8.55639 7.9998 8.55639Z" fill="#F39F5F"/>
+                                        </svg>
+                                        <span><?php echo $workshop['location'] . ', ' . $workshop['state']; ?></span>
                                     </li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".7s">
-                            <div class="single-footer-widget style-margin">
-                                <div class="widget-head">
-                                    <h3>Recent Posts</h3>
-                                </div>
-                                <div class="recent-post-area">
-                                    <div class="recent-post-items">
-                                        <div class="thumb">
-                                            <img src="assets/img/news/pp1.jpg" alt="post-img">
-                                        </div>
-                                        <div class="content">
-                                            <ul class="post-date">
-                                                <li>
-                                                    <i class="fa-solid fa-calendar-days me-2"></i>
-                                                    20 Feb, 2024
-                                                </li>
-                                            </ul>
-                                            <h6>
-                                                <a href="news-details.php">
-                                                    That jerk Form Finance <br>
-                                                    really threw me
-                                                </a>
-                                            </h6>
-                                        </div>
-                                    </div>
-                                    <div class="recent-post-items mb-0">
-                                        <div class="thumb">
-                                            <img src="assets/img/news/pp2.jpg" alt="post-img">
-                                        </div>
-                                        <div class="content">
-                                            <ul class="post-date">
-                                                <li>
-                                                    <i class="fa-solid fa-calendar-days me-2"></i>
-                                                    15 Dec, 2024
-                                                </li>
-                                            </ul>
-                                            <h6>
-                                                <a href="news-details.php">
-                                                    From without content <br>
-                                                    style without 
-                                                </a>
-                                            </h6>
+                                <h3>
+                                    <a href="event-details.php?id=<?php echo $workshop['id']; ?>"><?php echo $workshop['title']; ?></a>
+                                </h3>
+                                <div class="event-author">
+                                    <a href="event-details.php?id=<?php echo $workshop['id']; ?>" class="theme-btn">Learn More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                    <div class="author-ratting">
+                                        <span><?php echo $workshop['mode']; ?></span>
+                                        <div class="star">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star color-1"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
-            <div class="footer-bottom">
-                <div class="f-bottom-shape">
-                    <img src="assets/img/footer-bottom.png" alt="shape-img">
-                </div>
-                <div class="container">
-                    <div class="footer-wrapper d-flex align-items-center justify-content-between">
-                         <p class="wow fadeInLeft color-2" data-wow-delay=".3s">
-                            © Campus Coach | Developed By <a href="https://endeavourdigital.in">Endeavour Digital</a>
-                        </p>
-                        <ul class="footer-menu wow fadeInRight" data-wow-delay=".5s">
-                            <li>
-                                <a href="contact.php">
-                                    Terms & Condition
-                                </a>
-                            </li>
-                            <li>
-                                <a href="contact.php">
-                                    Privacy Policy
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <a href="#" id="scrollUp" class="scroll-icon">
-                    <i class="far fa-arrow-up"></i>
-                </a>
-            </div>
-        </footer>
+        </div>
+    </section>
 
-        <?php include "include/script.php" ?>
-    </body>
+    <?php include "include/footer.php" ?>
+    <?php include "include/script.php" ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+$(document).ready(function() {
+    $('#monthFilter, #categoryFilter, #modeFilter, #stateFilter').change(function() {
+        filterWorkshops();
+    });
+
+    function filterWorkshops() {
+        var selectedMonth = $('#monthFilter').val();
+        var selectedCategory = $('#categoryFilter').val();
+        var selectedMode = $('#modeFilter').val();
+        var selectedState = $('#stateFilter').val();
+
+        $('.workshop-item').each(function() {
+            var workshopDate = $(this).data('date');
+            var workshopMonth = new Date(workshopDate).toLocaleString('default', { month: 'long', year: 'numeric' });
+            var workshopCategory = $(this).data('category');
+            var workshopMode = $(this).data('mode');
+            var workshopState = $(this).data('state');
+
+            var monthMatch = !selectedMonth || workshopMonth === selectedMonth;
+            var categoryMatch = !selectedCategory || workshopCategory == selectedCategory;
+            var modeMatch = !selectedMode || workshopMode === selectedMode;
+            var stateMatch = !selectedState || workshopState === selectedState;
+
+            if (monthMatch && categoryMatch && modeMatch && stateMatch) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+});
+</script>
+</body>
 </html>

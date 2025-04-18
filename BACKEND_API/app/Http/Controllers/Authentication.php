@@ -168,7 +168,7 @@ class Authentication extends Controller
                     $email = $user->email;
                     $name = $user->first_name;
                     Mail::send('verification', $data, function ($message) use ($email, $name) {
-                        $message->to($email, $name)->subject('Your Account is created with magic of skills. | Verify Your Email Id');
+                        $message->to($email, $name)->subject('Your Account is created with Campus Coach. | Verify Your Email Id');
                     });
                     
                 } catch (Exception $e) {

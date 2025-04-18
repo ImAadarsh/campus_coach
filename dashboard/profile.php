@@ -1,3 +1,62 @@
+<?php
+include ("../include/private_page.php");
+include ("../include/connect.php");
+
+// Get user data
+$userId = $_SESSION['userid'];
+$sql = "SELECT * FROM users WHERE id = $userId";
+$result = mysqli_query($connect, $sql);
+$user = mysqli_fetch_assoc($result);
+
+// Handle profile update
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $firstName = mysqli_real_escape_string($connect, $_POST['first_name']);
+    $lastName = mysqli_real_escape_string($connect, $_POST['last_name']);
+    $email = mysqli_real_escape_string($connect, $_POST['email']);
+    // $mobile = mysqli_real_escape_string($connect, $_POST['mobile']);
+    $school = mysqli_real_escape_string($connect, $_POST['school']);
+    $city = mysqli_real_escape_string($connect, $_POST['city']);
+    $grade = mysqli_real_escape_string($connect, $_POST['grade']);
+    $about = mysqli_real_escape_string($connect, $_POST['about']);
+
+    // Handle profile image upload
+    $profileImage = $user['icon'];
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+        $allowed = ['jpg', 'jpeg', 'png'];
+        $filename = $_FILES['profile_image']['name'];
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        
+        if (in_array($ext, $allowed)) {
+            $newFilename = 'profile_' . $userId . '_' . time() . '.' . $ext;
+            $uploadPath = '../uploads/profiles/' . $newFilename;
+            
+            if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $uploadPath)) {
+                $profileImage = 'uploads/profiles/' . $newFilename;
+            }
+        }
+    }
+
+    // Update user data
+    $updateSql = "UPDATE users SET 
+        first_name = '$firstName',
+        last_name = '$lastName',
+        email = '$email',
+        school = '$school',
+        city = '$city',
+        grade = '$grade',
+        about = '$about',
+        icon = '$profileImage'
+        WHERE id = $userId";
+
+    if (mysqli_query($connect, $updateSql)) {
+        $_SESSION['success'] = "Profile updated successfully!";
+        header("Location: profile.php");
+        exit();
+    } else {
+        $_SESSION['error'] = "Error updating profile: " . mysqli_error($connect);
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,228 +94,160 @@
 
 				<h2 class="main-title d-block d-lg-none">Profile</h2>
 
-				<div class="bg-white card-box border-20">
-                    <div class="user-avatar-setting d-flex align-items-center mb-30">
-                        <img src="../images/lazy.svg" data-src="images/avatar_02.jpg" alt="" class="lazy-img user-img">
-                        <div class="upload-btn position-relative tran3s ms-4 me-3">
-                            Upload new photo
-                            <input type="file" id="uploadImg" name="uploadImg" placeholder="">
-                        </div>
-                        <button class="delete-btn tran3s">Delete</button>
-                    </div>
-                    <!-- /.user-avatar-setting -->
-					<div class="row">
-						<div class="col-12">
-							<div class="dash-input-wrapper mb-30">
-								<label for="">Username*</label>
-								<input type="text" placeholder="JonyRio">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-sm-6">
-							<div class="dash-input-wrapper mb-30">
-								<label for="">First Name*</label>
-								<input type="text" placeholder="Mr Johny">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-sm-6">
-							<div class="dash-input-wrapper mb-30">
-								<label for="">Last Name*</label>
-								<input type="text" placeholder="Riolek">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-sm-6">
-							<div class="dash-input-wrapper mb-30">
-								<label for="">Email*</label>
-								<input type="email" placeholder="companyinc@mail.com">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-sm-6">
-							<div class="dash-input-wrapper mb-30">
-								<label for="">Position*</label>
-								<select class="nice-select">
-									<option>Agent</option>
-									<option>Agency</option>
-								</select>
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-sm-6">
-							<div class="dash-input-wrapper mb-30">
-								<label for="">Phone Number*</label>
-								<input type="tel" placeholder="+880 01723801729">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-sm-6">
-							<div class="dash-input-wrapper mb-30">
-								<label for="">Website*</label>
-								<input type="text" placeholder="http://somename.com">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-12">
-							<div class="dash-input-wrapper">
-								<label for="">About*</label>
-								<textarea class="size-lg" placeholder="I am working for the last 4 years as a web designer, graphics designer and well as UI/UX designer............."></textarea>
-								<div class="alert-text">Brief description for your profile. URLs are hyperlinked.</div>
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-					</div>
-                    
-                    
-                </div>
-				<!-- /.card-box -->
-
-				<div class="bg-white card-box border-20 mt-40">
-                    <h4 class="dash-title-three">Social Media</h4>
-
-                    <div class="dash-input-wrapper mb-20">
-                        <label for="">Network 1</label>
-                        <input type="text" placeholder="https://www.facebook.com/zubayer0145">
-                    </div>
-                    <!-- /.dash-input-wrapper -->
-                    <div class="dash-input-wrapper mb-20">
-                        <label for="">Network 2</label>
-                        <input type="text" placeholder="https://twitter.com/FIFAcom">
-                    </div>
-                    <!-- /.dash-input-wrapper -->
-					<a href="#" class="dash-btn-one"><i class="bi bi-plus"></i> Add more link</a>
-                </div>
-				<!-- /.card-box -->
-
-				<div class="bg-white card-box border-20 mt-40">
-                    <h4 class="dash-title-three">Address & Location</h4>
-					<div class="row">
-						<div class="col-12">
-							<div class="dash-input-wrapper mb-25">
-								<label for="">Address*</label>
-								<input type="text" placeholder="19 Yawkey Way">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-lg-3">
-							<div class="dash-input-wrapper mb-25">
-								<label for="">Country*</label>
-								<select class="nice-select">
-									<option>Afghanistan</option>
-									<option>Albania</option>
-									<option>Algeria</option>
-									<option>Andorra</option>
-									<option>Angola</option>
-									<option>Antigua and Barbuda</option>
-									<option>Argentina</option>
-									<option>Armenia</option>
-									<option>Australia</option>
-									<option>Austria</option>
-									<option>Azerbaijan</option>
-									<option>Bahamas</option>
-									<option>Bahrain</option>
-									<option>Bangladesh</option>
-									<option>Barbados</option>
-									<option>Belarus</option>
-									<option>Belgium</option>
-									<option>Belize</option>
-									<option>Benin</option>
-									<option>Bhutan</option>
-								</select>
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-lg-3">
-							<div class="dash-input-wrapper mb-25">
-								<label for="">City*</label>
-								<select class="nice-select">
-									<option>Boston</option>
-									<option>Tokyo</option>
-									<option>Delhi</option>
-									<option>Shanghai</option>
-									<option>Mumbai</option>
-									<option>Bangalore</option>
-								</select>
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-lg-3">
-							<div class="dash-input-wrapper mb-25">
-								<label for="">Zip Code*</label>
-								<input type="number" placeholder="1708">
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-lg-3">
-							<div class="dash-input-wrapper mb-25">
-								<label for="">State*</label>
-								<select class="nice-select">
-									<option>Maine</option>
-									<option>Tokyo</option>
-									<option>Delhi</option>
-									<option>Shanghai</option>
-									<option>Mumbai</option>
-									<option>Bangalore</option>
-								</select>
-							</div>
-							<!-- /.dash-input-wrapper -->
-						</div>
-						<div class="col-12">
-							<div class="dash-input-wrapper mb-25">
-								<label for="">Map Location*</label>
-								<div class="position-relative">
-									<input type="text" placeholder="XC23+6XC, Moiran, N105">
-									<button class="location-pin tran3s"><img src="../images/lazy.svg" data-src="images/icon/icon_16.svg" alt="" class="lazy-img m-auto"></button>
+				<div class=" border-20 ">
+					<div class="row gx-3">
+						<div class="col-lg-4 rounded-3">
+							<div class="profile-sidebar border-25 p-4 rounded-3">
+								<div class="text-center mb-4">
+									<div class="profile-image-wrapper position-relative d-inline-block">
+										<?php if (!empty($user['icon'])): ?>
+											<img src="<?php echo $uri . $user['icon']; ?>" alt="<?php echo $user['first_name']; ?>" class="rounded-circle" width="150">
+										<?php else: ?>
+											<div class="profile-initials rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 150px; height: 150px; font-size: 3rem; font-weight: 600;">
+												<?php 
+												$initials = strtoupper(substr($user['first_name'], 0, 1) . substr($user['last_name'], 0, 1));
+												echo $initials;
+												?>
+											</div>
+										<?php endif; ?>
+										<label for="profile_image" class="position-absolute bottom-0 end-0 bg-primary text-white rounded-circle p-2 cursor-pointer">
+											<i class="bi bi-camera"></i>
+										</label>
+									</div>
+									<h4 class="mt-3 mb-1"><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></h4>
+									<p class="text-muted mb-0"><?php echo $user['email']; ?></p>
 								</div>
-								<div class="map-frame mt-30">
-									<div class="gmap_canvas h-100 w-100">
-										<iframe class="gmap_iframe h-100 w-100" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=dhaka collage&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+
+								<div class="profile-stats">
+									<div class="d-flex justify-content-between align-items-center mb-3">
+										<span class="text-muted">Total Bookings</span>
+										<span class="fw-bold"><?php 
+											$bookingsSql = "SELECT COUNT(*) as total FROM bookings WHERE user_id = $userId";
+											$bookingsResult = mysqli_query($connect, $bookingsSql);
+											echo mysqli_fetch_assoc($bookingsResult)['total'];
+										?></span>
+									</div>
+									<div class="d-flex justify-content-between align-items-center mb-3">
+										<span class="text-muted">Completed Sessions</span>
+										<span class="fw-bold"><?php 
+											$completedSql = "SELECT COUNT(*) as total FROM bookings b 
+												JOIN payments p ON b.id = p.booking_id 
+												WHERE b.user_id = $userId AND p.status = 'completed'";
+											$completedResult = mysqli_query($connect, $completedSql);
+											echo mysqli_fetch_assoc($completedResult)['total'];
+										?></span>
+									</div>
+									<div class="d-flex justify-content-between align-items-center">
+										<span class="text-muted">Member Since</span>
+										<span class="fw-bold"><?php echo date('M Y', strtotime($user['created_at'])); ?></span>
 									</div>
 								</div>
 							</div>
-							<!-- /.dash-input-wrapper -->
+						</div>
+
+						<div class="col-lg-8 rounded-3">
+							<div class="profile-content border-25 p-4 rounded-3">
+								<h4 class="mb-4">Profile Information</h4>
+								
+								<?php if (isset($_SESSION['success'])): ?>
+									<div class="alert alert-success alert-dismissible fade show" role="alert">
+										<?php 
+										echo $_SESSION['success'];
+										unset($_SESSION['success']);
+										?>
+										<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+									</div>
+								<?php endif; ?>
+
+								<?php if (isset($_SESSION['error'])): ?>
+									<div class="alert alert-danger alert-dismissible fade show" role="alert">
+										<?php 
+										echo $_SESSION['error'];
+										unset($_SESSION['error']);
+										?>
+										<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+									</div>
+								<?php endif; ?>
+
+								<form method="POST" enctype="multipart/form-data">
+									<input type="file" id="profile_image" name="profile_image" class="d-none" accept="image/*">
+									
+									<div class="row gx-3">
+										<div class="col-md-6">
+											<div class="form-group mb-3">
+												<label class="form-label">First Name</label>
+												<input type="text" class="form-control" name="first_name" value="<?php echo $user['first_name']; ?>" required>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group mb-3">
+												<label class="form-label">Last Name</label>
+												<input type="text" class="form-control" name="last_name" value="<?php echo $user['last_name']; ?>" required>
+											</div>
+										</div>
+									</div>
+
+									<div class="row gx-3">
+										<div class="col-md-6">
+											<div class="form-group mb-3">
+												<label class="form-label">Email</label>
+												<input type="email" class="form-control" name="email" value="<?php echo $user['email']; ?>" required>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group mb-3">
+												<label class="form-label">Mobile (Can't be changed)</label>
+												<input disabled type="text" class="form-control" name="mobile" value="<?php echo $user['mobile']; ?>" required>
+											</div>
+										</div>
+									</div>
+
+									<div class="row gx-3">
+										<div class="col-md-6">
+											<div class="form-group mb-3">
+												<label class="form-label">School</label>
+												<input type="text" class="form-control" name="school" value="<?php echo $user['school']; ?>">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group mb-3">
+												<label class="form-label">City</label>
+												<input type="text" class="form-control" name="city" value="<?php echo $user['city']; ?>">
+											</div>
+										</div>
+									</div>
+
+									<div class="row gx-3">
+										<div class="col-md-6">
+											<div class="form-group mb-3">
+												<label class="form-label">Grade</label>
+												<input type="text" class="form-control" name="grade" value="<?php echo $user['grade']; ?>">
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group mb-4">
+										<label class="form-label">About</label>
+										<textarea class="form-control" name="about" rows="4"><?php echo $user['about']; ?></textarea>
+									</div>
+
+									<div class="d-flex justify-content-end">
+										<button type="submit" class="btn btn-primary">
+											<i class="bi bi-save me-2"></i>Save Changes
+										</button>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
-                </div>
-				<!-- /.card-box -->
-
-				<div class="button-group d-inline-flex align-items-center mt-30">
-					<a href="#" class="dash-btn-two tran3s me-3">Save</a>
-					<a href="#" class="dash-cancel-btn tran3s">Cancel</a>
-				</div>				
+				</div>
 			</div>
 		</div>
 		<!-- /.dashboard-body -->
 
-
-		<!-- Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen modal-dialog-centered">
-                <div class="container">
-                    <div class="remove-account-popup text-center modal-content">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						<img src="../images/lazy.svg" data-src="images/icon/icon_22.svg" alt="" class="lazy-img m-auto">
-						<h2>Are you sure?</h2>
-						<p>Are you sure to delete your account? All data will be lost.</p>
-						<div class="button-group d-inline-flex justify-content-center align-items-center pt-15">
-							<a href="#" class="confirm-btn fw-500 tran3s me-3">Yes</a>
-							<button type="button" class="btn-close fw-500 ms-3" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-						</div>
-                    </div>
-                    <!-- /.remove-account-popup -->
-                </div>
-            </div>
-        </div>
-		
-
-
 		<button class="scroll-top">
 			<i class="bi bi-arrow-up-short"></i>
 		</button>
-
-
-
 
 		<!-- Optional JavaScript _____________________________  -->
 
@@ -283,7 +274,104 @@
 
 		<!-- Theme js -->
 		<script src="../js/theme.js"></script>
+
+		<script>
+			$(document).ready(function() {
+				// Remove loader after page loads
+				setTimeout(function() {
+					$('#preloader').fadeOut(500, function() {
+						$(this).remove();
+					});
+				}, 500);
+
+				// Handle profile image upload
+				$('#profile_image').change(function() {
+					if (this.files && this.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							$('.profile-image-wrapper img').attr('src', e.target.result);
+						}
+						reader.readAsDataURL(this.files[0]);
+					}
+				});
+			});
+		</script>
+			<?php include "include/footer.php" ?>
 	</div> <!-- /.main-page-wrapper -->
+
+<style>
+.profile-sidebar {
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.profile-image-wrapper {
+    position: relative;
+}
+
+.profile-image-wrapper img,
+.profile-initials {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-initials {
+    background: linear-gradient(45deg, #4e73df, #224abe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.profile-image-wrapper label {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-image-wrapper label:hover {
+    transform: scale(1.1);
+}
+
+.profile-stats {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+.profile-content {
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.form-control {
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+</style>
 </body>
 
 </html>

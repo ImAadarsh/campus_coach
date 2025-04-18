@@ -1,0 +1,1639 @@
+{
+    "type": "postman_collection",
+    "collection": {
+        "info": {
+            "_postman_id": "1e2a3b4c-5d6e-7f8g-9h0i-1j2k3l4m5n6o",
+            "name": "Trainer Appointment Booking System API",
+            "description": "A collection for testing the Trainer Appointment Booking System API endpoints",
+            "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+        },
+        "item": [
+            {
+                "name": "Trainers",
+                "item": [
+                    {
+                        "name": "List Trainers",
+                        "request": {
+                            "method": "GET",
+                            "header": [
+                                {
+                                    "key": "Accept",
+                                    "value": "application/json",
+                                    "type": "text"
+                                }
+                            ],
+                            "url": {
+                                "raw": "{{base_url}}/v1/trainers",
+                                "host": [
+                                    "{{base_url}}"
+                                ],
+                                "path": [
+                                    "v1",
+                                    "trainers"
+                                ],
+                                "query": [
+                                    {
+                                        "key": "specialization",
+                                        "value": "yoga",
+                                        "description": "Filter by specialization",
+                                        "disabled": true
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "Create Trainer",
+                        "request": {
+                            "method": "POST",
+                            "header": [
+                                {
+                                    "key": "Accept",
+                                    "value": "application/json",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json",
+                                    "type": "text"
+                                }
+                            ],
+                            "body": {
+                                "mode": "formdata",
+                                "formdata": [
+                                    {
+                                        "key": "token",
+                                        "value": "admin_token",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "first_name",
+                                        "value": "John",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "last_name",
+                                        "value": "Doe",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "hero_img",
+                                        "value": "",
+                                        "type": "file",
+                                        "disabled": true
+                                    },
+                                    {
+                                        "key": "profile_img",
+                                        "value": "",
+                                        "type": "file",
+                                        "disabled": true
+                                    },
+                                    {
+                                        "key": "short_about",
+                                        "value": "Experienced fitness trainer with 10+ years of experience",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "about",
+                                        "value": "Detailed biography of the trainer with qualifications and experience",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "designation",
+                                        "value": "Senior Fitness Trainer",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "email",
+                                        "value": "john.doe@example.com",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "passcode",
+                                        "value": "password123",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "key": "mobile",
+                                        "value": "1234567890",
+                                        "type": "text"
+                                    }
+                                ]
+                            },
+                            "url": {
+                                "raw": "{{base_url}}/v1/trainers",
+                                "host": [
+                                    "{{base_url}}"
+                                ],
+                                "path": [
+                                    "v1",
+                                    "trainers"
+                                ]
+                            }
+                        }
+                    }]
+                },
+                {
+                    "name": "Get Trainer Details",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/v1/trainers/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "v1",
+                                "trainers",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Trainer",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json",
+                                "type": "text"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "token",
+                                    "value": "admin_token",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "first_name",
+                                    "value": "John",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "last_name",
+                                    "value": "Doe",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "hero_img",
+                                    "value": "",
+                                    "type": "file",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "profile_img",
+                                    "value": "",
+                                    "type": "file",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "short_about",
+                                    "value": "Updated bio - Experienced fitness trainer with 10+ years of experience",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "about",
+                                    "value": "Updated detailed biography of the trainer with qualifications and experience",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "designation",
+                                    "value": "Senior Fitness Trainer",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "john.doe@example.com",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "passcode",
+                                    "value": "password123",
+                                    "type": "text",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "mobile",
+                                    "value": "1234567890",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/v1/trainers/1",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "v1",
+                                "trainers",
+                                "1"
+                            ]
+                        }
+                    },
+                    "description": "Update trainer information"
+                }
+            ,
+            {
+                "name": "Delete Trainer",
+                "request": {
+                    "method": "DELETE",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/trainers/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "trainers",
+                            "1"
+                        ]
+                    }
+                }
+            }
+,
+    {
+        "name": "Trainer Specializations",
+        "item": [
+            {
+                "name": "Add Specialization",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "specialization",
+                                "value": "Yoga",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/trainers/1/specializations",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "trainers",
+                            "1",
+                            "specializations"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Delete Specialization",
+                "request": {
+                    "method": "DELETE",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/trainers/1/specializations/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "trainers",
+                            "1",
+                            "specializations",
+                            "1"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Trainer Availabilities",
+        "item": [
+            {
+                "name": "List Availabilities",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/availabilities",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "availabilities"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Create Availability",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "trainer_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "date",
+                                "value": "2025-03-15",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/availabilities",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "availabilities"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Availability Details",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/availabilities/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "availabilities",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Update Availability",
+                "request": {
+                    "method": "PUT",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "date",
+                                "value": "2025-03-16",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/availabilities/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "availabilities",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Delete Availability",
+                "request": {
+                    "method": "DELETE",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/availabilities/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "availabilities",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Trainer Availabilities",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/trainers/1/availabilities",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "trainers",
+                            "1",
+                            "availabilities"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Time Slots",
+        "item": [
+            {
+                "name": "List Time Slots",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/time-slots",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "time-slots"
+                        ],
+                        "query": [
+                            {
+                                "key": "status",
+                                "value": "available",
+                                "description": "Filter by status",
+                                "disabled": true
+                            },
+                            {
+                                "key": "date",
+                                "value": "2025-03-15",
+                                "description": "Filter by date",
+                                "disabled": true
+                            },
+                            {
+                                "key": "trainer_id",
+                                "value": "1",
+                                "description": "Filter by trainer",
+                                "disabled": true
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Create Time Slot",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "trainer_availability_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "start_time",
+                                "value": "10:00:00",
+                                "type": "text"
+                            },
+                            {
+                                "key": "end_time",
+                                "value": "11:00:00",
+                                "type": "text"
+                            },
+                            {
+                                "key": "duration_minutes",
+                                "value": "60",
+                                "type": "text"
+                            },
+                            {
+                                "key": "price",
+                                "value": "50.00",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/time-slots",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "time-slots"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Time Slot Details",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/time-slots/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "time-slots",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Update Time Slot",
+                "request": {
+                    "method": "PUT",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "start_time",
+                                "value": "10:30:00",
+                                "type": "text"
+                            },
+                            {
+                                "key": "end_time",
+                                "value": "11:30:00",
+                                "type": "text"
+                            },
+                            {
+                                "key": "duration_minutes",
+                                "value": "60",
+                                "type": "text"
+                            },
+                            {
+                                "key": "price",
+                                "value": "55.00",
+                                "type": "text"
+                            },
+                            {
+                                "key": "status",
+                                "value": "available",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/time-slots/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "time-slots",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Delete Time Slot",
+                "request": {
+                    "method": "DELETE",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/time-slots/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "time-slots",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Availability Time Slots",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/availabilities/1/time-slots",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "availabilities",
+                            "1",
+                            "time-slots"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Bookings",
+        "item": [
+            {
+                "name": "List Bookings",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/bookings",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "bookings"
+                        ],
+                        "query": [
+                            {
+                                "key": "status",
+                                "value": "pending",
+                                "description": "Filter by status",
+                                "disabled": true
+                            },
+                            {
+                                "key": "date_from",
+                                "value": "2025-03-01",
+                                "description": "Filter by date range",
+                                "disabled": true
+                            },
+                            {
+                                "key": "date_to",
+                                "value": "2025-03-31",
+                                "description": "Filter by date range",
+                                "disabled": true
+                            },
+                            {
+                                "key": "trainer_id",
+                                "value": "1",
+                                "description": "Filter by trainer",
+                                "disabled": true
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Create Booking",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "user_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "user_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "time_slot_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "booking_notes",
+                                "value": "Any special requests or notes for the trainer",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/bookings",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "bookings"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Booking Details",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/bookings/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "bookings",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Update Booking Status",
+                "request": {
+                    "method": "PATCH",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "status",
+                                "value": "confirmed",
+                                "type": "text",
+                                "description": "Options: pending, confirmed, completed, cancelled, refunded"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/bookings/1/status",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "bookings",
+                            "1",
+                            "status"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get User Bookings",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/users/1/bookings",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "users",
+                            "1",
+                            "bookings"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Payments",
+        "item": [
+            {
+                "name": "List Payments",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/payments",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "payments"
+                        ],
+                        "query": [
+                            {
+                                "key": "status",
+                                "value": "completed",
+                                "description": "Filter by status",
+                                "disabled": true
+                            },
+                            {
+                                "key": "payment_method",
+                                "value": "credit_card",
+                                "description": "Filter by payment method",
+                                "disabled": true
+                            },
+                            {
+                                "key": "date_from",
+                                "value": "2025-03-01",
+                                "description": "Filter by date range",
+                                "disabled": true
+                            },
+                            {
+                                "key": "date_to",
+                                "value": "2025-03-31",
+                                "description": "Filter by date range",
+                                "disabled": true
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Create Payment",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "booking_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "amount",
+                                "value": "50.00",
+                                "type": "text"
+                            },
+                            {
+                                "key": "payment_method",
+                                "value": "credit_card",
+                                "type": "text"
+                            },
+                            {
+                                "key": "transaction_id",
+                                "value": "txn_123456789",
+                                "type": "text"
+                            },
+                            {
+                                "key": "status",
+                                "value": "completed",
+                                "type": "text",
+                                "description": "Options: pending, completed, failed, refunded"
+                            },
+                            {
+                                "key": "payment_date",
+                                "value": "2025-03-11T12:00:00",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/payments",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "payments"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Payment Details",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/payments/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "payments",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Update Payment Status",
+                "request": {
+                    "method": "PATCH",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "admin_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "status",
+                                "value": "completed",
+                                "type": "text",
+                                "description": "Options: pending, completed, failed, refunded"
+                            },
+                            {
+                                "key": "transaction_id",
+                                "value": "txn_updated123456",
+                                "type": "text",
+                                "disabled": true
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/payments/1/status",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "payments",
+                            "1",
+                            "status"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "name": "Reviews",
+        "item": [
+            {
+                "name": "List Reviews",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/reviews",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "reviews"
+                        ],
+                        "query": [
+                            {
+                                "key": "rating",
+                                "value": "5",
+                                "description": "Filter by rating",
+                                "disabled": true
+                            },
+                            {
+                                "key": "trainer_id",
+                                "value": "1",
+                                "description": "Filter by trainer",
+                                "disabled": true
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Create Review",
+                "request": {
+                    "method": "POST",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "user_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "booking_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "user_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "trainer_id",
+                                "value": "1",
+                                "type": "text"
+                            },
+                            {
+                                "key": "rating",
+                                "value": "5",
+                                "type": "text"
+                            },
+                            {
+                                "key": "review",
+                                "value": "Excellent trainer! Very knowledgeable and motivating.",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/reviews",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "reviews"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Review Details",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/reviews/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "reviews",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Update Review",
+                "request": {
+                    "method": "PUT",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "user_token",
+                                "type": "text"
+                            },
+                            {
+                                "key": "rating",
+                                "value": "4",
+                                "type": "text"
+                            },
+                            {
+                                "key": "review",
+                                "value": "Updated review - Very good trainer, would recommend!",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/reviews/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "reviews",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Delete Review",
+                "request": {
+                    "method": "DELETE",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                            {
+                                "key": "token",
+                                "value": "user_token",
+                                "type": "text"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "raw": "{{base_url}}/v1/reviews/1",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "reviews",
+                            "1"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Get Trainer Reviews",
+                "request": {
+                    "method": "GET",
+                    "header": [
+                        {
+                            "key": "Accept",
+                            "value": "application/json",
+                            "type": "text"
+                        }
+                    ],
+                    "url": {
+                        "raw": "{{base_url}}/v1/trainers/1/reviews",
+                        "host": [
+                            "{{base_url}}"
+                        ],
+                        "path": [
+                            "v1",
+                            "trainers",
+                            "1",
+                            "reviews"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "Trainer Settings",
+                "item": [
+                  {
+                    "name": "Update Trainer Settings",
+                    "request": {
+                      "method": "POST",
+                      "header": [
+                        {
+                          "key": "Accept",
+                          "value": "application/json",
+                          "type": "text"
+                        }
+                      ],
+                      "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                          {
+                            "key": "token",
+                            "value": "trainer_token",
+                            "type": "text"
+                          },
+                          {
+                            "key": "first_name",
+                            "value": "John",
+                            "type": "text"
+                          },
+                          {
+                            "key": "last_name",
+                            "value": "Doe",
+                            "type": "text"
+                          },
+                          {
+                            "key": "short_about",
+                            "value": "Experienced fitness trainer",
+                            "type": "text"
+                          },
+                          {
+                            "key": "designation",
+                            "value": "Senior Fitness Trainer",
+                            "type": "text"
+                          },
+                          {
+                            "key": "mobile",
+                            "value": "9876543210",
+                            "type": "text"
+                          }
+                        ]
+                      },
+                      "url": {
+                        "raw": "{{base_url}}/v1/trainer/settings/update",
+                        "host": ["{{base_url}}"],
+                        "path": ["v1", "trainer", "settings", "update"]
+                      }
+                    }
+                  },
+                  {
+                    "name": "Upload Profile Image",
+                    "request": {
+                      "method": "POST",
+                      "header": [
+                        {
+                          "key": "Accept",
+                          "value": "application/json",
+                          "type": "text"
+                        }
+                      ],
+                      "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                          {
+                            "key": "token",
+                            "value": "trainer_token",
+                            "type": "text"
+                          },
+                          {
+                            "key": "profile_img",
+                            "type": "file",
+                            "src": []
+                          }
+                        ]
+                      },
+                      "url": {
+                        "raw": "{{base_url}}/v1/trainer/profile-image/upload",
+                        "host": ["{{base_url}}"],
+                        "path": ["v1", "trainer", "profile-image", "upload"]
+                      }
+                    }
+                  },
+                  {
+                    "name": "Upload Hero Image",
+                    "request": {
+                      "method": "POST",
+                      "header": [
+                        {
+                          "key": "Accept",
+                          "value": "application/json",
+                          "type": "text"
+                        }
+                      ],
+                      "body": {
+                        "mode": "formdata",
+                        "formdata": [
+                          {
+                            "key": "token",
+                            "value": "trainer_token",
+                            "type": "text"
+                          },
+                          {
+                            "key": "hero_img",
+                            "type": "file",
+                            "src": []
+                          }
+                        ]
+                      },
+                      "url": {
+                        "raw": "{{base_url}}/v1/trainer/hero-image/upload",
+                        "host": ["{{base_url}}"],
+                        "path": ["v1", "trainer", "hero-image", "upload"]
+                      }
+                    }
+                  }
+                ]
+              }
+              
+        ]
+    }
+],
+"auth": {
+    "type": "bearer",
+    "bearer": [
+        {
+            "key": "token",
+            "value": "{{api_token}}",
+            "type": "string"
+        }
+    ]
+},
+"event": [
+    {
+        "listen": "prerequest",
+        "script": {
+            "type": "text/javascript",
+            "exec": [
+                "// You can add pre-request scripts here if needed"
+            ]
+        }
+    },
+    {
+        "listen": "test",
+        "script": {
+            "type": "text/javascript"
+        }
+    }
+],
+"variable": [
+    {
+        "key": "base_url",
+        "value": "http://localhost:8000/api",
+        "type": "string"
+    },
+    {
+        "key": "api_token",
+        "value": "your_api_token_here",
+        "type": "string"
+    }
+]
+}}

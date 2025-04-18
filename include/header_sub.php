@@ -174,16 +174,7 @@
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="news.php">
-                                                    Blog
-                                                    <i class="fas fa-angle-down"></i>
-                                                </a>
-                                                <ul class="submenu">
-                                                    <li><a href="news-grid.php">Blog Grid</a></li>
-                                                    <li><a href="news.php">Blog List</a></li>
-                                                    <li><a href="news-carousel.php">Blog Carousel</a></li>
-                                                    <li><a href="news-details.php">Blog Details</a></li>
-                                                </ul>
+                                                <a href="news.php">Blog & News</a>
                                             </li>
                                             <li>
                                                 <a href="contact.php">Contact Us</a>
@@ -194,9 +185,9 @@
                             </div>
                             <a href="#0" class="search-trigger search-icon"><i class="fal fa-search"></i></a>
                             <div class="header-button">
-                                <a href="contact.php" class="theme-btn">
+                                <a href="login.php" class="theme-btn">
                                     <span>
-                                        Book A visit
+                                       Login
                                         <i class="fa-solid fa-arrow-right-long"></i>
                                     </span>
                                 </a>

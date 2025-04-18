@@ -16,6 +16,8 @@ use App\Models\Workshop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Response;
+
 class Admin extends Controller
 {
     public function insertBlog(Request $request)
@@ -356,42 +358,66 @@ public function insertTrainer(Request $request)
 {
     $rules = [
         'token' => 'required|max:255',
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'hero_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:9048',
+        'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:9048',
+        'short_about' => 'nullable|string|max:500',
+        'about' => 'nullable|string',
+        'designation' => 'required|string|max:255',
+        'email' => 'required|email|unique:trainers,email',
+        'passcode' => 'required|string|min:6',
+        'mobile' => 'required|string|max:15|unique:trainers,mobile'
     ];
-
+    
     $validator = Validator::make($request->all(), $rules);
-
+    
     if ($validator->fails()) {
-        return response($validator->errors(), 400);
+        return response()->json(['status' => false, 'errors' => $validator->errors()], 400);
     }
-    if(!User::where('remember_token',$request->token)->where('user_type','admin')->first()){
-        return response(["status" =>"false", "message"=>"Session is expired. Please Login Again"], 401);
+    
+    $admin = User::where('remember_token', $request->token)->where('user_type', 'admin')->first();
+    if (!$admin) {
+        return response()->json(['status' => false, 'message' => 'Session expired. Please log in again.'], 401);
     }
-
+    
     try {
-        if($request->id){
-            $trainer = Trainer::find($request->id);
-        }else{
-            $trainer = new Trainer();
+        $trainer = $request->id ? Trainer::find($request->id) : new Trainer();
+        
+        if (!$trainer) {
+            return response()->json(['status' => false, 'message' => 'Trainer not found.'], 404);
         }
-        $trainer->name = $request->name;
+        
+        $trainer->first_name = $request->first_name;
+        $trainer->last_name = $request->last_name;
+        $trainer->short_about = $request->short_about;
+        $trainer->about = $request->about;
         $trainer->designation = $request->designation;
-        $trainer->short_description = $request->short_description;
-        $trainer->description = $request->description;
-        if ($request->hasFile('image')) {
-            $file = $request->file('image')->store('public/trainer/icon');
-            $trainer->image  = $file;
+        $trainer->email = $request->email;
+        $trainer->passcode = bcrypt($request->passcode);
+        $trainer->mobile = $request->mobile;
+        
+        if ($request->hasFile('hero_img')) {
+            $heroImgPath = $request->file('hero_img')->store('public/trainer/hero');
+            $trainer->hero_img = $heroImgPath;
         }
+        
+        if ($request->hasFile('profile_img')) {
+            $profileImgPath = $request->file('profile_img')->store('public/trainer/profile');
+            $trainer->profile_img = $profileImgPath;
+        }
+        
         $trainer->save();
-
-        return response([
+        
+        return response()->json([
             'status' => true,
-            'message' => 'Trainer created successfully.',
+            'message' => 'Trainer saved successfully.',
             'data' => $trainer
         ], 201);
     } catch (\Exception $e) {
-        return response([
+        return response()->json([
             'status' => false,
-            'message' => 'Failed to insert trainer.',
+            'message' => 'Failed to save trainer.',
             'error' => $e->getMessage()
         ], 500);
     }
@@ -399,11 +425,16 @@ public function insertTrainer(Request $request)
 public function insertWorkshop(Request $request)
 {
     $rules = [
-        'name' => 'required|max:255',
+        'title' => 'required|max:255',
         'description' => 'required|max:2000',
-        'price' => 'required|numeric',
-        'trainer_id' => 'required|integer|exists:trainers,id',
-
+        'category_id' => 'required|integer|exists:categories,id',
+        'start_date' => 'required|date',
+        'duration' => 'required|string',
+        'language' => 'required|string',
+        'state' => 'required|string',
+        'location' => 'required|string',
+        'requirements' => 'nullable|string',
+        'mode' => 'required|string',
     ];
 
     $validator = Validator::make($request->all(), $rules);
@@ -411,38 +442,39 @@ public function insertWorkshop(Request $request)
     if ($validator->fails()) {
         return response($validator->errors(), 400);
     }
-    if(!User::where('remember_token',$request->token)->where('user_type','admin')->first()){
-        return response(["status" =>"false", "message"=>"Session is expired. Please Login Again"], 401);
+
+    if(!User::where('remember_token', $request->token)->where('user_type', 'admin')->first()){
+        return response(["status" => "false", "message" => "Session is expired. Please Login Again"], 401);
     }
 
     try {
         if($request->id){
             $workshop = Workshop::find($request->id);
-        }else{
+        } else {
             $workshop = new Workshop();
         }
-        $workshop->name = $request->name;
+
+        $workshop->title = $request->title;
         $workshop->description = $request->description;
-        $workshop->short_description = $request->short_description;
-        $workshop->learnings = $request->learnings;
-        $workshop->price = $request->price;
-        $workshop->trainer_id = $request->trainer_id;
         $workshop->category_id = $request->category_id;
-        $workshop->start_time = $request->start_time;
+        $workshop->start_date = $request->start_date;
         $workshop->duration = $request->duration;
-        $workshop->cut_price = $request->cut_price;
-        if($request->is_free)
-        $workshop->is_free = $request->is_free;
-        $workshop->level = $request->level;
-       
-        if ($request->hasFile('icon')) {
-            $file = $request->file('icon')->store('public/workshop/icon');
-            $workshop->icon  = $file;
+        $workshop->language = $request->language;
+        $workshop->state = $request->state;
+        $workshop->location = $request->location;
+        $workshop->requirements = $request->requirements;
+        $workshop->mode = $request->mode;
+
+        if ($request->hasFile('icon_image')) {
+            $file = $request->file('icon_image')->store('public/workshop/icon_image');
+            $workshop->icon_image = $file;
         }
+
         if ($request->hasFile('banner_image')) {
             $file = $request->file('banner_image')->store('public/workshop/banner_image');
-            $workshop->banner_image  = $file;
+            $workshop->banner_image = $file;
         }
+
         $workshop->save();
 
         return response([

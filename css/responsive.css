@@ -158,7 +158,12 @@
   .theme-details-one .media-gallery .style-two .carousel-indicators button {width: 150px;}
   .theme-details-one .media-gallery .style-two .carousel-arrow {bottom: 32px; right: 15px;}
   .theme-details-one .media-gallery-grid {padding: 0 25px;}
-  
+  .dashboard-body {padding: 120px 40px 30px;}
+  .dashboard-body .dashboard-header {
+    left: 300px;
+    padding: 5px 0;
+    min-height: 60px;
+  }
 }
 /*(min-width: 1200px) and (max-width: 1399px)*/
 
@@ -251,6 +256,7 @@
   .service-details .service-post h4 {font-size: 35px;}
 }
 /* (min-width: 992px) and (max-width: 1399px) */
+
 
 
 /*Grid lg Start*/
@@ -358,6 +364,31 @@
   .service-details .service-post .feature-wrapper .bg-wrapper {padding: 15px 15px 20px;}
   .card-style-eleven .icon {height: 60px;}
   .card-style-eleven h5 {font-size: 20px;}
+  .dashboard-body {padding: 100px 15px 30px;}
+  .dashboard-body .dashboard-header {
+    padding: 5px 0;
+    min-height: 50px;
+  }
+  .dashboard-body .dashboard-header .search-form {
+    height: 40px;
+    width: 200px;
+  }
+  .dashboard-body .dashboard-header .user-data .user-name {
+    font-size: 14px;
+  }
+  .dashboard-body .dashboard-header .user-data .user-avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f4ff;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 2px solid #e6e9f4;
+  }
 }
 /*(max-width: 1199px)*/
 
@@ -383,6 +414,11 @@
   .listing-card-seven .layout-two .property-info {width: calc(100% - 250px); padding: 25px 30px 10px 30px;}
   .theme-details-one .property-floor-plan .carousel-indicators {right: -30px;}
   .pricing-section-one .left-panel li {font-size: 15px; padding-left: 20px;}
+  .dashboard-body .dashboard-header {
+    right: 10px;
+    left: 275px;
+    min-height: 50px;
+  }
 }
 /*(min-width: 992px) and (max-width: 1199px)*/
 
@@ -620,6 +656,19 @@
   .pricing-section-one .main-bg {border: none;}
   .pricing-section-one .pr-column-wrapper .pr-header {margin-bottom: 40px;}
   .listing-slider-one.vw-100 {width: 100% !important;}
+  .dashboard-body .dashboard-header {
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 5px 10px;
+    min-height: 45px;
+  }
+  .dashboard-body .dashboard-header .job-post-btn {
+    width: 100px;
+    line-height: 35px;
+    font-size: 13px;
+    padding: 0;
+  }
 }
 /*(max-width: 767px)*/
 
@@ -665,6 +714,19 @@
   .grid-3column .grid-sizer, .grid-3column .isotop-item {width: 100%;}
   .project-details-one .details-text .project-info-outline .main-bg li .num {position: static; transform: none; font-size: 26px;}
   .project-details-one .details-text .project-info-outline .main-bg li {padding: 25px 15px 40px 60px;}
+  .dashboard-body .dashboard-header {
+    min-height: 40px;
+  }
+  .dashboard-body .dashboard-header .search-form {display: none;}
+  .dashboard-body .dashboard-header .user-data .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    border-width: 2px;
+  }
+  .dashboard-body .dashboard-header .profile-notification .noti-btn {
+    font-size: 18px;
+  }
 }
 /*(max-width: 575px)*/
 
@@ -688,7 +750,10 @@
 }
 @media (min-width: 1200px) and (max-width: 1399px) {
   .dashboard-body {padding: 150px 40px 30px;}
-  .dashboard-body .dashboard-header {left: 300px; padding: 20px 0;}
+  .dashboard-body .dashboard-header {
+    left: 300px;
+    padding: 10px 0;
+  }
   .dashboard-body .main-title {font-size: 30px; margin-bottom: 35px;}
   .dashboard-body .card-box {padding: 40px 45px;}
   .compose-mail-offcanvas {right:40px;}
@@ -705,8 +770,14 @@
   .dash-aside-navbar .profile-complete-status {margin: 20px 0;}
   .dash-aside-navbar .logout-btn {font-size: 15px;}
   .dashboard-body {padding: 130px 15px 30px;}
-  .dashboard-body .dashboard-header {padding: 15px 0;}
-  .dashboard-body .dashboard-header .search-form {height: 50px; width: 250px;}
+  .dashboard-body .dashboard-header {
+    padding: 5px 0;
+    min-height: 50px;
+  }
+  .dashboard-body .dashboard-header .search-form {
+    height: 40px;
+    width: 200px;
+  }
   .dashboard-body .main-title {font-size: 24px; margin-bottom: 25px;}
   .dashboard-body .dash-card-one .value {font-size: 22px;}
   .dashboard-body .border-30,.dashboard-body .dash-card-one:before {border-radius: 15px;}
@@ -730,13 +801,21 @@
 }
 
 @media (min-width: 992px) and (max-width: 1199px) { 
-  .dashboard-body .dashboard-header {right:15px; left: 275px;}
+  .dashboard-body .dashboard-header {
+    right: 10px;
+    left: 275px;
+    min-height: 50px;
+  }
   .dashboard-body .filter-input li {width: calc(25% - 20px);}
   
 }
 
 @media (min-width: 768px) and (max-width: 991px) { 
-  .dashboard-body .dashboard-header {right:15px; left: 275px;}
+  .dashboard-body .dashboard-header {
+    right: 10px;
+    left: 275px;
+    min-height: 50px;
+  }
   .dashboard-body .filter-input li {width: calc(33.333% - 20px);}
 
 }
@@ -757,14 +836,37 @@
   .dash-aside-navbar {transform: translateX(-100%); opacity: 0; visibility: hidden; transition: all 0.3s ease;}
   .dash-aside-navbar.show {transform: translateX(0); box-shadow: 15px 0 25px rgba(35,35,35,0.09); opacity: 1; visibility: visible;}
   .dashboard-body {margin: 0; border-radius: 0;}
-  .dashboard-body .dashboard-header {left: 0; right: 0; border-bottom: 1px solid #e5e5e5; padding: 12px 15px;}
+  .dashboard-body .dashboard-header {
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 5px 10px;
+    min-height: 45px;
+  }
   .dashboard-body .dashboard-header .search-form {width: auto;}
-  .dashboard-body .dashboard-header .job-post-btn {width: 110px; line-height: 40px; font-size: 14px;}
+  .dashboard-body .dashboard-header .job-post-btn {
+    width: 100px;
+    line-height: 35px;
+    font-size: 13px;
+    padding: 0;
+  }
   .compose-mail-offcanvas {left: 15px; width: auto;}
 }
 
 @media (max-width: 575px) {
+  .dashboard-body .dashboard-header {
+    min-height: 40px;
+  }
   .dashboard-body .dashboard-header .search-form {display: none;}
+  .dashboard-body .dashboard-header .user-data .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    border-width: 2px;
+  }
+  .dashboard-body .dashboard-header .profile-notification .noti-btn {
+    font-size: 18px;
+  }
   .dashboard-body .dash-card-one {text-align: center;}
   .dashboard-body .dash-card-one .icon {margin: 0 auto 15px;}
   .dashboard-body .dashboard-header .profile-notification .dropdown-menu {max-width: 300px; padding: 20px 15px 20px 15px;}
