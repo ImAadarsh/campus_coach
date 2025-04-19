@@ -24,6 +24,10 @@
 
 <body>
 
+<?php 
+// Include database connection
+include "include/connect.php"; 
+?>
 
     <!-- header style one -->
 <?php include "include_cc/header.php"; ?>
@@ -240,9 +244,8 @@
                             <img src="assets_cc/images/banner/bulb.png" alt="icon">
                             <span>Gateway to Lifelong Learning</span>
                         </div>
-                        <h2 class="title">Know Campus Coach | Guiding Future Empowering
-                            Learners Worldwide</h2>
-                        <p class="post-title">We are passionate about education and dedicated to providing high- <br> quality learning resources for learners of all backgrounds.</p>
+                        <h2 class="title">Beyond 2025: Preparing You for the Careers That Will Determine Tomorrow</h2>
+                        <p class="post-title">We guide students to adapt and excel in an evolving job landscape where continuous upskilling is key to staying relevant in an automated world.</p>
                     </div>
                     <div class="about-inner-right-one">
                         <div class="what-you-get">
@@ -252,8 +255,8 @@
                                     <img src="assets_cc/images/about/icon/01.png" alt="icon-image">
                                 </div>
                                 <div class="information">
-                                    <h5 class="title">Learn with Expert </h5>
-                                    <p>We are passionate education.</p>
+                                    <h5 class="title">Future-Ready Careers</h5>
+                                    <p>Preparing for emerging careers beyond 2025.</p>
                                 </div>
                             </div>
                             <!-- single-facilities end -->
@@ -263,20 +266,20 @@
                                     <img src="assets_cc/images/about/icon/02.png" alt="icon-image">
                                 </div>
                                 <div class="information">
-                                    <h5 class="title">Expert Instructors</h5>
-                                    <p>We are passionate about education</p>
+                                    <h5 class="title">Continuous Learning</h5>
+                                    <p>Adapt, learn, and upskill to stay relevant.</p>
                                 </div>
                             </div>
                             <!-- single-facilities end -->
                         </div>
                         <div class="author-area">
                             <div class="single-author-and-info">
-                                <img src="assets_cc/images/about/01.png" alt="about">
+                                <img style="width:55px; height: 60px;" src="Gaurava.png" alt="about">
                                 <div class="information">
                                     <a href="#">
-                                        <h6 class="title">William James</h6>
+                                        <h6 class="title">Gaurava Yadav</h6>
                                     </a>
-                                    <p class="desig">CEO, Campus Coach | Guiding Future Online Education</p>
+                                    <p class="desig">Founder CEO | IPN FORUM</p>
                                 </div>
                             </div>
                             <a href="#" class="rts-btn btn-primary">About Us</a>
@@ -299,15 +302,18 @@
                                 <img src="assets_cc/images/banner/bulb.png" alt="icon">
                                 <!-- <span>Courses</span> -->
                             </div>
-                            <h2 class="title">Explore Featured Instructor</h2>
-                            <p class="post-title">You'll find something to spark your curiosity and enhance</p>
+                            <h2 class="title">Explore Featured Counsellors</h2>
+                            <p class="post-title">Connect with expert career mentors to guide your future path</p>
                         </div>
                         <div class="button-group filters-button-group">
-                            <button class="button is-checked" data-filter="*">All Catagories</button>
-                            <button class="button" data-filter=".creative">Business</button>
-                            <button class="button" data-filter=".design">Marketing</button>
-                            <button class="button" data-filter=".photo">Music</button>
-                            <button class="button" data-filter=".style">Design</button>
+                            <button class="button is-checked" data-filter="*">All Categories</button>
+                            <?php
+                            $cat_query = "SELECT * FROM categories WHERE is_deleted = 0 LIMIT 4";
+                            $cat_result = mysqli_query($connect, $cat_query);
+                            while($cat_row = mysqli_fetch_assoc($cat_result)) {
+                                echo '<button class="button" data-filter=".'.$cat_row['name'].'">'.$cat_row['name'].'</button>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -316,11 +322,93 @@
                 <div class="portfolio_wrap">
                     <div class="filter row g-5 mt--20 portfolio-feed personal">
 
-
+                        <?php
+                        $trainer_query = "SELECT * FROM trainers ORDER BY id DESC LIMIT 8";
+                        $trainer_result = mysqli_query($connect, $trainer_query);
+                        
+                        if(mysqli_num_rows($trainer_result) > 0) {
+                            while($trainer = mysqli_fetch_assoc($trainer_result)) {
+                                // Get trainer specializations
+                                $specialization_query = "SELECT specialization FROM trainer_specializations WHERE trainer_id = ".$trainer['id']." LIMIT 1";
+                                $specialization_result = mysqli_query($connect, $specialization_query);
+                                $specialization = "";
+                                if(mysqli_num_rows($specialization_result) > 0) {
+                                    $spec_row = mysqli_fetch_assoc($specialization_result);
+                                    $specialization = $spec_row['specialization'];
+                                }
+                                
+                                // Get trainer rating
+                                $rating_query = "SELECT AVG(rating) as avg_rating, COUNT(id) as review_count FROM trainer_reviews WHERE trainer_id = ".$trainer['id'];
+                                $rating_result = mysqli_query($connect, $rating_query);
+                                $rating = 0;
+                                $review_count = 0;
+                                if(mysqli_num_rows($rating_result) > 0) {
+                                    $rating_row = mysqli_fetch_assoc($rating_result);
+                                    $rating = round($rating_row['avg_rating'], 1);
+                                    $review_count = $rating_row['review_count'];
+                                }
+                        ?>
+                        <div class="flash grid-item-p element-item transition <?php echo $specialization; ?> col-xl-3 col-lg-4 col-md-6 col-sm-6" data-category="transition">
+                            <!-- rts single course -->
+                            <div class="rts-single-course">
+                                <a href="mypage.php?trainer_id=<?php echo $trainer['id']; ?>" class="thumbnail">
+                                    <img src="<?php echo $uri.$trainer['profile_img']; ?>" alt="<?php echo $trainer['first_name'].' '.$trainer['last_name']; ?>">
+                                </a>
+                                <div class="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
+                                    <i class="fa-sharp fa-light fa-bookmark"></i>
+                                </div>
+                                <div class="tags-area-wrapper">
+                                    <div class="single-tag">
+                                        <span><?php echo $specialization; ?></span>
+                                    </div>
+                                </div>
+                                <div class="lesson-studente">
+                                    <div class="lesson">
+                                        <i class="fa-light fa-calendar-lines-pen"></i>
+                                        <span>Available for Booking</span>
+                                    </div>
+                                    <div class="lesson">
+                                        <i class="fa-light fa-user-group"></i>
+                                        <span><?php echo $review_count; ?>+ Reviews</span>
+                                    </div>
+                                </div>
+                                <a href="mypage.php?trainer_id=<?php echo $trainer['id']; ?>">
+                                    <h5 class="title"><?php echo $trainer['first_name'].' '.$trainer['last_name']; ?></h5>
+                                </a>
+                                <p class="teacher"><?php echo $trainer['designation']; ?></p>
+                                <div class="rating-and-price">
+                                    <div class="rating-area">
+                                        <span><?php echo $rating; ?></span>
+                                        <div class="stars">
+                                            <ul>
+                                                <?php
+                                                for($i = 1; $i <= 5; $i++) {
+                                                    if($i <= $rating) {
+                                                        echo '<li><i class="fa-sharp fa-solid fa-star"></i></li>';
+                                                    } else {
+                                                        echo '<li><i class="fa-sharp fa-regular fa-star"></i></li>';
+                                                    }
+                                                }
+                                                ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="price-area">
+                                        <a href="mypage.php?trainer_id=<?php echo $trainer['id']; ?>" class="rts-btn btn-primary">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- rts single course end -->
+                        </div>
+                        <?php
+                            }
+                        } else {
+                            // Fallback to static content if no trainers in database
+                        ?>
                         <div class="flash grid-item-p element-item transition creative col-xl-3 col-lg-4 col-md-6 col-sm-6" data-category="transition">
                             <!-- rts single course -->
                             <div class="rts-single-course">
-                                <a href="single-course.php" class="thumbnail">
+                                <a href="mypage.php" class="thumbnail">
                                     <img src="Gaurava.png" alt="course">
                                 </a>
                                 <div class="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
@@ -341,7 +429,7 @@
                                         <span>100+ Students</span>
                                     </div>
                                 </div>
-                                <a href="single-course.php">
+                                <a href="mypage.php">
                                     <h5 class="title">Mr. Gaurava Yadav</h5>
                                 </a>
                                 <p class="teacher">Founder CEO | IPN FORUM</p>
@@ -370,170 +458,7 @@
                             </div>
                             <!-- rts single course end -->
                         </div>
-
-                        <div class="flash grid-item-p element-item transition creative col-xl-3 col-lg-4 col-md-6 col-sm-6" data-category="transition">
-                            <!-- rts single course -->
-                            <div class="rts-single-course">
-                                <a href="single-course.php" class="thumbnail">
-                                    <img src="Gaurava.png" alt="course">
-                                </a>
-                                <div class="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
-                                    <i class="fa-sharp fa-light fa-bookmark"></i>
-                                </div>
-                                <div class="tags-area-wrapper">
-                                    <div class="single-tag">
-                                        <span>Education</span>
-                                    </div>
-                                </div>
-                                <div class="lesson-studente">
-                                    <div class="lesson">
-                                        <i class="fa-light fa-calendar-lines-pen"></i>
-                                        <span>25 Sessions</span>
-                                    </div>
-                                    <div class="lesson">
-                                        <i class="fa-light fa-user-group"></i>
-                                        <span>100+ Students</span>
-                                    </div>
-                                </div>
-                                <a href="single-course.php">
-                                    <h5 class="title">Mr. Gaurava Yadav</h5>
-                                </a>
-                                <p class="teacher">Founder CEO | IPN FORUM</p>
-                                <div class="rating-and-price">
-                                    <div class="rating-area">
-                                        <span>4.5</span>
-                                        <div class="stars">
-                                            <ul>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-regular fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="price-area">
-                                        <div class="not price">
-                                        ₹1999
-                                        </div>
-                                        <div class="price">
-                                        ₹999
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- rts single course end -->
-                        </div>
-
-
-                        <div class="flash grid-item-p element-item transition creative col-xl-3 col-lg-4 col-md-6 col-sm-6" data-category="transition">
-                            <!-- rts single course -->
-                            <div class="rts-single-course">
-                                <a href="single-course.php" class="thumbnail">
-                                    <img src="Gaurava.png" alt="course">
-                                </a>
-                                <div class="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
-                                    <i class="fa-sharp fa-light fa-bookmark"></i>
-                                </div>
-                                <div class="tags-area-wrapper">
-                                    <div class="single-tag">
-                                        <span>Education</span>
-                                    </div>
-                                </div>
-                                <div class="lesson-studente">
-                                    <div class="lesson">
-                                        <i class="fa-light fa-calendar-lines-pen"></i>
-                                        <span>25 Sessions</span>
-                                    </div>
-                                    <div class="lesson">
-                                        <i class="fa-light fa-user-group"></i>
-                                        <span>100+ Students</span>
-                                    </div>
-                                </div>
-                                <a href="single-course.php">
-                                    <h5 class="title">Mr. Gaurava Yadav</h5>
-                                </a>
-                                <p class="teacher">Founder CEO | IPN FORUM</p>
-                                <div class="rating-and-price">
-                                    <div class="rating-area">
-                                        <span>4.5</span>
-                                        <div class="stars">
-                                            <ul>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-regular fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="price-area">
-                                        <div class="not price">
-                                        ₹1999
-                                        </div>
-                                        <div class="price">
-                                        ₹999
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- rts single course end -->
-                        </div>
-
-
-                        <div class="flash grid-item-p element-item transition creative col-xl-3 col-lg-4 col-md-6 col-sm-6" data-category="transition">
-                            <!-- rts single course -->
-                            <div class="rts-single-course">
-                                <a href="single-course.php" class="thumbnail">
-                                    <img src="Gaurava.png" alt="course">
-                                </a>
-                                <div class="save-icon" data-bs-toggle="modal" data-bs-target="#exampleModal-login">
-                                    <i class="fa-sharp fa-light fa-bookmark"></i>
-                                </div>
-                                <div class="tags-area-wrapper">
-                                    <div class="single-tag">
-                                        <span>Education</span>
-                                    </div>
-                                </div>
-                                <div class="lesson-studente">
-                                    <div class="lesson">
-                                        <i class="fa-light fa-calendar-lines-pen"></i>
-                                        <span>25 Sessions</span>
-                                    </div>
-                                    <div class="lesson">
-                                        <i class="fa-light fa-user-group"></i>
-                                        <span>100+ Students</span>
-                                    </div>
-                                </div>
-                                <a href="single-course.php">
-                                    <h5 class="title">Mr. Gaurava Yadav</h5>
-                                </a>
-                                <p class="teacher">Founder CEO | IPN FORUM</p>
-                                <div class="rating-and-price">
-                                    <div class="rating-area">
-                                        <span>4.5</span>
-                                        <div class="stars">
-                                            <ul>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                <li><i class="fa-sharp fa-regular fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="price-area">
-                                        <div class="not price">
-                                        ₹1999
-                                        </div>
-                                        <div class="price">
-                                        ₹999
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- rts single course end -->
-                        </div>
+                        <?php } ?>
 
 
                         
@@ -640,7 +565,7 @@
                         </div>
                         <!-- single choose reason end -->
                     </div>
-                    <a href="single-course.php" class="rts-btn btn-primary-white with-arrow">View All Course <i class="fa-regular fa-arrow-right"></i></a>
+                    <a href="mypage.php" class="rts-btn btn-primary-white with-arrow">Explore Trainers<i class="fa-regular fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -660,10 +585,10 @@
                     <div class="title-area-center-style">
                         <div class="pre-title">
                             <img src="assets_cc/images/banner/bulb.png" alt="icon">
-                            <span>Our Event</span>
+                            <span>Our Events</span>
                         </div>
-                        <h2 class="title">Upcoming Events</h2>
-                        <p class="post-title">You'll find something to spark your curiosity and enhance</p>
+                        <h2 class="title">Upcoming Career Events</h2>
+                        <p class="post-title">Join our interactive events to explore career opportunities and enhance your skills</p>
                     </div>
                 </div>
             </div>
@@ -671,6 +596,49 @@
                 <div class="col-lg-12">
                     <!-- single up coming events -->
                     <div class="upcoming-events-main-wrapper-1">
+                        <?php
+                        $event_query = "SELECT * FROM events ORDER BY date_time DESC LIMIT 3";
+                        $event_result = mysqli_query($connect, $event_query);
+                        
+                        if(mysqli_num_rows($event_result) > 0) {
+                            while($event = mysqli_fetch_assoc($event_result)) {
+                                $event_date = date("F d, Y", strtotime($event['date_time']));
+                                $event_time = date("h:i a", strtotime($event['date_time']));
+                        ?>
+                        <!-- single -->
+                        <div class="single-upcoming-events">
+                            <div class="img-information">
+                                <a href="event-details.php?id=<?php echo $event['id']; ?>" class="thumbnail">
+                                    <img src="<?php echo $uri.$event['image']; ?>" alt="<?php echo $event['name']; ?>">
+                                </a>
+                                <div class="information">
+                                    <div class="date-details">
+                                        <div class="date">
+                                            <i class="fa-thin fa-calendar-days"></i>
+                                            <p><?php echo $event_date; ?></p>
+                                        </div>
+                                        <div class="time">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <p><?php echo $event_time; ?></p>
+                                        </div>
+                                        <div class="location">
+                                            <i class="fa-thin fa-location-dot"></i>
+                                            <p><?php echo $event['location']; ?></p>
+                                        </div>
+                                    </div>
+                                    <a href="event-details.php?id=<?php echo $event['id']; ?>">
+                                        <h5 class="title"><?php echo $event['name']; ?></h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <a href="<?php echo !empty($event['link']) ? $event['link'] : 'event-details.php?id='.$event['id']; ?>" class="rts-btn btn-primary with-arrow">Get Ticket <i class="fa-light fa-arrow-right"></i></a>
+                        </div>
+                        <!-- single -->
+                        <?php
+                            }
+                        } else {
+                            // Fallback to static content if no events in database
+                        ?>
                         <!-- single -->
                         <div class="single-upcoming-events">
                             <div class="img-information">
@@ -757,6 +725,7 @@
                             </div>
                             <a href="event-details.php" class="rts-btn btn-primary with-arrow">Get Ticket <i class="fa-light fa-arrow-right"></i></a>
                         </div>
+                        <?php } ?>
                         <!-- single -->
                     </div>
                     <!-- single up coming events end -->
@@ -777,7 +746,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/01.svg" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">65,972</span></h5>
+                            <h5 class="title"><span class="">65,972</span></h5>
                             <span class="enr">Students Enrolled</span>
                         </div>
                         <!-- single end -->
@@ -786,7 +755,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/02.svg" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">5,321</span></h5>
+                            <h5 class="title"><span class="">5,321</span></h5>
                             <span class="enr">Completed Course</span>
                         </div>
                         <!-- single end -->
@@ -795,7 +764,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/03.svg" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">44,239</span></h5>
+                            <h5 class="title"><span class="">44,239</span></h5>
                             <span class="enr">Students Learner</span>
                         </div>
                         <!-- single end -->
@@ -804,7 +773,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/04.svg" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">75,992</span></h5>
+                            <h5 class="title"><span class="">75,992</span></h5>
                             <span class="enr">Students Enrolled</span>
                         </div>
                         <!-- single end -->
@@ -819,6 +788,8 @@
     </div>
     <!-- fun facts area end -->
 
+
+    <!-- conclusion area end -->
 
     <!-- feedback area start -->
     <!-- rts testimonials area  -->
@@ -857,8 +828,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/02.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Rajeev Verma</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -879,7 +850,7 @@
                                     <img src="assets_cc/images/students-feedback/03.png" alt="students-feedback">
                                     <div class="information">
                                         <h5 class="title">Jack Benjamin</h5>
-                                        <span>Assistant Teacher</span>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -900,7 +871,7 @@
                                     <img src="assets_cc/images/students-feedback/04.png" alt="students-feedback">
                                     <div class="information">
                                         <h5 class="title">Samuel John </h5>
-                                        <span>Assistant Teacher</span>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -921,7 +892,7 @@
                                     <img src="assets_cc/images/students-feedback/05.png" alt="students-feedback">
                                     <div class="information">
                                         <h5 class="title">Samantha Willow</h5>
-                                        <span>Assistant Teacher</span>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -943,8 +914,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/06.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Kirti Tiwari</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -964,8 +935,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/07.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Jaya Sharma</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -985,8 +956,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/08.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Adi Gupta</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1006,8 +977,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/09.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Komal Pratap</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1031,8 +1002,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/02.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Parul Goyal</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1053,7 +1024,7 @@
                                     <img src="assets_cc/images/students-feedback/03.png" alt="students-feedback">
                                     <div class="information">
                                         <h5 class="title">Jack Benjamin</h5>
-                                        <span>Assistant Teacher</span>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1074,7 +1045,7 @@
                                     <img src="assets_cc/images/students-feedback/04.png" alt="students-feedback">
                                     <div class="information">
                                         <h5 class="title">Samuel John </h5>
-                                        <span>Assistant Teacher</span>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1095,7 +1066,7 @@
                                     <img src="assets_cc/images/students-feedback/05.png" alt="students-feedback">
                                     <div class="information">
                                         <h5 class="title">Samantha Willow</h5>
-                                        <span>Assistant Teacher</span>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1117,8 +1088,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/06.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Preetk Mehra</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1138,8 +1109,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/07.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Neha Srivastava</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1159,8 +1130,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/08.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Prerna Singh</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1180,8 +1151,8 @@
                                 <div class="feedback-author">
                                     <img src="assets_cc/images/students-feedback/09.png" alt="students-feedback">
                                     <div class="information">
-                                        <h5 class="title">Emma Elizabeth</h5>
-                                        <span>Assistant Teacher</span>
+                                        <h5 class="title">Swati Ahuja</h5>
+                                        <span>Student</span>
                                     </div>
                                 </div>
                             </div>
@@ -1196,21 +1167,64 @@
     <!-- feedback area end -->
 
     <!-- rts blog area start -->
-    <div class="rts-section-gap rts-blog-area">
+    <div class=" rts-blog-area">
         <div class="container pb--130">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="title-area-center-style">
                         <div class="pre-title">
                             <img src="assets_cc/images/banner/bulb.png" alt="icon">
-                            <span>News & Article</span>
+                            <span>News & Articles</span>
                         </div>
-                        <h2 class="title">Read Our Latest News</h2>
-                        <p class="post-title"> Our mission is to provide you with valuable insights</p>
+                        <h2 class="title">Latest Career Insights</h2>
+                        <p class="post-title">Stay updated with the latest trends and opportunities in the career landscape</p>
                     </div>
                 </div>
             </div>
             <div class="row g-5 mt--20">
+                <?php
+                $blog_query = "SELECT blogs.*, blog_categories.name as category_name 
+                               FROM blogs 
+                               LEFT JOIN blog_categories ON blogs.category_id = blog_categories.id 
+                               WHERE blogs.is_deleted = 0 
+                               ORDER BY blogs.created_at DESC LIMIT 3";
+                $blog_result = mysqli_query($connect, $blog_query);
+                
+                if(mysqli_num_rows($blog_result) > 0) {
+                    while($blog = mysqli_fetch_assoc($blog_result)) {
+                        $blog_date = date("F d, Y", strtotime($blog['created_at']));
+                ?>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="single-blog-style-one">
+                        <a href="blog-details.php?id=<?php echo $blog['id']; ?>" class="thumbnail">
+                            <img src="<?php echo $uri.$blog['banner']; ?>" alt="<?php echo $blog['title']; ?>">
+                            <div class="tags-area">
+                                <span><?php echo $blog['category_name']; ?></span>
+                            </div>
+                        </a>
+                        <div class="blog-top-area">
+                            <div class="single">
+                                <i class="fa-light fa-calendar-days"></i>
+                                <p><?php echo $blog_date; ?></p>
+                            </div>
+                            <div class="single">
+                                <i class="fa-light fa-user"></i>
+                                <p><?php echo $blog['author_name']; ?></p>
+                            </div>
+                        </div>
+                        <a href="blog-details.php?id=<?php echo $blog['id']; ?>">
+                            <h5 class="title"><?php echo $blog['title']; ?></h5>
+                        </a>
+                        <div class="button-area">
+                            <a href="blog-details.php?id=<?php echo $blog['id']; ?>" class="rts-btn btn-primary readmore-btn">Read More <i class="fa-regular fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                    }
+                } else {
+                    // Fallback to static content if no blogs in database
+                ?>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="single-blog-style-one">
                         <a href="blog-details.php" class="thumbnail">
@@ -1289,6 +1303,7 @@
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -1412,7 +1427,7 @@
                         </ul>
                         <ul class="submenu mm-collapse">
                             <li><a href="#" class="tag">Courses Details</a></li>
-                            <li><a class="mobile-menu-link" href="single-course.php">Courses Details</a></li>
+                            <li><a class="mobile-menu-link" href="mypage.php">Courses Details</a></li>
                             <li><a class="mobile-menu-link" href="single-course-two.php">Courses Details V2</a></li>
                             <li><a class="mobile-menu-link" href="single-course-three.php">Courses Details V3</a></li>
                             <li><a class="mobile-menu-link" href="single-course-four.php">Courses Details V4</a></li>

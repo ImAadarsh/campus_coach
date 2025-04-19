@@ -1,3 +1,4 @@
+<?php error_reporting( E_ALL ); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +25,79 @@
 
 <body>
 
+<?php
+// Include database connection
+include "include/connect.php";
+
+// Add this function at the top of the file after the database connection
+function getInitials($name) {
+    $words = explode(' ', $name);
+    $initials = '';
+    foreach ($words as $word) {
+        $initials .= strtoupper(substr($word, 0, 1));
+    }
+    return substr($initials, 0, 2);
+}
+
+// Get trainer ID from URL or set default
+$trainer_id = isset($_GET['trainer_id']) ? intval($_GET['trainer_id']) : 1;
+
+// Fetch trainer details
+$trainer_query = "SELECT * FROM trainers WHERE id = $trainer_id";
+$trainer_result = mysqli_query($connect, $trainer_query);
+$trainer = mysqli_fetch_assoc($trainer_result);
+
+// If trainer not found, use default data
+// Get trainer statistics
+
+$stats_query = "SELECT 
+                (SELECT COUNT(DISTINCT user_id) FROM bookings 
+                    JOIN time_slots ON bookings.time_slot_id = time_slots.id 
+                    JOIN trainer_availabilities ON time_slots.trainer_availability_id = trainer_availabilities.id 
+                    WHERE trainer_availabilities.trainer_id = $trainer_id) as students,
+                (SELECT COUNT(bookings.id) FROM bookings 
+                    JOIN time_slots ON bookings.time_slot_id = time_slots.id 
+                    JOIN trainer_availabilities ON time_slots.trainer_availability_id = trainer_availabilities.id 
+                    WHERE trainer_availabilities.trainer_id = $trainer_id) as sessions,
+                (SELECT AVG(rating) FROM trainer_reviews WHERE trainer_id = $trainer_id) as avg_rating";
+
+
+$stats_result = mysqli_query($connect, $stats_query);
+
+$stats = mysqli_fetch_assoc($stats_result);
+
+// Default values if no stats found
+$students = $stats && $stats['students'] ? $stats['students'] : 2000;
+$sessions = $stats && $stats['sessions'] ? $stats['sessions'] : 100;
+$avg_rating = $stats && $stats['avg_rating'] ? round($stats['avg_rating'], 1) : 4.5;
+
+
+
+// Get specializations
+
+$specialization_query = "SELECT specialization FROM trainer_specializations WHERE trainer_id = $trainer_id";
+
+$specialization_result = mysqli_query($connect, $specialization_query);
+
+$specializations = [];
+while ($spec = mysqli_fetch_assoc($specialization_result)) {
+    $specializations[] = $spec['specialization'];
+}
+
+// Profile image path
+
+$hero_img = isset($trainer['profile_img']) && strpos($trainer['profile_img'], 'http') === false 
+    ? $uri . $trainer['profile_img'] 
+    : (isset($trainer['profile_img']) ? $trainer['profile_img'] : 'Gaurava.png');
+
+
+$profile_img = isset($trainer['hero_img']) && strpos($trainer['hero_img'], 'http') === false 
+    ? $uri . $trainer['hero_img'] 
+    : (isset($trainer['hero_img']) ? $trainer['hero_img'] : 'gaurava_bg.png');
+
+
+?>
+
     <!-- header style one -->
 <?php include 'include_cc/header.php'; ?>
     <!-- header style end -->
@@ -36,33 +110,39 @@
                 <div class="col-lg-6 order-xl-1 order-lg-1 order-md-2 order-sm-2 order-2">
                     <!-- banner five area start -->
                     <div class="rts-banner-five-content-wrapper pt--100 pb--150">
-                        <span class="pre-title">Hello! I’m</span>
+                        <span class="pre-title">Hello! I'm</span>
                         <h1 class="title-m-5">
-                            Gaurava <br>
-                            <span>Yadav</span>
+                            <?php echo $trainer['first_name']; ?> <br>
+                            <span><?php echo $trainer['last_name']; ?></span>
                             <img src="assets_cc/images/banner/shape/01.svg" alt="banner-image">
                         </h1>
                         <div class="banner-btn-author-wrapper">
-                            <a href="course-one.php" class="rts-btn btn-primary-white radious-0">Book Session</a>
+                            <a href="course-one.php?trainer_id=<?php echo $trainer_id; ?>" class="rts-btn btn-primary-white radious-0">Book Session</a>
                             <div class="rts-wrapper-stars-area">
-                                <h5 class="title">4.5 <span> Instructor Rating</span> </h5>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-regular fa-star"></i>
+                                <h5 class="title"><?php echo $avg_rating; ?> <span style="font-size: 18px; font-weight: 500; color: #fff;"> Star Instructor Rating</span> </h5>
+                                <?php 
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= floor($avg_rating)) {
+                                        echo '<i class="fa-solid fa-star"></i>';
+                                    } else if ($i - 0.5 <= $avg_rating) {
+                                        echo '<i class="fa-solid fa-star-half-stroke"></i>';
+                                    } else {
+                                        echo '<i class="fa-regular fa-star"></i>';
+                                    }
+                                }
+                                ?>
                             </div>
-                            <!-- <p class="disc">
-                                I'm an avid outdoor photographer and explorer and have been taking pictures for years.
-                            </p> -->
                         </div>
+                        <?php if(!empty($trainer['short_about'])): ?>
+                        <p style="font-size: 18px; font-weight: 500; color: #fff;" class="disc mt-3"><?php echo $trainer['short_about']; ?></p>
+                        <?php endif; ?>
                     </div>
                     <!-- banner five area end -->
                 </div>
                 <div class="col-lg-6 order-xl-2 order-lg-2 order-md-1 order-sm-1 order-1  justify-content-xl-end justify-content-md-center justify-content-sm-center d-flex align-items-end">
                     <!-- banner five image area start -->
                     <div class="banner-five-thumbnail">
-                        <img src="gaurava_bg.png" alt="banner-imagfe">
+                        <img src="<?php echo $hero_img; ?>" alt="<?php echo $trainer['first_name'].' '.$trainer['last_name']; ?>">
                     </div>
                     <!-- banner five image area end -->
                 </div>
@@ -77,7 +157,7 @@
                     <img class="three" src="assets_cc/images/banner/shape/08.png" alt="banner">
                 </div>
                 <div class="info">
-                    <h6 class="title">2k+ students</h6>
+                    <h6 class="title"><?php echo number_format($students); ?>+ students</h6>
                     <span>Mentored</span>
                 </div>
             </div>
@@ -86,7 +166,7 @@
                 <div class="review-single two">
                     <img src="assets_cc/images/banner/08.png" alt="banner">
                     <div class="info-right">
-                        <h6 class="title">100+
+                        <h6 class="title"><?php echo number_format($sessions); ?>+
                         </h6>
                         <span>Sessions</span>
                     </div>
@@ -99,58 +179,13 @@
     <!-- rts banner area five end -->
 
     <!-- rts fun facts area start -->
-    <div class="fun-facts-area-4 mt-dec-fun-f pb--100">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="fun-facts-main-wrapper-1 style-two">
-                        <!-- single  -->
-                        <div class="single-fun-facts">
-                            <div class="icon">
-                                <img src="assets_cc/images/fun-facts/icon/01.svg" alt="icon">
-                            </div>
-                            <h5 class="title"><span class="counter">65,972</span></h5>
-                            <span class="enr">Students Enrolled</span>
-                        </div>
-                        <!-- single end -->
-                        <!-- single  -->
-                        <div class="single-fun-facts">
-                            <div class="icon">
-                                <img src="assets_cc/images/fun-facts/icon/02.svg" alt="icon">
-                            </div>
-                            <h5 class="title"><span class="counter">5,321</span></h5>
-                            <span class="enr">Completed Course</span>
-                        </div>
-                        <!-- single end -->
-                        <!-- single  -->
-                        <div class="single-fun-facts">
-                            <div class="icon">
-                                <img src="assets_cc/images/fun-facts/icon/03.svg" alt="icon">
-                            </div>
-                            <h5 class="title"><span class="counter">44,239</span></h5>
-                            <span class="enr">Students Learner</span>
-                        </div>
-                        <!-- single end -->
-                        <!-- single  -->
-                        <div class="single-fun-facts">
-                            <div class="icon">
-                                <img src="assets_cc/images/fun-facts/icon/04.svg" alt="icon">
-                            </div>
-                            <h5 class="title"><span class="counter">75,992</span></h5>
-                            <span class="enr">Students Enrolled</span>
-                        </div>
-                        <!-- single end -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- rts fun facts area end -->
 
     
 
     <!-- rts about area start -->
-    <div class="rts-about-area-five rts-section-gapBottom">
+    <div class="rts-about-area-five rts-section-gapBottom mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -159,13 +194,15 @@
                         <div class="title-wrapper">
                             <h2 class="title-stroke">Instructor</h2>
                         </div>
-                        <p class="disc mb--30">
-                            My name is Gaurava Yadav and I am super-psyched that you are reading this!
-                            Professionally, I come from the Data Science consulting space with experience in finance, retail, transport and other industries. I was trained by the best analytics mentors at Deloitte Australia and since starting on Campus Coach | Guiding Future I have passed on my knowledge to thousands of aspiring data scientists.
-                        </p>
-                        <p class="disc mb--30">
-                            To sum up, I am absolutely and utterly passionate about Data Science and I am looking forward to sharing my passion and knowledge with you!
-                        </p>
+                        <?php 
+                        // Split about text into paragraphs
+                        $about_paragraphs = explode("\n", $trainer['about']);
+                        foreach($about_paragraphs as $paragraph) {
+                            if(trim($paragraph) != '') {
+                                echo '<p class="disc mb--30">' . trim($paragraph) . '</p>';
+                            }
+                        }
+                        ?>
 
                         <div class="call-sign-area-start">
                             <div class="call-btn-area">
@@ -173,12 +210,12 @@
                                     <i class="fa-regular fa-phone"></i>
                                 </div>
                                 <div class="information">
-                                    <p>Call me</p>
-                                    <a href="tel:+4733378901">+236-3256-21456</a>
+                                    <p>Connect with me</p>
+                                    <a href="#"><?php echo str_repeat('*', strlen($trainer['mobile'])); ?></a>
                                 </div>
                             </div>
                             <div class="sign-area-start">
-                                <img src="assets_cc/images/about/02.svg" alt="about">
+                                <img width="100px" src="assets_cc/images/logo/logo-1.svg" alt="about">
                             </div>
                         </div>
                     </div>
@@ -187,8 +224,8 @@
                 <div class="col-lg-6 pl--50 pl_md--15 pl_sm--10 mt_md--50  mt_sm--50">
                     <!-- about area top wrapper -->
                     <div class="about-thumbnail-right-5">
-                        <p>Hey there, my name is Gaurava Yadav. I'm <br> the founder of the IPN Academy.</p>
-                        <img src="gaurava_speaking.png" alt="about-area">
+                        <p>Hey there, my name is <?php echo $trainer['first_name'].' '.$trainer['last_name']; ?>. I'm <br> <?php echo $trainer['designation']; ?></p>
+                        <img src="<?php echo $profile_img; ?>" alt="<?php echo $trainer['first_name'].' '.$trainer['last_name']; ?>">
                     </div>
                     <!-- about area top wrapper end -->
                 </div>
@@ -201,13 +238,13 @@
     <!-- rts about area end -->
 
     <!-- rts students feedbacka area start -->
-    <div class="rts-students-feedback-area rts-section-gap">
+    <div class="rts-students-feedback-area ">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title-w-style-center">
                         <h2 class="title">My Students Feedback</h2>
-                        <p>You'll find something to spark your curiosity and enhance</p>
+                        <p>Read what my students say about their learning experience</p>
                     </div>
                 </div>
             </div>
@@ -247,24 +284,46 @@
                                 }
                             }'>
                             <div class="swiper-wrapper">
+                                <?php
+                                // Get trainer reviews
+                                $reviews_query = "SELECT tr.*, u.first_name, u.last_name, u.icon 
+                                                FROM trainer_reviews tr 
+                                                JOIN users u ON tr.user_id = u.id 
+                                                WHERE tr.trainer_id = $trainer_id 
+                                                ORDER BY tr.created_at DESC 
+                                                LIMIT 10";
+                                $reviews_result = mysqli_query($connect, $reviews_query);
+                                
+                                if (mysqli_num_rows($reviews_result) > 0) {
+                                    while ($review = mysqli_fetch_assoc($reviews_result)) {
+                                        $user_img = !empty($review['icon']) ? $uri . $review['icon'] : 'assets_cc/images/students-feedback/02.png';
+                                        $rating = intval($review['rating']);
+                                        $user_name = $review['first_name'] . ' ' . $review['last_name'];
+                                ?>
                                 <div class="swiper-slide">
                                     <!-- single students feedbacka rea start -->
                                     <div class="single-students-feedback-5">
                                         <div class="stars">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
+                                            <?php
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                if ($i <= $rating) {
+                                                    echo '<i class="fa-solid fa-star"></i>';
+                                                } else {
+                                                    echo '<i class="fa-regular fa-star"></i>';
+                                                }
+                                            }
+                                            ?>
                                         </div>
                                         <p class="disc">
-                                            I can't recommend The Gourmet Haven enough. It's a place for special date in nights, or whenever you're in the mood for a culinary.
+                                            <?php echo !empty($review['review']) ? $review['review'] : 'Great experience with this instructor. Highly recommended!'; ?>
                                         </p>
                                         <div class="authore-area">
-                                            <img src="assets_cc/images/students-feedback/02.png" alt="feedback">
+                                            <div class="initials-avatar" style="width: 50px; height: 50px; background-color: #4a90e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">
+                                                <?php echo getInitials($user_name); ?>
+                                            </div>
                                             <div class="author">
-                                                <h6 class="title">Emma Gaurava</h6>
-                                                <span>Assistant Teacher</span>
+                                                <h6 class="title"><?php echo $user_name; ?></h6>
+                                                <span>Student</span>
                                             </div>
                                         </div>
                                         <div class="quote">
@@ -273,24 +332,38 @@
                                     </div>
                                     <!-- single students feedbacka rea end -->
                                 </div>
+                                <?php
+                                    }
+                                } else {
+                                    // Default reviews if none found
+                                    $default_reviews = [
+                                      
+                                    ];
+                                    
+                                    foreach ($default_reviews as $review) {
+                                ?>
                                 <div class="swiper-slide">
                                     <!-- single students feedbacka rea start -->
                                     <div class="single-students-feedback-5">
                                         <div class="stars">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
+                                            <?php
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                if ($i <= $review['rating']) {
+                                                    echo '<i class="fa-solid fa-star"></i>';
+                                                } else {
+                                                    echo '<i class="fa-regular fa-star"></i>';
+                                                }
+                                            }
+                                            ?>
                                         </div>
                                         <p class="disc">
-                                            I can't recommend The Gourmet Haven enough. It's a place for special date in nights, or whenever you're in the mood for a culinary.
+                                            <?php echo $review['text']; ?>
                                         </p>
                                         <div class="authore-area">
-                                            <img src="assets_cc/images/students-feedback/03.png" alt="feedback">
+                                            <img src="<?php echo $review['img']; ?>" alt="feedback">
                                             <div class="author">
-                                                <h6 class="title">Emma Gaurava</h6>
-                                                <span>Assistant Teacher</span>
+                                                <h6 class="title"><?php echo $review['name']; ?></h6>
+                                                <span>Student</span>
                                             </div>
                                         </div>
                                         <div class="quote">
@@ -299,84 +372,10 @@
                                     </div>
                                     <!-- single students feedbacka rea end -->
                                 </div>
-                                <div class="swiper-slide">
-                                    <!-- single students feedbacka rea start -->
-                                    <div class="single-students-feedback-5">
-                                        <div class="stars">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </div>
-                                        <p class="disc">
-                                            I can't recommend The Gourmet Haven enough. It's a place for special date in nights, or whenever you're in the mood for a culinary.
-                                        </p>
-                                        <div class="authore-area">
-                                            <img src="assets_cc/images/students-feedback/04.png" alt="feedback">
-                                            <div class="author">
-                                                <h6 class="title">Emma Gaurava</h6>
-                                                <span>Assistant Teacher</span>
-                                            </div>
-                                        </div>
-                                        <div class="quote">
-                                            <img src="assets_cc/images/students-feedback/19.png" alt="feedback">
-                                        </div>
-                                    </div>
-                                    <!-- single students feedbacka rea end -->
-                                </div>
-                                <div class="swiper-slide">
-                                    <!-- single students feedbacka rea start -->
-                                    <div class="single-students-feedback-5">
-                                        <div class="stars">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </div>
-                                        <p class="disc">
-                                            I can't recommend The Gourmet Haven enough. It's a place for special date in nights, or whenever you're in the mood for a culinary.
-                                        </p>
-                                        <div class="authore-area">
-                                            <img src="assets_cc/images/students-feedback/02.png" alt="feedback">
-                                            <div class="author">
-                                                <h6 class="title">Emma Gaurava</h6>
-                                                <span>Assistant Teacher</span>
-                                            </div>
-                                        </div>
-                                        <div class="quote">
-                                            <img src="assets_cc/images/students-feedback/19.png" alt="feedback">
-                                        </div>
-                                    </div>
-                                    <!-- single students feedbacka rea end -->
-                                </div>
-                                <div class="swiper-slide">
-                                    <!-- single students feedbacka rea start -->
-                                    <div class="single-students-feedback-5">
-                                        <div class="stars">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </div>
-                                        <p class="disc">
-                                            I can't recommend The Gourmet Haven enough. It's a place for special date in nights, or whenever you're in the mood for a culinary.
-                                        </p>
-                                        <div class="authore-area">
-                                            <img src="assets_cc/images/students-feedback/02.png" alt="feedback">
-                                            <div class="author">
-                                                <h6 class="title">Emma Gaurava</h6>
-                                                <span>Assistant Teacher</span>
-                                            </div>
-                                        </div>
-                                        <div class="quote">
-                                            <img src="assets_cc/images/students-feedback/19.png" alt="feedback">
-                                        </div>
-                                    </div>
-                                    <!-- single students feedbacka rea end -->
-                                </div>
+                                <?php
+                                    }
+                                }
+                                ?>
                             </div>
                             <div class="left-align-arrow-btn">
                                 <div class="swiper-button-next"><i class="fa-solid fa-chevron-right"></i></div>
@@ -408,7 +407,7 @@
                                         </path>
                                     </defs>
                                     <text font-size="11.2">
-                                        <textPath xlink:href="#circle">About Univercity • About Collage •</textPath>
+                                        <textPath xlink:href="#circle">About Instructor • Specializations •</textPath>
                                     </text>
                                 </svg>
                                 <i class="fa-regular fa-arrow-up-right"></i>
@@ -420,69 +419,79 @@
                     <div class="title-area-left-style">
                         <div class="pre-title">
                             <img src="assets_cc/images/banner/bulb-2.png" alt="icon">
-                            <span>Why Choose Us</span>
+                            <span>Why Choose Me</span>
                         </div>
-                        <h2 class="title">Campus Coach | Guiding Future Your Path to
-                            Excellence & Success</h2>
-                        <p class="post-title">We are passionate about education and dedicated to providing high- <br> quality learning resources for learners of all backgrounds.</p>
+                        <h2 class="title">Specialized Career Guidance for Future-Ready Skills</h2>
+                        <p class="post-title">I help students develop the skills and knowledge needed to succeed in an ever-evolving job market, with personalized mentoring tailored to your unique goals.</p>
                     </div>
                     <div class="why-choose-main-wrapper-1">
+                        <?php
+                        // Get specializations or use default ones
+                        if (empty($specializations)) {
+                            $specializations = [
+                                'Career Planning',
+                                'Industry Insights',
+                                'Skill Development',
+                                'Interview Preparation',
+                                'Resume Building',
+                                'Future Technologies'
+                            ];
+                        }
+                        
+                        // Icons for specializations
+                        $icons = [
+                            'assets_cc/images/why-choose/icon/01.png',
+                            'assets_cc/images/why-choose/icon/02.png',
+                            'assets_cc/images/why-choose/icon/03.png',
+                            'assets_cc/images/why-choose/icon/04.png',
+                            'assets_cc/images/why-choose/icon/05.png',
+                            'assets_cc/images/why-choose/icon/06.png'
+                        ];
+                        
+                        // Display specializations (up to 6)
+                        $count = 0;
+                        foreach ($specializations as $specialization) {
+                            if ($count >= 6) break;
+                            $icon = $icons[$count];
+                        ?>
                         <!-- single choose reason -->
                         <div class="single-choose-reason-1">
                             <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/01.png" alt="icon">
+                                <img src="<?php echo $icon; ?>" alt="icon">
                             </div>
-                            <h6 class="title">Expert
-                                Instructors</h6>
+                            <h6 class="title"><?php echo $specialization; ?></h6>
                         </div>
                         <!-- single choose reason end -->
+                        <?php
+                            $count++;
+                        }
+                        
+                        // Fill in remaining slots if needed
+                        while ($count < 6) {
+                            $default_specs = [
+                                'Expert Guidance',
+                                'Interactive Learning',
+                                'Affordable Sessions',
+                                'Career Advancement',
+                                'Personalized Plans',
+                                'Support Community'
+                            ];
+                            $icon = $icons[$count];
+                        ?>
                         <!-- single choose reason -->
                         <div class="single-choose-reason-1">
                             <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/02.png" alt="icon">
+                                <img src="<?php echo $icon; ?>" alt="icon">
                             </div>
-                            <h6 class="title">Interactive
-                                Learning</h6>
+                            <h6 class="title"><?php echo $default_specs[$count]; ?></h6>
                         </div>
                         <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/03.png" alt="icon">
-                            </div>
-                            <h6 class="title">Affordable
-                                Learning</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/04.png" alt="icon">
-                            </div>
-                            <h6 class="title">Career
-                                Advance</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/05.png" alt="icon">
-                            </div>
-                            <h6 class="title">Course
-                                Selection</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/06.png" alt="icon">
-                            </div>
-                            <h6 class="title">Support
-                                Community</h6>
-                        </div>
-                        <!-- single choose reason end -->
+                        <?php
+                            $count++;
+                        }
+                        ?>
                     </div>
-                    <a href="single-course.php" class="rts-btn btn-primary-white with-arrow">View All Course <i class="fa-regular fa-arrow-right"></i></a>
+                    <a href="course-one.php?trainer_id=<?php echo $trainer_id; ?>" class="rts-btn btn-primary-white with-arrow">Book a Session <i class="fa-regular fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -508,22 +517,22 @@
                 <div class="col-lg-6 pl--70 pl_sm--15 pl_md--15 mt_md--50 mt_sm--50">
                     <!-- contact- area right template -->
                     <div class="contact-area-right-5">
-                        <h2 class="title">Get a Free Course and Connect
-                            with Us Today</h2>
+                        <h2 class="title">Get in Touch with <?php echo $trainer['first_name']; ?> for Career Guidance</h2>
                         <form action="#" class="contact-form-1">
+                            <input type="hidden" name="trainer_id" value="<?php echo $trainer_id; ?>">
                             <div class="single-input">
                                 <label for="name">Your Name*</label>
-                                <input type="text" id="name" placeholder="Enter Your Name" required>
+                                <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
                             </div>
                             <div class="single-input">
                                 <label for="email">Your Email*</label>
-                                <input type="text" id="email" placeholder="info@Campus Coach | Guiding Future.net" required>
+                                <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
                             </div>
                             <div class="single-input">
                                 <label for="message">Message*</label>
-                                <textarea id="message" placeholder="Let tell us about your projects"></textarea>
+                                <textarea id="message" name="message" placeholder="Tell us about your career goals and how we can help"></textarea>
                             </div>
-                            <button class="rts-btn btn-primary radious-0">Send Message</button>
+                            <button type="submit" class="rts-btn btn-primary radious-0">Send Message</button>
                         </form>
                     </div>
                     <!-- contact- area right template end -->
@@ -538,11 +547,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="call-to-sction style-three with-full-width bg_image">
-                        <h2 class="title">Sign up today and be the first to <br>
-                            access our exclusive offers</h2>
+                        <h2 class="title">Sign up for career updates and<br>exclusive mentoring opportunities</h2>
                         <form action="#" class="cta-form">
-                            <input type="text" placeholder="Enter your mail..." required="">
-                            <button class="rts-btn btn-primary">Subscribe</button>
+                            <input type="email" placeholder="Enter your email..." required>
+                            <button type="submit" class="rts-btn btn-primary">Subscribe</button>
                         </form>
                     </div>
                 </div>

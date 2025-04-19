@@ -1,10 +1,35 @@
+<?php include "include/connect.php"; 
+
+// Get blog ID from URL
+$blog_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Fetch blog data
+$sql = "SELECT b.*, bc.name as category_name 
+        FROM blogs b 
+        LEFT JOIN blog_categories bc ON b.category_id = bc.id 
+        WHERE b.id = $blog_id AND b.is_deleted = 0";
+
+$result = $connect->query($sql);
+
+if ($result->num_rows > 0) {
+    $blog = $result->fetch_assoc();
+    $blog_date = date('F d, Y', strtotime($blog['created_at']));
+    $tags = explode(',', $blog['tags']);
+} else {
+    // Redirect to blogs page if blog not found
+    header("Location: blogs.php");
+    exit();
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Coach | Guiding Future </title>
+    <title>Campus Coach | Guiding Future | <?php echo $blog['title']; ?></title>
     <link rel="shortcut icon" type="image/x-icon" href="assets_cc/images/fav.png">
     <!-- fontawesome 6.4.2 -->
     <link rel="stylesheet" href="assets_cc/css/plugins/fontawesome-6.css">
@@ -37,12 +62,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-main-wrapper">
-                        <h1 class="title">Blog Details</h1>
+                        <h1 class="title"><?php echo $blog['title']; ?></h1>
                         <!-- breadcrumb pagination area -->
                         <div class="pagination-wrapper">
                             <a href="index.php">Home</a>
                             <i class="fa-regular fa-chevron-right"></i>
-                            <a class="active" href="Instructor.php">Blog Details</a>
+                            <a href="blogs.php">Blogs</a>
+                            <i class="fa-regular fa-chevron-right"></i>
+                            <a class="active" href="#"><?php echo $blog['title']; ?></a>
                         </div>
                         <!-- breadcrumb pagination area end -->
                     </div>
@@ -62,150 +89,50 @@
                     <!-- single post -->
                     <div class="blog-single-post-listing details mb--0">
                         <div class="thumbnail">
-                            <img src="assets_cc/images/blog/03.jpg" alt="Business-Blog">
+                            <img src="<?php echo $uri . $blog['banner']; ?>" alt="<?php echo $blog['title']; ?>">
                         </div>
                         <div class="blog-listing-content">
                             <div class="user-info">
                                 <!-- single info -->
                                 <div class="single">
                                     <i class="far fa-user-circle"></i>
-                                    <span>by David Smith</span>
+                                    <span>by <?php echo $blog['author_name']; ?></span>
                                 </div>
                                 <!-- single infoe end -->
                                 <!-- single info -->
                                 <div class="single">
                                     <i class="far fa-clock"></i>
-                                    <span>15 Jan 2024</span>
+                                    <span><?php echo $blog_date; ?></span>
                                 </div>
                                 <!-- single infoe end -->
                                 <!-- single info -->
                                 <div class="single">
                                     <i class="far fa-tags"></i>
-                                    <span>Business, Marketing</span>
+                                    <span><?php echo $blog['category_name']; ?></span>
                                 </div>
                                 <!-- single infoe end -->
                             </div>
-                            <h3 class="title animated fadeIn">Profitable business makes your profit</h3>
-                            <p class="disc para-1">
-                                Collaboratively pontificate bleeding edge resources with inexpensive methodologies
-                                globally initiate multidisciplinary compatible architectures pidiously repurpose leading
-                                edge growth strategies with just in time web readiness communicate timely meta services
-                            </p>
-                            <p class="disc">
-                                Onubia semper vel donec torquent fusce mauris felis aptent lacinia nisl, lectus
-                                himenaeos euismod molestie iaculis interdum in laoreet condimentum dictum, quisque quam
-                                risus sollicitudin gravida ut odio per a et. Gravida maecenas lobortis suscipit mus
-                                sociosqu convallis, mollis vestibulum donec aliquam risus sapien ridiculus, nulla
-                                sollicitudin eget in venenatis. Tortor montes platea iaculis posuere per mauris, eros
-                                porta blandit curabitur ullamcorper varius
-                            </p>
+                            <h3 class="title animated fadeIn"><?php echo $blog['title']; ?></h3>
+                            <p class="disc para-1"><?php echo $blog['subtitle']; ?></p>
+                            <p class="disc"><?php echo $blog['content']; ?></p>
+                            
+                            <?php if (!empty($blog['quote'])): ?>
                             <!-- quote area start -->
                             <div class="rts-quote-area text-start reveal">
-                                <h5 class="title title-g">“Placerat pretium tristique mattis tellus accuan metus dictumst
-                                    vivamus odio nulla fusce auctor into suscipit habitasse class congue potenti
-                                    iaculis”</h5>
-                                <p class="author-name">David John</p>
+                                <h5 class="title title-g">"<?php echo $blog['quote']; ?>"</h5>
+                                <p class="author-name"><?php echo $blog['author_name']; ?></p>
                             </div>
                             <!-- quote area end -->
+                            <?php endif; ?>
 
-                            <p class="disc">
-                                Ultrices iaculis commodo parturient euismod pulvinar donec cum eget a, accumsan viverra
-                                cras praesent cubilia dignissim ad rhoncus. Gravida maecenas lobortis suscipit mus
-                                sociosqu convallis, mollis vestibulum donec aliquam risus sapien ridiculus, nulla
-                                sollicitudin eget in venenatis. Tortor montes platea iaculis posuere per mauris, eros
-                                porta blandit curabitur ullamcorper varius, nostra ante risus egestas suscipit. Quisque
-                                interdum nec parturient facilisis nunc ac quam, ad est cubilia mauris himenaeos nascetur
-                                vestibulum.
-                            </p>
-
-                            <div class="row g-24">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="thumbnail details w-100">
-                                        <img class="w-100" src="assets_cc/images/course/11.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="thumbnail details w-100">
-                                        <img class="w-100" src="assets_cc/images/course/12.jpg" alt="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <h4 class="title mt--40 mt_sm--20">Ultimate Business Strategy Solution</h4>
-                            <p class="disc mb--25">
-                                Gravida maecenas lobortis suscipit mus sociosqu convallis, mollis vestibulum donec
-                                aliquam risus sapien ridiculus, nulla sollicitudin eget in venenatis. Tortor montes
-                                platea iaculis posuere per mauris, eros porta blandit curabitur ullamcorper varius
-                                nostra ante risus egestas.
-                            </p>
-                            <div class="row align-items-start">
-                                <div class="col-lg-5">
-                                    <div class="thumbnail details mb_sm--15"><img src="assets_cc/images/course/13.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-lg-7">
-                                    <div class="check-area-details">
-                                        <!-- single check -->
-                                        <div class="single-check">
-                                            <i class="far fa-check-circle"></i>
-                                            <span>How will activities traditional manufacturing</span>
-                                        </div>
-                                        <!-- single check End -->
-                                        <!-- single check -->
-                                        <div class="single-check">
-                                            <i class="far fa-check-circle"></i>
-                                            <span>All these digital and projects aim to enhance</span>
-                                        </div>
-                                        <!-- single check End -->
-                                        <!-- single check -->
-                                        <div class="single-check">
-                                            <i class="far fa-check-circle"></i>
-                                            <span>I monitor my software that takes screenshots</span>
-                                        </div>
-                                        <!-- single check End -->
-                                        <!-- single check -->
-                                        <div class="single-check">
-                                            <i class="far fa-check-circle"></i>
-                                            <span>Laoreet dolore niacin sodium glutimate
-                                            </span>
-                                        </div>
-                                        <!-- single check End -->
-                                        <!-- single check -->
-                                        <div class="single-check">
-                                            <i class="far fa-check-circle"></i>
-                                            <span>Minim veniam sodium glutimate nostrud</span>
-                                        </div>
-                                        <!-- single check End -->
-                                        <!-- single check -->
-                                        <div class="single-check">
-                                            <i class="far fa-check-circle"></i>
-                                            <span>Minim veniam sodium glutimate nostrud</span>
-                                        </div>
-                                        <!-- single check End -->
-                                        <!-- single check -->
-                                        <div class="single-check">
-                                            <i class="far fa-check-circle"></i>
-                                            <span>Minim veniam sodium glutimate nostrud</span>
-                                        </div>
-                                        <!-- single check End -->
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="disc mt--30">
-                                Cubilia hendrerit luctus sem aptent curae gravida maecenas eleifend nunc nec vitae morbi
-                                sodales fusce tristique aenean habitasse mattis sociis feugiat conubia mus auctor
-                                praesent urna tincidunt taciti dui lobortis nullam. Mattis placerat feugiat ridiculus
-                                sed a per curae fermentum aenean facilisi, vitae urna imperdiet ac mauris non inceptos
-                                luctus hac odio.
-                            </p>
-                            <div class="row  align-items-center">
+                            <div class="row align-items-center">
                                 <div class="col-lg-6 col-md-12">
                                     <!-- tags details -->
                                     <div class="details-tag">
                                         <h6>Tags:</h6>
-                                        <button>Services</button>
-                                        <button>Business</button>
-                                        <button>Growth</button>
+                                        <?php foreach ($tags as $tag): ?>
+                                            <button><?php echo trim($tag); ?></button>
+                                        <?php endforeach; ?>
                                     </div>
                                     <!-- tags details End -->
                                 </div>
@@ -219,38 +146,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="author-area reveal">
-                                <div class="thumbnail details mb_sm--15">
-                                    <img src="assets_cc/images/students-feedback/01.jpg" alt="">
-                                </div>
-                                <div class="author-details team">
-                                    <span class="title-g">Brand Designer</span>
-                                    <h5 class="title-g">Angelina H. Dekato</h5>
-                                    <p class="disc title-g">
-                                        Nullam varius luctus pharetra ultrices volpat facilisis donec tortor, nibhkisys
-                                        habitant curabitur at nunc nisl magna ac rhoncus vehicula sociis tortor nist
-                                        hendrerit molestie integer.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="replay-area-details">
-                                <h4 class="title">Leave a Reply</h4>
-                                <form action="#">
-                                    <div class="row g-4">
-                                        <div class="col-lg-6">
-                                            <input type="text" placeholder="First Name" required>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" placeholder="Last Name" required>
-                                        </div>
-                                        <div class="col-12">
-                                            <input type="text" placeholder="Select Topic" required>
-                                            <textarea placeholder="Your Comment Here" required></textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="rts-btn btn-primary mt--20">Submit Message</button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                     <!-- single post End-->
@@ -262,10 +157,12 @@
                         <!-- single wizered start -->
                         <div class="rts-single-wized search">
                             <div class="wized-body mt--0">
-                                <div class="rts-search-wrapper">
-                                    <input class="Search" type="text" placeholder="Enter Keyword">
-                                    <button><i class="fal fa-search"></i></button>
-                                </div>
+                                <form action="blogs.php" method="GET">
+                                    <div class="rts-search-wrapper">
+                                        <input type="text" name="search" placeholder="Enter Keyword">
+                                        <button type="submit"><i class="fal fa-search"></i></button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <!-- single wizered End -->
@@ -277,31 +174,14 @@
                                 </h5>
                             </div>
                             <div class="wized-body">
-                                <!-- single categoris -->
-                                <ul class="single-categories">
-                                    <li><a href="#">Business Solution <i class="far fa-long-arrow-right"></i></a></li>
-                                </ul>
-                                <!-- single categoris End -->
-                                <!-- single categoris -->
-                                <ul class="single-categories">
-                                    <li><a href="#">Strategy Growth<i class="far fa-long-arrow-right"></i></a></li>
-                                </ul>
-                                <!-- single categoris End -->
-                                <!-- single categoris -->
-                                <ul class="single-categories">
-                                    <li><a href="#">Finance Solution<i class="far fa-long-arrow-right"></i></a></li>
-                                </ul>
-                                <!-- single categoris End -->
-                                <!-- single categoris -->
-                                <ul class="single-categories">
-                                    <li><a href="#">Investment Policy<i class="far fa-long-arrow-right"></i></a></li>
-                                </ul>
-                                <!-- single categoris End -->
-                                <!-- single categoris -->
-                                <ul class="single-categories">
-                                    <li><a href="#">Tax Managment<i class="far fa-long-arrow-right"></i></a></li>
-                                </ul>
-                                <!-- single categoris End -->
+                                <?php
+                                $categories = $connect->query("SELECT * FROM blog_categories ORDER BY name");
+                                while ($cat = $categories->fetch_assoc()) {
+                                    echo '<ul class="single-categories">
+                                            <li><a href="blogs.php?category=' . $cat['id'] . '">' . $cat['name'] . ' <i class="far fa-long-arrow-right"></i></a></li>
+                                          </ul>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <!-- single wizered End -->
@@ -313,54 +193,28 @@
                                 </h5>
                             </div>
                             <div class="wized-body">
-                                <!-- recent-post -->
-                                <div class="recent-post-single">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="assets_cc/images/course/01.jpg" alt="Blog_post"></a>
-                                    </div>
-                                    <div class="content-area text-start">
-                                        <div class="user">
-                                            <i class="fal fa-clock"></i>
-                                            <span>15 Jan, 2023</span>
-                                        </div>
-                                        <a class="post-title" href="#">
-                                            <h6 class="title">We would love to share a similar experience</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- recent-post End -->
-                                <!-- recent-post -->
-                                <div class="recent-post-single">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="assets_cc/images/course/02.jpg" alt="Blog_post"></a>
-                                    </div>
-                                    <div class="content-area text-start">
-                                        <div class="user">
-                                            <i class="fal fa-clock"></i>
-                                            <span>15 Jan, 2023</span>
-                                        </div>
-                                        <a class="post-title" href="#">
-                                            <h6 class="title">We would love to share a similar experience</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- recent-post End -->
-                                <!-- recent-post -->
-                                <div class="recent-post-single">
-                                    <div class="thumbnail">
-                                        <a href="#"><img src="assets_cc/images/course/03.jpg" alt="Blog_post"></a>
-                                    </div>
-                                    <div class="content-area text-start">
-                                        <div class="user">
-                                            <i class="fal fa-clock"></i>
-                                            <span>15 Jan, 2023</span>
-                                        </div>
-                                        <a class="post-title" href="#">
-                                            <h6 class="title">We would love to share a similar experience</h6>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- recent-post End -->
+                                <?php
+                                $recent_posts = $connect->query("SELECT * FROM blogs WHERE is_deleted = 0 AND id != $blog_id ORDER BY created_at DESC LIMIT 3");
+                                while ($post = $recent_posts->fetch_assoc()) {
+                                    $post_date = date('F d, Y', strtotime($post['created_at']));
+                                    echo '<div class="recent-post-single">
+                                            <div class="thumbnail">
+                                                <a href="blog-details.php?id=' . $post['id'] . '">
+                                                    <img src="' . $uri . $post['banner'] . '" alt="' . $post['title'] . '">
+                                                </a>
+                                            </div>
+                                            <div class="content-area text-start">
+                                                <div class="user">
+                                                    <i class="fal fa-clock"></i>
+                                                    <span>' . $post_date . '</span>
+                                                </div>
+                                                <a class="post-title" href="blog-details.php?id=' . $post['id'] . '">
+                                                    <h6 class="title">' . $post['title'] . '</h6>
+                                                </a>
+                                            </div>
+                                          </div>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <!-- single wizered End -->

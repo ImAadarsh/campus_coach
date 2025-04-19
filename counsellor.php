@@ -1,10 +1,53 @@
+<?php include "include/connect.php"; 
+
+
+// Get filter parameters
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$category = isset($_GET['category']) ? $_GET['category'] : '';
+$price = isset($_GET['price']) ? $_GET['price'] : '';
+
+// Build the SQL query
+$sql = "SELECT t.*, 
+        GROUP_CONCAT(DISTINCT ts.specialization) as specializations,
+        AVG(tr.rating) as avg_rating,
+        COUNT(tr.id) as review_count
+        FROM trainers t
+        LEFT JOIN trainer_specializations ts ON t.id = ts.trainer_id
+        LEFT JOIN trainer_reviews tr ON t.id = tr.trainer_id
+        WHERE 1=1";
+
+// Add search filter
+if (!empty($search)) {
+    $sql .= " AND (t.first_name LIKE '%$search%' OR t.last_name LIKE '%$search%' OR t.designation LIKE '%$search%')";
+}
+
+// Add category filter
+if (!empty($category)) {
+    $sql .= " AND ts.specialization = '$category'";
+}
+
+// Add price filter
+if (!empty($price)) {
+    if ($price === 'asc') {
+        $sql .= " ORDER BY t.price ASC";
+    } elseif ($price === 'desc') {
+        $sql .= " ORDER BY t.price DESC";
+    }
+}
+
+// Group by trainer ID
+$sql .= " GROUP BY t.id";
+
+// Execute the query
+$result = $connect->query($sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Coach | Guiding Future </title>
+    <title>Campus Coach | Guiding Future | Counsellor</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets_cc/images/fav.png">
     <!-- fontawesome 6.4.2 -->
     <link rel="stylesheet" href="assets_cc/css/plugins/fontawesome-6.css">
@@ -23,6 +66,8 @@
 </head>
 
 <body>
+
+
     <!-- header style one -->
     <!-- header style one -->
 <?php include "include_cc/header.php"; ?>
@@ -36,12 +81,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-main-wrapper">
-                        <h1 class="title">Contact Us</h1>
+                        <h1 class="title">Our Counsellor</h1>
                         <!-- breadcrumb pagination area -->
                         <div class="pagination-wrapper">
                             <a href="index.php">Home</a>
                             <i class="fa-regular fa-chevron-right"></i>
-                            <a class="active" href="contact.php">Contact us</a>
+                            <a class="active" href="counsellor.php">All Counsellor</a>
                         </div>
                         <!-- breadcrumb pagination area end -->
                     </div>
@@ -52,85 +97,183 @@
     <!-- bread crumb area end -->
 
 
-    <!-- rts contact area start -->
-    <div class="rts-contact-area rts-section-gapTop">
+
+    <!-- course area start -->
+    <div class="rts-course-default-area rts-section-gap">
         <div class="container">
             <div class="row g-5">
-                <div class="col-xl-5">
-                    <!-- contact left area start -->
-                    <div class="contact-left-area-start">
-                        <div class="title-area-left-style">
-                            <div class="pre-title">
-                                <img src="assets_cc/images/banner/bulb.png" alt="icon">
-                                <span>Courses</span>
+                <div class="col-lg-3">
+                    <!-- course-filter-area start -->
+                    <div class="rts-course-filter-area">
+                        <!-- single filter wized -->
+                        <div class="single-filter-left-wrapper">
+                            <h6 class="title">Search</h6>
+                            <div class="search-filter filter-body">
+                                <div class="input-wrapper">
+                                    <input type="text" id="searchInput" placeholder="Search Counsellor..." value="<?php echo htmlspecialchars($search); ?>">
+                                    <i class="fa-light fa-magnifying-glass"></i>
+                                </div>
                             </div>
-                            <h2 class="title">Love to hear from you <br>
-                                <span>Get in touch!</span>
-                            </h2>
                         </div>
-                        <form action="mailer.php" method="post" class="contact-page-form" id="contact-form">
-                            <div class="single-input">
-                                <label for="name">Your Name*</label>
-                                <input id="name" name="name" type="text" placeholder="Andrew Davis ...." required>
+                        <!-- single filter wized end -->
+                        <!-- single filter wized -->
+                        <div class="single-filter-left-wrapper">
+                            <h6 class="title">Specialization</h6>
+                            <div class="checkbox-filter filter-body">
+                                <div class="checkbox-wrapper">
+                                    <?php
+                                    $specializations = $connect->query("SELECT DISTINCT specialization FROM trainer_specializations");
+                                    while ($spec = $specializations->fetch_assoc()) {
+                                        $checked = ($category == $spec['specialization']) ? 'checked' : '';
+                                        echo '<div class="single-checkbox-filter">
+                                        <div class="check-box">
+                                                    <input type="checkbox" id="category-' . $spec['specialization'] . '" 
+                                                           name="category" value="' . $spec['specialization'] . '" ' . $checked . '>
+                                                    <label for="category-' . $spec['specialization'] . '">' . $spec['specialization'] . '</label>
+                                        </div>
+                                            </div>';
+                                    }
+                                    ?>
+                                    </div>
                             </div>
-                            <div class="single-input">
-                                <label for="email">Your Email*</label>
-                                <input id="email" name="email" type="email" placeholder="info@Campus Coach | Guiding Future.net">
-                            </div>
-                            <div class="single-input">
-                                <label for="message">Message*</label>
-                                <textarea id="message" name="message" placeholder="Let tell us about your projects"></textarea>
-                            </div>
-                            <button class="rts-btn btn-primary mt--30">Send Message</button>
-                        </form>
-                        <div id="form-messages" class="mt--20"></div>
+                        </div>
+                        <!-- single filter wized end -->
+
+                        <!-- single filter wized end -->
+                        <a href="#" class="rts-btn btn-border"><i class="fa-regular fa-x"></i> Clear All Filters</a>
                     </div>
-                    <!-- contact left area end -->
+                    <!-- course-filter-area end -->
                 </div>
-                <div class="col-xl-7 pl--50 pl_lg--15 pl_md--15 pl_sm--15 pb_md--100 pb_sm--100">
-                    <div class="contact-map-area-start">
-                        <div class="single-maptop-info">
-                            <div class="icon">
-                                <img src="assets_cc/images/contact/02.png" alt="contact">
-                            </div>
-                            <p class="disc">
-                                123 Main Street,
-                                New York, AV 10013
-                            </p>
+                <div class="col-lg-9">
+                    <!-- filter top-area  -->
+                    <div class="filter-small-top-full">
+                        <div class="left-filter">
+                            <span>Short By</span>
+                            <select class="nice-select" name="price">
+                                <option>All Category</option>
+                                <option value="asc">Design</option>
+                                <option value="desc">Development</option>
+                                <option value="pop">Popularity</option>
+                                <option value="low">Price</option>
+                                <option value="high">Stars</option>
+                            </select>
                         </div>
-                        <div class="single-maptop-info">
-                            <div class="icon">
-                                <img src="assets_cc/images/contact/03.png" alt="contact">
-                            </div>
-                            <a href="tel:+4733378901">(555) 123-4567</a> <br>
-                            <a href="tel:+4733378901">(555) 123-4567</a>
-                        </div>
-                        <div class="single-maptop-info">
-                            <div class="icon">
-                                <img src="assets_cc/images/contact/04.png" alt="contact">
-                            </div>
-                            <p class="disc">
-                                Mon-Fri: 9 AM – 6 PM <br>
-                                Saturday: 9 AM – 4 PM
-                            </p>
+                        <div class="right-filter">
+                            <span>Showing All Counsellor</span>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">
+                                        <i class="fa-light fa-grid-2"></i>
+                                        <span>Grid</span>
+                                    </button>
+                                </li>
+                               
+                            </ul>
+
                         </div>
                     </div>
-                    <div class="map-bottom-area mt--30">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14602.288851207937!2d90.47855065!3d23.798243149999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1705835333294!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
+                    <!-- filter top-area end -->
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row g-5 mt--10">
+                                <?php
+                                if ($result->num_rows > 0) {
+                                    while ($trainer = $result->fetch_assoc()) {
+                                        $rating = round($trainer['avg_rating'], 1);
+                                        $stars = str_repeat('<i class="fa-sharp fa-solid fa-star"></i>', floor($rating));
+                                        if ($rating - floor($rating) >= 0.5) {
+                                            $stars .= '<i class="fa-sharp fa-regular fa-star-half-stroke"></i>';
+                                        }
+                                        $stars .= str_repeat('<i class="fa-sharp fa-regular fa-star"></i>', 5 - ceil($rating));
+                                        
+                                        echo '<div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                                    <div class="rts-single-course">
+                                                    <a href="trainer-profile.php?id=' . $trainer['id'] . '" class="thumbnail">
+                                                        <img src="' . $uri . $trainer['profile_img'] . '" alt="' . $trainer['first_name'] . ' ' . $trainer['last_name'] . '">
+                                        </a>
+                                        <div class="tags-area-wrapper">
+                                            <div class="single-tag">
+                                                            <span>' . $trainer['specializations'] . '</span>
+                                            </div>
+                                        </div>
+                                        <div class="lesson-studente">
+                                            <div class="lesson">
+                                                <i class="fa-light fa-user-group"></i>
+                                                            <span>' . $trainer['review_count'] . ' Reviews</span>
+                                            </div>
+                                        </div>
+                                                    <a href="trainer-profile.php?id=' . $trainer['id'] . '">
+                                                        <h5 class="title">' . $trainer['first_name'] . ' ' . $trainer['last_name'] . '</h5>
+                                        </a>
+                                                    <p class="teacher">' . $trainer['designation'] . '</p>
+                                        <div class="rating-and-price">
+                                            <div class="rating-area">
+                                                            <span>' . $rating . '</span>
+                                                <div class="stars">
+                                                                <ul>' . $stars . '</ul>
+                                                </div>
+                                            </div>
+                                            <div class="price-area">
+                                                            <a href="booking.php?trainer_id=' . $trainer['id'] . '" class="rts-btn btn-primary">Book Now</a>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>';
+                                    }
+                                } else {
+                                    echo '<div class="col-12"><p>No trainers found matching your criteria.</p></div>';
+                                }
+                                ?>
+                            </div>
+                            <div class="row mt--30">
+                                <div class="col-lg-12">
+                                    <!-- rts-pagination-area -->
+                                    
+                                    <!-- rts-pagination-area end -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                                </div>
+                                            </div>
+        </div>
+    </div>
+    <!-- course area end -->
+
+
+    <!-- Modal -->
+    <div class="modal login-pupup-modal fade" id="exampleModal-login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hi, Welcome back!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" class="login-form">
+                        <input type="text" placeholder="Username of Email Address" required>
+                        <input type="password" placeholder="Password" required>
+                        <div class="d-flex mb--20 align-items-center">
+                            <input type="checkbox" id="examplecheck-modal">
+                            <label for="examplecheck-modal">I agree to the terms of use and privacy policy.</label>
+                        </div>
+                        <button type="submit" class="rts-btn btn-primary">Sign In</button>
+
+                        <p class="dont-acc mt--20">Dont Have an Account? <a href="registration.php">Sign-up</a> </p>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- rts contact area end -->
 
-    <div class="rts-section-gap">
-
-    </div>
+    <!-- cart area start -->
 
     <!-- footer call to action area start -->
 <?php include "include_cc/footer.php"; ?> 
     <!-- footer call to action area end -->
+    <!-- cart area edn -->
+
 
     <!-- cart area start -->
 
@@ -138,6 +281,7 @@
 <?php include "include_cc/cart.php"; ?>
     <!-- cart area edn -->
     <!-- cart area edn -->
+
 
     <!-- header style two -->
     <div id="side-bar" class="side-bar header-two">
@@ -375,6 +519,37 @@
 
 <?php include "include_cc/script.php"; ?>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filters = document.querySelectorAll('input[type="checkbox"], #searchInput');
+    filters.forEach(filter => {
+        filter.addEventListener('change', updateFilters);
+    });
+    document.getElementById('searchInput').addEventListener('input', updateFilters);
+});
+
+function updateFilters() {
+    const params = new URLSearchParams(window.location.search);
+    
+    // Update search
+    const search = document.getElementById('searchInput').value;
+    if (search) params.set('search', search);
+    else params.delete('search');
+    
+    // Update category
+    const category = document.querySelector('input[name="category"]:checked');
+    if (category) params.set('category', category.value);
+    else params.delete('category');
+    
+    // Update price
+    const price = document.querySelector('input[name="price"]:checked');
+    if (price) params.set('price', price.value);
+    else params.delete('price');
+    
+    // Reload page with new filters
+    window.location.href = window.location.pathname + '?' + params.toString();
+}
+</script>
 
 </body>
 

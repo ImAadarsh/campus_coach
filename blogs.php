@@ -1,10 +1,40 @@
+<?php include "include/connect.php"; 
+
+// Get filter parameters
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$category = isset($_GET['category']) ? $_GET['category'] : '';
+
+// Build the SQL query
+$sql = "SELECT b.*, bc.name as category_name 
+        FROM blogs b 
+        LEFT JOIN blog_categories bc ON b.category_id = bc.id 
+        WHERE b.is_deleted = 0";
+
+// Add search filter
+if (!empty($search)) {
+    $sql .= " AND (b.title LIKE '%$search%' OR b.subtitle LIKE '%$search%' OR b.content LIKE '%$search%')";
+}
+
+// Add category filter
+if (!empty($category)) {
+    $sql .= " AND b.category_id = '$category'";
+}
+
+$sql .= " ORDER BY b.created_at DESC";
+
+// Execute the query
+$result = $connect->query($sql);
+
+// Get categories for filter
+$categories = $connect->query("SELECT * FROM blog_categories ORDER BY name");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Coach | Guiding Future </title>
+    <title>Campus Coach | Guiding Future | Blogs</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets_cc/images/fav.png">
     <!-- fontawesome 6.4.2 -->
     <link rel="stylesheet" href="assets_cc/css/plugins/fontawesome-6.css">
@@ -25,273 +55,117 @@
 <body>
 
     <!-- header style one -->
-    <!-- header style one -->
-<?php include "include_cc/header.php"; ?>
-    <!-- header style end -->
+    <?php include "include_cc/header.php"; ?>
     <!-- header style end -->
 
 
-    <!-- dashboard banner area start -->
-    <div class="dashboard-banner-area-wrapper">
+    <!-- bread crumb area -->
+    <div class="rts-bread-crumbarea-1 rts-section-gap bg_image">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="dashboard-banner-area-start bg_image  student-dashboard">
-                        <div class="rating-area-banner-dashboard">
-                            <a href="become-instructor.php" class="create-btn"><i class="fa-regular fa-circle-plus"></i> Become an Instructor</a>
+                    <div class="breadcrumb-main-wrapper">
+                        <h1 class="title">Our Blogs</h1>
+                        <!-- breadcrumb pagination area -->
+                        <div class="pagination-wrapper">
+                            <a href="index.php">Home</a>
+                            <i class="fa-regular fa-chevron-right"></i>
+                            <a class="active" href="blogs.php">Blogs</a>
                         </div>
-                        <div class="author-profile-image-and-name">
-                            <div class="profile-pic">
-                                <img src="assets_cc/images/dashboard/04.png" alt="dashboard">
-                            </div>
-                            <div class="name-desig">
-                                <h1 class="title">Jon Adam</h1>
-                                <div class="course-vedio">
-                                    <div class="single">
-                                        <i class="fa-thin fa-book"></i>
-                                        <span>5 Course Enrolled</span>
-                                    </div>
-                                    <div class="single">
-                                        <i class="fa-thin fa-file-certificate"></i>
-                                        <span>4 Certificate</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- breadcrumb pagination area end -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- dashboard banner area end -->
+    <!-- bread crumb area end -->
 
 
-
-    <!-- rts dahboard-area-main-wrapper -->
-    <div class="dashboard--area-main pt--100">
+    <!-- blog area start -->
+    <div class="rts-blog-list-area rts-section-gap">
         <div class="container">
             <div class="row g-5">
-                <div class="col-lg-3">
-                    <div class="left-sindebar-dashboard">
-                        <div class="dashboard-left-single-wrapper">
-                            <!-- single item -->
-                            <a href="student-dashboard.php" class="single-item ">
-                                <i class="fa-light fa-house"></i>
-                                <p>Dashboard</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-profile.php" class="single-item ">
-                                <i class="fa-regular fa-user"></i>
-                                <p>My Profile</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-enroll-course.php" class="single-item ">
-                                <i class="fa-light fa-graduation-cap"></i>
-                                <p>Enrolled Courses</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-wishlist.php" class="single-item ">
-                                <i class="fa-sharp fa-light fa-bookmark"></i>
-                                <p>Wishlist</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-reviews.php" class="single-item ">
-                                <i class="fa-regular fa-star"></i>
-                                <p>Reviews</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-quiz-attempts.php" class="single-item ">
-                                <i class="fa-sharp fa-light fa-bullseye-pointer"></i>
-                                <p>My Quiz Attempts</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-order-history.php" class="single-item ">
-                                <i class="fa-sharp fa-light fa-bag-shopping"></i>
-                                <p>Order History</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-question-answer.php" class="single-item">
-                                <i class="fa-regular fa-circle-question"></i>
-                                <p>Question & Answer</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="student-calender.php" class="single-item active">
-                                <i class="fa-light fa-calendar-days"></i>
-                                <p>Calendar</p>
-                            </a>
-                            <!-- single item end -->
-                        </div>
-                        <div class="dashboard-left-single-wrapper bbnone mt--40">
-                            <h4 class="title mb--5">User</h4>
-                            <!-- single item -->
-                            <a href="student-settings.php" class="single-item ">
-                                <i class="fa-sharp fa-regular fa-gear"></i>
-                                <p>Settings</p>
-                            </a>
-                            <!-- single item end -->
-                            <!-- single item -->
-                            <a href="index.php" class="single-item">
-                                <i class="fa-light fa-right-from-bracket"></i>
-                                <p>Logout</p>
-                            </a>
-                            <!-- single item end -->
-                        </div>
+                <!-- blog post area -->
+                <div class="col-xl-8 col-md-12 col-sm-12 col-12">
+                    <div class="row g-5">
+                        <?php
+                        if ($result->num_rows > 0) {
+                            while ($blog = $result->fetch_assoc()) {
+                                echo '<div class="col-lg-6">
+                                    <div class="single-blog-style-one">
+                                        <a href="blog-details.php?id=' . $blog['id'] . '" class="thumbnail">
+                                            <img src="' . $uri . $blog['banner'] . '" alt="' . $blog['title'] . '">
+                                        </a>
+                                        <div class="blog-top-area">
+                                            <div class="single">
+                                                <i class="fa-light fa-calendar-days"></i>
+                                                <p>' . date('F d, Y', strtotime($blog['created_at'])) . '</p>
+                                            </div>
+                                            <div class="single">
+                                                <i class="fa-light fa-user"></i>
+                                                <p>' . $blog['author_name'] . '</p>
+                                            </div>
+                                        </div>
+                                        <a href="blog-details.php?id=' . $blog['id'] . '">
+                                            <h5 class="title">' . $blog['title'] . '</h5>
+                                        </a>
+                                        <div class="tags-area">
+                                            <span>' . $blog['category_name'] . '</span>
+                                        </div>
+                                    </div>
+                                </div>';
+                            }
+                        } else {
+                            echo '<div class="col-12"><p>No blogs found matching your criteria.</p></div>';
+                        }
+                        ?>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <div class="calender-area-wrapper">
-                        <h5 class="title">Calendar</h5>
-                        <div class="calender-dash-wrapper" id="calender-active">
-                            <!-- calender -->
-                            <div class="wrapper">
-
-                                <div class="container-calendar">
-                                    <div class="footer-container-calendar">
-                                        <select id="month" onchange="jump()">
-                                            <option value=0>Jan</option>
-                                            <option value=1>Feb</option>
-                                            <option value=2>Mar</option>
-                                            <option value=3>Apr</option>
-                                            <option value=4>May</option>
-                                            <option value=5>Jun</option>
-                                            <option value=6>Jul</option>
-                                            <option value=7>Aug</option>
-                                            <option value=8>Sep</option>
-                                            <option value=9>Oct</option>
-                                            <option value=10>Nov</option>
-                                            <option value=11>Dec</option>
-                                        </select>
-                                        <select id="year" onchange="jump()"></select>
+                <!-- blog sidebar -->
+                <div class="col-xl-4 col-md-12 col-sm-12 col-12 rts-sticky-column-item">
+                    <div class="blog-sidebar theiaStickySidebar">
+                        <!-- search widget -->
+                        <div class="rts-single-wized search">
+                            <div class="wized-body mt--0">
+                                <form action="blogs.php" method="GET">
+                                    <div class="rts-search-wrapper">
+                                        <input type="text" name="search" placeholder="Enter Keyword" value="<?php echo htmlspecialchars($search); ?>">
+                                        <button type="submit"><i class="fal fa-search"></i></button>
                                     </div>
-                                    <div class="mt--30" id="monthAndYear"></div>
-
-                                    <!-- <div class="button-container-calendar">
-                                        <button id="previous" onclick="previous()">&#8249;</button>
-                                        <button id="next" onclick="next()">&#8250;</button>
-                                    </div> -->
-
-                                    <table class="table-calendar" id="calendar" data-lang="en">
-                                        <thead id="thead-month"></thead>
-                                        <tbody id="calendar-body"></tbody>
-                                    </table>
-
-
-
-                                </div>
-
+                                </form>
                             </div>
-                            <!-- calender -->
-                        </div>
-                        <div class="search-area-calender-inner">
-                            <input type="text" placeholder="Search...">
-                            <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
 
-                        <!-- assignments-area saert -->
-                        <div class="assignment-list-wrapper-calender">
-                            <!-- single assignments area wrapper -->
-                            <div class="single-assignments-wrapper">
-                                <div class="top-wrapper">
-                                    <i class="fa-regular fa-calendar-lines-pen"></i>
-                                    <span>October 4, 2023</span>
-                                </div>
-                                <div class="assignment-list">
-                                    <div class="left">
-                                        <i class="fa-regular fa-calendar-lines-pen"></i>
-                                        <p>Assignment:</p>
-                                        <span>My Quiz Attempts</span>
-                                    </div>
-                                    <div class="right">
-                                        <span>Deadline: No Limit</span>
-                                    </div>
-                                </div>
-                                <div class="assignment-list mt--20">
-                                    <div class="left">
-                                        <i class="fa-regular fa-calendar-lines-pen"></i>
-                                        <p>Assignment:</p>
-                                        <span>My Quiz Attempts</span>
-                                    </div>
-                                    <div class="right">
-                                        <span>Deadline: No Limit</span>
-                                    </div>
-                                </div>
+                        <!-- categories widget -->
+                        <div class="rts-single-wized Categories">
+                            <div class="wized-header">
+                                <h5 class="title">Categories</h5>
                             </div>
-                            <!-- single assignments area wrapper end -->
-                            <!-- single assignments area wrapper -->
-                            <div class="single-assignments-wrapper mt--50">
-                                <div class="top-wrapper">
-                                    <i class="fa-regular fa-calendar-lines-pen"></i>
-                                    <span>October 29, 2023</span>
-                                </div>
-                                <div class="assignment-list">
-                                    <div class="left">
-                                        <i class="fa-regular fa-calendar-lines-pen"></i>
-                                        <p>Assignment:</p>
-                                        <span>My Quiz Attempts</span>
-                                    </div>
-                                    <div class="right">
-                                        <span>Deadline: No Limit</span>
-                                    </div>
-                                </div>
-                                <div class="assignment-list mt--20">
-                                    <div class="left">
-                                        <i class="fa-regular fa-calendar-lines-pen"></i>
-                                        <p>Assignment:</p>
-                                        <span>My Quiz Attempts</span>
-                                    </div>
-                                    <div class="right">
-                                        <span>Deadline: No Limit</span>
-                                    </div>
-                                </div>
-                                <div class="assignment-list mt--20">
-                                    <div class="left">
-                                        <i class="fa-regular fa-calendar-lines-pen"></i>
-                                        <p>Assignment:</p>
-                                        <span>My Quiz Attempts</span>
-                                    </div>
-                                    <div class="right">
-                                        <span>Deadline: No Limit</span>
-                                    </div>
-                                </div>
-                                <div class="assignment-list mt--20">
-                                    <div class="left">
-                                        <i class="fa-regular fa-calendar-lines-pen"></i>
-                                        <p>Assignment:</p>
-                                        <span>My Quiz Attempts</span>
-                                    </div>
-                                    <div class="right">
-                                        <span>Deadline: No Limit</span>
-                                    </div>
-                                </div>
+                            <div class="wized-body">
+                                <ul class="single-categories">
+                                    <?php
+                                    while ($cat = $categories->fetch_assoc()) {
+                                        $active = ($category == $cat['id']) ? 'active' : '';
+                                        echo '<li class="' . $active . '">
+                                            <a href="blogs.php?category=' . $cat['id'] . '">' . $cat['name'] . '
+                                                <i class="far fa-long-arrow-right"></i>
+                                            </a>
+                                        </li>';
+                                    }
+                                    ?>
+                                </ul>
                             </div>
-                            <!-- single assignments area wrapper end -->
                         </div>
-                        <!-- assignments-area end -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- rts dahboard-area-main-wrapper end -->
+    <!-- blog details area end -->
 
-
-    <div class="rts-section-gapTop">
-
-    </div>
-
-    <!-- footer dashboards area -->
-<?php include "include_cc/footer.php"; ?> 
-    <!-- footer dashboards area end -->
-
-
+    <!-- footer call to action area start -->
+    <?php include "include_cc/footer.php"; ?> 
+    <!-- footer call to action area end -->
     <!-- cart area start -->
 
     <!-- cart area start -->
@@ -534,7 +408,6 @@
     </div>
 
 <?php include "include_cc/script.php"; ?>
-
 
 </body>
 

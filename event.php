@@ -1,3 +1,11 @@
+<?php include "include/connect.php"; ?>
+
+<?php
+// Fetch events from database
+$event_query = "SELECT * FROM events ORDER BY date_time DESC";
+$event_result = mysqli_query($connect, $event_query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,87 +68,45 @@
                 <div class="col-lg-12">
                     <!-- single up coming events -->
                     <div class="upcoming-events-main-wrapper-1">
+                        <?php
+                        if(mysqli_num_rows($event_result) > 0) {
+                            while($event = mysqli_fetch_assoc($event_result)) {
+                                $event_date = date("F d, Y", strtotime($event['date_time']));
+                                $event_time = date("h:i a", strtotime($event['date_time']));
+                        ?>
                         <!-- single -->
                         <div class="single-upcoming-events">
-                            <a href="event-details.php" class="thumbnail">
-                                <img src="assets_cc/images/events/01.jpg" alt="events">
+                            <a href="event-details.php?id=<?php echo $event['id']; ?>" class="thumbnail">
+                                <img src="assets_cc/images/events/<?php echo $event['image']; ?>" alt="<?php echo $event['name']; ?>">
                             </a>
                             <div class="information">
                                 <div class="date-details">
                                     <div class="date">
                                         <i class="fa-thin fa-calendar-days"></i>
-                                        <p> December 26, 2023</p>
+                                        <p><?php echo $event_date; ?></p>
                                     </div>
                                     <div class="time">
                                         <i class="fa-regular fa-clock"></i>
-                                        <p>10:30 am</p>
+                                        <p><?php echo $event_time; ?></p>
                                     </div>
                                     <div class="location">
                                         <i class="fa-thin fa-location-dot"></i>
-                                        <p>Yarra Park, Melbourne</p>
+                                        <p><?php echo $event['location']; ?></p>
                                     </div>
                                 </div>
-                                <a href="event-details.php">
-                                    <h5 class="title">EduFest 2023: Igniting Minds, Transforming Lives </h5>
+                                <a href="event-details.php?id=<?php echo $event['id']; ?>">
+                                    <h5 class="title"><?php echo $event['name']; ?></h5>
                                 </a>
                             </div>
-                            <a href="event-details.php" class="rts-btn btn-primary with-arrow">Get Ticket <i class="fa-light fa-arrow-right"></i></a>
+                            <a href="<?php echo $event['link']; ?>" class="rts-btn btn-primary with-arrow">Get Ticket <i class="fa-light fa-arrow-right"></i></a>
                         </div>
                         <!-- single -->
-                        <!-- single -->
-                        <div class="single-upcoming-events">
-                            <a href="event-details.php" class="thumbnail">
-                                <img src="assets_cc/images/events/02.jpg" alt="events">
-                            </a>
-                            <div class="information">
-                                <div class="date-details">
-                                    <div class="date">
-                                        <i class="fa-thin fa-calendar-days"></i>
-                                        <p> December 29, 2023</p>
-                                    </div>
-                                    <div class="time">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <p>10:30 am</p>
-                                    </div>
-                                    <div class="location">
-                                        <i class="fa-thin fa-location-dot"></i>
-                                        <p>Yarra Park, Melbourne</p>
-                                    </div>
-                                </div>
-                                <a href="event-details.php">
-                                    <h5 class="title">EdTech Summit: Revolutionizing Learning</h5>
-                                </a>
-                            </div>
-                            <a href="event-details.php" class="rts-btn btn-primary with-arrow">Get Ticket <i class="fa-light fa-arrow-right"></i></a>
-                        </div>
-                        <!-- single -->
-                        <!-- single -->
-                        <div class="single-upcoming-events">
-                            <a href="event-details.php" class="thumbnail">
-                                <img src="assets_cc/images/events/03.jpg" alt="events">
-                            </a>
-                            <div class="information">
-                                <div class="date-details">
-                                    <div class="date">
-                                        <i class="fa-thin fa-calendar-days"></i>
-                                        <p> December 16, 2023</p>
-                                    </div>
-                                    <div class="time">
-                                        <i class="fa-regular fa-clock"></i>
-                                        <p>10:30 am</p>
-                                    </div>
-                                    <div class="location">
-                                        <i class="fa-thin fa-location-dot"></i>
-                                        <p>Yarra Park, Melbourne</p>
-                                    </div>
-                                </div>
-                                <a href="event-details.php">
-                                    <h5 class="title">Teaching Tomorrow: A Symposium on Modern</h5>
-                                </a>
-                            </div>
-                            <a href="event-details.php" class="rts-btn btn-primary with-arrow">Get Ticket <i class="fa-light fa-arrow-right"></i></a>
-                        </div>
-                        <!-- single -->
+                        <?php
+                            }
+                        } else {
+                            echo '<div class="col-12 text-center"><p>No events found.</p></div>';
+                        }
+                        ?>
                     </div>
                     <!-- single up coming events end -->
                 </div>
@@ -164,215 +130,11 @@
     <!-- cart area edn -->
 
     <!-- header style two -->
-    <div id="side-bar" class="side-bar header-two">
-        <button class="close-icon-menu"><i class="far fa-times"></i></button>
-        <!-- inner menu area desktop start -->
-        <div class="inner-main-wrapper-desk">
-            <div class="thumbnail">
-                <img src="assets_cc/images/banner/04.jpg" alt="elevate">
-            </div>
-            <div class="inner-content">
-                <h4 class="title">We Build Building and Great Constructive Homes.</h4>
-                <p class="disc">
-                    We successfully cope with tasks of varying complexity, provide long-term guarantees and regularly master new technologies.
-                </p>
-                <div class="footer">
-                    <h4 class="title">Got a project in mind?</h4>
-                    <a href="contact.php" class="rts-btn btn-primary">Let's talk</a>
-                </div>
-            </div>
-        </div>
-        <!-- mobile menu area start -->
-        <div class="mobile-menu-main">
-            <nav class="nav-main mainmenu-nav mt--30">
-                <ul class="mainmenu metismenu" id="mobile-menu-active">
-                    <li class="has-droupdown">
-                        <a href="#" class="main">Home</a>
-                        <ul class="submenu mm-collapse">
-                            <li><a class="mobile-menu-link" href="index.php">Main Home</a></li>
-                            <li><a class="mobile-menu-link" href="index-two.php">Online Course</a></li>
-                            <li><a class="mobile-menu-link" href="index-three.php">Course Hub</a></li>
-                            <li><a class="mobile-menu-link" href="index-four.php">Distance Learning</a></li>
-                            <li><a class="mobile-menu-link" href="index-five.php">Single Instructor</a></li>
-                            <li><a class="mobile-menu-link" href="index-six.php">Language Academy</a></li>
-                            <li><a class="mobile-menu-link" href="index-seven.php">Gym Instructor</a></li>
-                            <li><a class="mobile-menu-link" href="index-eight.php">Kitchen Coach</a></li>
-                            <li><a class="mobile-menu-link" href="index-nine.php">Course Portal</a></li>
-                            <li><a class="mobile-menu-link" href="index-ten.php">Business Coach</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-droupdown">
-                        <a href="#" class="main">Pages</a>
-                        <ul class="submenu mm-collapse">
-                            <li><a class="mobile-menu-link" href="about.php">About Us</a></li>
-                            <li><a class="mobile-menu-link" href="about-two.php">About Us Two</a></li>
-                            <li><a class="mobile-menu-link" href="instructor-profile.php">Profile</a></li>
-                            <li><a class="mobile-menu-link" href="contact.php">Contact</a></li>
-                            <li class="has-droupdown third-lvl">
-                                <a class="main" href="#">Zoom</a>
-                                <ul class="submenu-third-lvl mm-collapse">
-                                    <li><a href="zoom-meeting.php"></a>Zoom Meeting</li>
-                                    <li><a href="zoom-details.php"></a>Zoom Details</li>
-                                </ul>
-                            </li>
-                            <li class="has-droupdown third-lvl">
-                                <a class="main" href="#">Event</a>
-                                <ul class="submenu-third-lvl mm-collapse">
-                                    <li><a href="event.php"></a>Event</li>
-                                    <li><a href="event-two.php"></a>Event Two</li>
-                                    <li><a href="event-details.php"></a>Event Details</li>
-                                </ul>
-                            </li>
-                            <li class="has-droupdown third-lvl">
-                                <a class="main" href="#">Shop</a>
-                                <ul class="submenu-third-lvl mm-collapse">
-                                    <li><a href="shop.php"></a>Shop</li>
-                                    <li><a href="product-details.php"></a>Product Details</li>
-                                    <li><a href="checkout.php"></a>Checkout</li>
-                                    <li><a href="cart.php"></a>Cart</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-droupdown">
-                        <a href="#" class="main">Course</a>
-                        <ul class="submenu mm-collapse">
-                            <li><a href="#" class="tag">Courses</a></li>
-                            <li><a class="mobile-menu-link" href="course-one.php">Courses</a></li>
-                            <li><a class="mobile-menu-link" href="course-two.php">Course List</a></li>
-                            <li><a class="mobile-menu-link" href="course-three.php">Course Grid</a></li>
-                            <li><a class="mobile-menu-link" href="course-four.php">Course List Two</a></li>
-                            <li><a class="mobile-menu-link" href="course-five.php">Course Grid Two</a></li>
-                            <li><a class="mobile-menu-link" href="course-six.php">Course Filter</a></li>
-                        </ul>
-                        <ul class="submenu mm-collapse">
-                            <li><a href="#" class="tag">Courses Details</a></li>
-                            <li><a class="mobile-menu-link" href="single-course.php">Courses Details</a></li>
-                            <li><a class="mobile-menu-link" href="single-course-two.php">Courses Details V2</a></li>
-                            <li><a class="mobile-menu-link" href="single-course-three.php">Courses Details V3</a></li>
-                            <li><a class="mobile-menu-link" href="single-course-four.php">Courses Details V4</a></li>
-                            <li><a class="mobile-menu-link" href="single-course-five.php">Courses Details V5</a></li>
-                            <li><a class="mobile-menu-link" href="single-course-free.php">Courses Details Free</a></li>
-                        </ul>
-                        <ul class="submenu mm-collapse">
-                            <li><a href="#" class="tag">Others</a></li>
-                            <li><a class="mobile-menu-link" href="become-instructor.php">Become an Instructor</a></li>
-                            <li><a class="mobile-menu-link" href="instructor-profile.php">Instructor Profile</a></li>
-                            <li><a class="mobile-menu-link" href="instructor.php">Instructor</a></li>
-                            <li><a class="mobile-menu-link" href="pricing.php">Membership Plan</a></li>
-                            <li><a class="mobile-menu-link" href="log-in.php">Log In</a></li>
-                            <li><a class="mobile-menu-link" href="registration.php">Registration</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-droupdown">
-                        <a href="#" class="main">Dashboard</a>
-                        <ul class="submenu mm-collapse">
-                            <li class="has-droupdown third-lvl">
-                                <a class="main" href="#">Instructor Dashboard</a>
-                                <ul class="submenu-third-lvl mm-collapse">
-                                    <li><a href="dashboard.php"></a>Dashboard</li>
-                                    <li><a href="my-profile.php"></a>My Profile</li>
-                                    <li><a href="enroll-course.php"></a>Enroll Course</li>
-                                    <li><a href="wishlist.php"></a>Wishlist</li>
-                                    <li><a href="reviews.php"></a>Reviews</li>
-                                    <li><a href="quick-attempts.php"></a>Quick Attempts</li>
-                                    <li><a href="order-history.php"></a>Order History</li>
-                                    <li><a href="question-answer.php"></a>Question Answer</li>
-                                    <li><a href="calender.php"></a>Calender</li>
-                                    <li><a href="my-course.php"></a>My Course</li>
-                                    <li><a href="announcement.php"></a>Announcement</li>
-                                    <li><a href="assignments.php"></a>Assignments</li>
-                                    <li><a href="certificate.php"></a>Certificate</li>
-                                </ul>
-                            </li>
-                            <li class="has-droupdown third-lvl">
-                                <a class="main" href="#">Students Dashboard</a>
-                                <ul class="submenu-third-lvl mm-collapse">
-                                    <li><a href="student-dashboard.php"></a>Dashboard</li>
-                                    <li><a href="student-profile.php"></a>My Profile</li>
-                                    <li><a href="student-enroll-course.php"></a>Enroll Course</li>
-                                    <li><a href="student-wishlist.php"></a>Wishlist</li>
-                                    <li><a href="student-reviews.php"></a>Reviews</li>
-                                    <li><a href="student-quick-attempts.php"></a>Quick Attempts</li>
-                                    <li><a href="student-order-history.php"></a>Order History</li>
-                                    <li><a href="student-question-answer.php"></a>Question Answer</li>
-                                    <li><a href="student-calender.php"></a>Calender</li>
-                                    <li><a href="student-settings.php"></a>Students Settings</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-droupdown">
-                        <a href="#" class="main">Blog</a>
-                        <ul class="submenu mm-collapse">
-                            <li><a class="mobile-menu-link" href="blog.php">Blog</a></li>
-                            <li><a class="mobile-menu-link" href="blog-grid.php">Blog Grid</a></li>
-                            <li><a class="mobile-menu-link" href="blog-list.php">Blog List</a></li>
-                            <li><a class="mobile-menu-link" href="blog-right-sidebar.php">Blog Right Sidebar</a></li>
-                            <li><a class="mobile-menu-link" href="blog-left-sidebar.php">Blog Left Sidebar</a></li>
-                            <li><a class="mobile-menu-link" href="blog-details.php">Blog Details</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="buttons-area">
-                <a href="#" class="rts-btn btn-border">Log In</a>
-                <a href="#" class="rts-btn btn-primary">Sign Up</a>
-            </div>
-
-            <div class="rts-social-style-one pl--20 mt--50">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-brands fa-twitter"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa-brands fa-linkedin-in"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- mobile menu area end -->
-    </div>
+  
     <!-- header style two End -->
 
     <!-- modal -->
-    <div id="myModal-1" class="modal fade" role="dialog">
-        <div class="modal-dialog bg_image">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bs-dismiss="modal"><i class="fa-light fa-x"></i></button>
-                </div>
-                <div class="modal-body text-center">
-                    <div class="inner-content">
-                        <div class="title-area">
-                            <span class="pre">Get Our Courses Free</span>
-                            <h4 class="title">Wonderful for Learning</h4>
-                        </div>
-                        <form action="#">
-                            <input type="text" placeholder="Your Mail.." required>
-                            <button>Download Now</button>
-                            <span>Your information will never be shared with any third party</span>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  
     <!-- rts backto top start -->
     <div class="progress-wrap">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">

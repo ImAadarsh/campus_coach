@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Coach | Guiding Future </title>
+    <title>About Us - Campus Coach | Guiding Future</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets_cc/images/fav.png">
     <!-- fontawesome 6.4.2 -->
     <link rel="stylesheet" href="assets_cc/css/plugins/fontawesome-6.css">
@@ -37,14 +37,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-main-wrapper">
-                        <h1 class="title">About Us</h1>
+                        <h1 class="title">Shaping Tomorrow's Leaders</h1>
                         <!-- breadcrumb pagination area -->
                         <div class="pagination-wrapper">
                             <a href="index.php">Home</a>
                             <i class="fa-regular fa-chevron-right"></i>
-                            <a class="active" href="Instructor.php">About Us</a>
+                            <a class="active" href="#">About Us</a>
                         </div>
-                        <!-- breadcrumb pagination area end -->
                     </div>
                 </div>
             </div>
@@ -101,11 +100,10 @@
                     <div class="title-area-left-style">
                         <div class="pre-title">
                             <img src="assets_cc/images/banner/bulb.png" alt="icon">
-                            <span>Gateway to Lifelong Learning</span>
+                            <span>Preparing for Tomorrow</span>
                         </div>
-                        <h2 class="title">Know Campus Coach | Guiding Future Empowering
-                            Learners Worldwide</h2>
-                        <p class="post-title">We are passionate about education and dedicated to providing high- <br> quality learning resources for learners of all backgrounds.</p>
+                        <h2 class="title">Beyond 2025: The Careers That Will Determine Tomorrow</h2>
+                        <p class="post-title">The world of work is evolving faster than ever before. Careers of tomorrow are not just a reflection of the present—they are actively shaping the future of industries, societies, and the way we live.</p>
                     </div>
                     <div class="about-inner-right-one">
                         <div class="what-you-get">
@@ -115,34 +113,32 @@
                                     <img src="assets_cc/images/about/icon/01.png" alt="icon-image">
                                 </div>
                                 <div class="information">
-                                    <h5 class="title">Learn with Expert </h5>
-                                    <p>We are passionate education.</p>
+                                    <h5 class="title">Continuous Learning</h5>
+                                    <p>Adapt, learn, and upskill to stay relevant.</p>
                                 </div>
                             </div>
-                            <!-- single-facilities end -->
                             <!-- single-facilities -->
                             <div class="single-facilityes">
                                 <div class="icon">
                                     <img src="assets_cc/images/about/icon/02.png" alt="icon-image">
                                 </div>
                                 <div class="information">
-                                    <h5 class="title">Expert Instructors</h5>
-                                    <p>We are passionate about education</p>
+                                    <h5 class="title">Future-Ready Skills</h5>
+                                    <p>Preparing for emerging careers beyond 2025.</p>
                                 </div>
                             </div>
-                            <!-- single-facilities end -->
                         </div>
                         <div class="author-area">
                             <div class="single-author-and-info">
-                                <img src="assets_cc/images/about/01.png" alt="about">
+                                <img width="55px" height="60px" src="Gaurava.png" alt="about">
                                 <div class="information">
                                     <a href="#">
-                                        <h6 class="title">William James</h6>
+                                        <h6 class="title">Gaurava Yadav</h6>
                                     </a>
-                                    <p class="desig">CEO, Campus Coach | Guiding Future Online Education</p>
+                                    <p class="desig">Founder CEO | IPN FORUM</p>
                                 </div>
                             </div>
-                            <a href="#" class="rts-btn btn-primary">About Us</a>
+                            <a href="#" class="rts-btn btn-primary">Explore Counsellor</a>
                         </div>
                     </div>
                 </div>
@@ -162,7 +158,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/icon/01.png" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">65,972</span></h5>
+                            <h5 class="title"><span >65,972</span></h5>
                             <span class="enr">Students Enrolled</span>
                         </div>
                         <!-- single end -->
@@ -171,7 +167,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/icon/02.png" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">5,321</span></h5>
+                            <h5 class="title"><span >5,321</span></h5>
                             <span class="enr">Completed Course</span>
                         </div>
                         <!-- single end -->
@@ -180,7 +176,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/icon/03.png" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">44,239</span></h5>
+                            <h5 class="title"><span >44,239</span></h5>
                             <span class="enr">Students Learner</span>
                         </div>
                         <!-- single end -->
@@ -189,7 +185,7 @@
                             <div class="icon">
                                 <img src="assets_cc/images/fun-facts/icon/04.png" alt="icon">
                             </div>
-                            <h5 class="title"><span class="counter">75,992</span></h5>
+                            <h5 class="title"><span >75,992</span></h5>
                             <span class="enr">Students Enrolled</span>
                         </div>
                         <!-- single end -->
@@ -200,6 +196,99 @@
     </div>
     <!-- fun facts area end -->
 
+
+    <!-- rts students feedbacka area end -->
+
+    <!-- why choose us section area start -->
+    <div class="why-choose-us bg-blue bg-choose-us-one bg_image rts-section-gap shape-move">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="why-choose-us-area-image pb--50">
+                        <img class="one" src="assets_cc/images/why-choose/02.jpg" alt="why-choose">
+                        <div class="border-img">
+                            <img class="two ml--20" src="assets_cc/images/why-choose/03.jpg" alt="why-choose">
+                        </div>
+                        <div class="circle-animation">
+                            <a class="uni-circle-text uk-background-white dark:uk-background-gray-80 uk-box-shadow-large uk-visible@m" href="#view_in_opensea">
+                                <svg class="uni-circle-text-path uk-text-secondary uni-animation-spin" viewBox="0 0 100 100" width="140" height="140">
+                                    <defs>
+                                        <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0">
+                                        </path>
+                                    </defs>
+                                    <text font-size="11.2">
+                                        <textPath xlink:href="#circle">About Univercity • About Collage •</textPath>
+                                    </text>
+                                </svg>
+                                <i class="fa-regular fa-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 pl--90 pl_sm--15 pt_sm--50">
+                    <div class="title-area-left-style">
+                        <div class="pre-title">
+                            <img src="assets_cc/images/banner/bulb-2.png" alt="icon">
+                            <span>Why Choose Us</span>
+                        </div>
+                        <h2 class="title">Empowering the Next Generation of Innovators</h2>
+                        <p class="post-title">With rapid technological advancements comes the rise of automation, which is reshaping job landscapes across industries. We guide students to adapt and excel in an evolving job landscape where continuous upskilling is key.</p>
+                    </div>
+                    <div class="why-choose-main-wrapper-1">
+                        <!-- single choose reason -->
+                        <div class="single-choose-reason-1">
+                            <div class="icon">
+                                <img src="assets_cc/images/why-choose/icon/01.png" alt="icon">
+                            </div>
+                            <h6 class="title">Industry Insights</h6>
+                        </div>
+                        <!-- single choose reason -->
+                        <div class="single-choose-reason-1">
+                            <div class="icon">
+                                <img src="assets_cc/images/why-choose/icon/02.png" alt="icon">
+                            </div>
+                            <h6 class="title">Career Guidance</h6>
+                        </div>
+                        <!-- single choose reason -->
+                        <div class="single-choose-reason-1">
+                            <div class="icon">
+                                <img src="assets_cc/images/why-choose/icon/03.png" alt="icon">
+                            </div>
+                            <h6 class="title">Skill Development</h6>
+                        </div>
+                        <!-- single choose reason -->
+                        <div class="single-choose-reason-1">
+                            <div class="icon">
+                                <img src="assets_cc/images/why-choose/icon/04.png" alt="icon">
+                            </div>
+                            <h6 class="title">Future Planning</h6>
+                        </div>
+                        <!-- single choose reason -->
+                        <div class="single-choose-reason-1">
+                            <div class="icon">
+                                <img src="assets_cc/images/why-choose/icon/05.png" alt="icon">
+                            </div>
+                            <h6 class="title">Expert Mentoring</h6>
+                        </div>
+                        <!-- single choose reason -->
+                        <div class="single-choose-reason-1">
+                            <div class="icon">
+                                <img src="assets_cc/images/why-choose/icon/06.png" alt="icon">
+                            </div>
+                            <h6 class="title">Lifelong Learning</h6>
+                        </div>
+                    </div>
+                    <a href="course-five.php" class="rts-btn btn-primary-white with-arrow">Explore Courses <i class="fa-regular fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="shape-image">
+            <div class="shape one" data-speed="0.04" data-revert="true"><img src="assets_cc/images/banner/15.png" alt=""></div>
+            <div class="shape two" data-speed="0.04"><img src="assets_cc/images/banner/shape/banner-shape02-w.svg" alt=""></div>
+            <div class="shape three" data-speed="0.04"><img src="assets_cc/images/banner/16.png" alt=""></div>
+        </div>
+    </div>
+    <!-- why choose us section area end -->
     <!-- rts students feedbacka area start -->
     <div class="rts-students-feedback-area rts-section-gap">
         <div class="container">
@@ -389,227 +478,8 @@
             </div>
         </div>
     </div>
-    <!-- rts students feedbacka area end -->
-
-    <!-- why choose us section area start -->
-    <div class="why-choose-us bg-blue bg-choose-us-one bg_image rts-section-gap shape-move">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="why-choose-us-area-image pb--50">
-                        <img class="one" src="assets_cc/images/why-choose/02.jpg" alt="why-choose">
-                        <div class="border-img">
-                            <img class="two ml--20" src="assets_cc/images/why-choose/03.jpg" alt="why-choose">
-                        </div>
-                        <div class="circle-animation">
-                            <a class="uni-circle-text uk-background-white dark:uk-background-gray-80 uk-box-shadow-large uk-visible@m" href="#view_in_opensea">
-                                <svg class="uni-circle-text-path uk-text-secondary uni-animation-spin" viewBox="0 0 100 100" width="140" height="140">
-                                    <defs>
-                                        <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0">
-                                        </path>
-                                    </defs>
-                                    <text font-size="11.2">
-                                        <textPath xlink:href="#circle">About Univercity • About Collage •</textPath>
-                                    </text>
-                                </svg>
-                                <i class="fa-regular fa-arrow-up-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 pl--90 pl_sm--15 pt_sm--50">
-                    <div class="title-area-left-style">
-                        <div class="pre-title">
-                            <img src="assets_cc/images/banner/bulb-2.png" alt="icon">
-                            <span>Why Choose Us</span>
-                        </div>
-                        <h2 class="title">Campus Coach | Guiding Future Your Path to
-                            Excellence & Success</h2>
-                        <p class="post-title">We are passionate about education and dedicated to providing high- <br> quality learning resources for learners of all backgrounds.</p>
-                    </div>
-                    <div class="why-choose-main-wrapper-1">
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/01.png" alt="icon">
-                            </div>
-                            <h6 class="title">Expert
-                                Instructors</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/02.png" alt="icon">
-                            </div>
-                            <h6 class="title">Interactive
-                                Learning</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/03.png" alt="icon">
-                            </div>
-                            <h6 class="title">Affordable
-                                Learning</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/04.png" alt="icon">
-                            </div>
-                            <h6 class="title">Career
-                                Advance</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/05.png" alt="icon">
-                            </div>
-                            <h6 class="title">Course
-                                Selection</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                        <!-- single choose reason -->
-                        <div class="single-choose-reason-1">
-                            <div class="icon">
-                                <img src="assets_cc/images/why-choose/icon/06.png" alt="icon">
-                            </div>
-                            <h6 class="title">Support
-                                Community</h6>
-                        </div>
-                        <!-- single choose reason end -->
-                    </div>
-                    <a href="single-course.php" class="rts-btn btn-primary-white with-arrow">View All Course <i class="fa-regular fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="shape-image">
-            <div class="shape one" data-speed="0.04" data-revert="true"><img src="assets_cc/images/banner/15.png" alt=""></div>
-            <div class="shape two" data-speed="0.04"><img src="assets_cc/images/banner/shape/banner-shape02-w.svg" alt=""></div>
-            <div class="shape three" data-speed="0.04"><img src="assets_cc/images/banner/16.png" alt=""></div>
-        </div>
-    </div>
-    <!-- why choose us section area end -->
-
     <!-- instructor area start -->
-    <div class="instrustor-area rts-section-gap">
-        <div class="container pb--120">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="title-between-area">
-                        <div class="title-area-left-style">
-                            <div class="pre-title">
-                                <img src="assets_cc/images/banner/bulb.png" alt="icon">
-                                <span>Instructor</span>
-                            </div>
-                            <h2 class="title">Our Professional Instructor</h2>
-                            <p class="post-title">You'll find something to spark your curiosity and enhance</p>
-                        </div>
-                        <a href="#" class="rts-btn btn-primary with-arrow">View All Teacher <i class="fa-light fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-5 mt--10">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <!-- single instrustor -->
-                    <div class="single-instructor">
-                        <div class="thumbnail-img">
-                            <a href="#" class="thumbnail">
-                                <img src="assets_cc/images/instructor/01.jpg" alt="instructor">
-                            </a>
-                            <div class="social-img-instructor">
-                                <ul>
-                                    <li><a href="#"><i class="fa-sharp fa-light fa-share-nodes"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-skype"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <h5 class="title">Emma Elizabeth</h5>
-                        </a>
-                        <p>Assistant Teacher</p>
-                    </div>
-                    <!-- single instrustor end -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <!-- single instrustor -->
-                    <div class="single-instructor">
-                        <div class="thumbnail-img">
-                            <a href="#" class="thumbnail">
-                                <img src="assets_cc/images/instructor/02.jpg" alt="instructor">
-                            </a>
-                            <div class="social-img-instructor">
-                                <ul>
-                                    <li><a href="#"><i class="fa-sharp fa-light fa-share-nodes"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-skype"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <h5 class="title">Thomas Fred</h5>
-                        </a>
-                        <p>Assistant Teacher</p>
-                    </div>
-                    <!-- single instrustor end -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <!-- single instrustor -->
-                    <div class="single-instructor">
-                        <div class="thumbnail-img">
-                            <a href="#" class="thumbnail">
-                                <img src="assets_cc/images/instructor/03.jpg" alt="instructor">
-                            </a>
-                            <div class="social-img-instructor">
-                                <ul>
-                                    <li><a href="#"><i class="fa-sharp fa-light fa-share-nodes"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-skype"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <h5 class="title">Dana White</h5>
-                        </a>
-                        <p>UI/UX Exparet</p>
-                    </div>
-                    <!-- single instrustor end -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <!-- single instrustor -->
-                    <div class="single-instructor">
-                        <div class="thumbnail-img">
-                            <a href="#" class="thumbnail">
-                                <img src="assets_cc/images/instructor/04.jpg" alt="instructor">
-                            </a>
-                            <div class="social-img-instructor">
-                                <ul>
-                                    <li><a href="#"><i class="fa-sharp fa-light fa-share-nodes"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-skype"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-                                    <li class="bottom"><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <h5 class="title">Elizabeth Olsen</h5>
-                        </a>
-                        <p>Assistant Teacher</p>
-                    </div>
-                    <!-- single instrustor end -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- instructor area start -->
+
 
     <!-- footer call to action area start -->
 <?php include "include_cc/footer.php"; ?> 

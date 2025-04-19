@@ -27,6 +27,10 @@ SET time_zone = "+00:00";
 -- Table structure for table `blogs`
 --
 
+Event Page Table;
+
+INSERT INTO `events`(`id`, `name`, `location`, `date_time`, `image`, `link`, `updated_at`, `created_at`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]')
+
 CREATE TABLE `blogs` (
   `id` int(11) NOT NULL,
   `title` varchar(500) NOT NULL,
